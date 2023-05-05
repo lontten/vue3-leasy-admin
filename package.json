@@ -9,12 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^3.2.20",
+    "normalize.css": "^8.0.1",
+    "pinia": "^2.0.35",
     "uuid": "^9.0.0",
     "vue": "^3.2.47",
     "vue-router": "4"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "@types/uuid": "^9.0.1",
     "@vitejs/plugin-vue": "^4.1.0",
     "typescript": "^5.0.2",

@@ -7,9 +7,10 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Login from "../src/demo_pages/login/Login.vue";
 import HelloWorld from "../src/components/HelloWorld.vue";
+import Home from "../src/demo_pages/home/Home.vue";
 
 const routes = [
-    {path: '/', component: Login},
+    {path: '/', component: Home},
     {path: '/login', component: Login},
     {path: '/hello', component: HelloWorld},
 ]

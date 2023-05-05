@@ -75,6 +75,8 @@ import {DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutli
 import {ref} from 'vue';
 import HomeLogo from "../../components/HomeLogo.vue";
 import {useSysInitStore} from "../../../stores/sysInitStore.ts";
+import router from "../../../routes/routes.ts";
+import {useRouter} from "vue-router";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
@@ -85,9 +87,12 @@ const selectedKeys1 = ref()
 let initStore = useSysInitStore();
 console.log(initStore.count)
 
+const r=useRouter()
+
 const click = () => {
     initStore.increment()
     console.log(initStore.count)
+    r.push('/login')
 }
 
 

@@ -8,9 +8,11 @@ import {createRouter, createWebHistory} from "vue-router";
 import Login from "../src/demo_pages/login/Login.vue";
 import HelloWorld from "../src/components/HelloWorld.vue";
 import Home from "../src/demo_pages/home/Home.vue";
+import {isAuthenticated} from "../core/utils/login.ts";
 
 const routes = [
     {path: '/', component: Home},
+    {path: '/home', component: Home},
     {path: '/login', component: Login},
     {path: '/hello', component: HelloWorld},
 ]
@@ -23,4 +25,18 @@ const router = createRouter({
     history: createWebHistory(),
     routes, // `routes: routes` 的缩写
 })
+
+router.beforeEach(async (to, _from) => {
+    if (
+        // 检查用户是否已登录
+        !isAuthenticated &&
+        // ❗️ 避免无限重定向
+        to.name !== 'Login'
+    ) {
+        // 将用户重定向到登录页面
+        return { name: '/login' }
+    }
+})
+
+
 export default router;

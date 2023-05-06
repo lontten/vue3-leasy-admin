@@ -52,8 +52,9 @@
 
 
                         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-                            Bill is a cat.
+                            <Table></Table>
                         </div>
+<!--                        <ProTable></ProTable>-->
 
 
                     </a-tab-pane>
@@ -77,6 +78,8 @@ import HomeLogo from "../../components/HomeLogo.vue";
 import {useSysInitStore} from "../../../stores/sysInitStore.ts";
 import router from "../../../routes/routes.ts";
 import {useRouter} from "vue-router";
+import ProTable from "../../../core/components/ProTable.vue";
+import Table from "../tables/Table.vue";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);

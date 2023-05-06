@@ -9,6 +9,7 @@ import Login from "../src/demo_pages/login/Login.vue";
 import HelloWorld from "../src/components/HelloWorld.vue";
 import Home from "../src/demo_pages/home/Home.vue";
 import {isAuthenticated} from "../core/utils/login.ts";
+import {baseConfig} from "../config/config.ts";
 
 const routes = [
     {path: '/', component: Home},
@@ -22,7 +23,7 @@ const routes = [
 // 暂时保持简单
 const router = createRouter({
     // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 history 模式。
-    history: createWebHistory(),
+    history: createWebHistory(baseConfig.baseUrl ),
     routes, // `routes: routes` 的缩写
 })
 
@@ -34,7 +35,7 @@ router.beforeEach(async (to, _from) => {
         to.name !== 'Login'
     ) {
         // 将用户重定向到登录页面
-        return { name: '/login' }
+        return {name: '/login'}
     }
 })
 

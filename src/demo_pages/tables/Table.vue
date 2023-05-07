@@ -1,38 +1,34 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
     <a-table :columns="columns" :data-source="dataSource" bordered>
         <template #bodyCell="{ column, text, record }">
-            <template v-if="['name', 'age', 'address'].includes(column.dataIndex)">
-                <div>
-                    <a-input
-                        v-if="editableData[record.key]"
-                        v-model:value="editableData[record.key][column.dataIndex]"
-                        style="margin: -5px 0"
-                    />
-                    <template v-else>
-                        {{ text }}
-                    </template>
-                </div>
-            </template>
-            <template v-else-if="column.dataIndex === 'operation'">
+
+
+            <template v-if="column.dataIndex === 'operation'">
                 <div class="editable-row-operations">
-          <span v-if="editableData[record.key]">
-            <a-typography-link @click="save(record.key)">Save</a-typography-link>
-            <a-popconfirm title="Sure to cancel?" @confirm="cancel(record.key)">
-              <a>Cancel</a>
-            </a-popconfirm>
-          </span>
+                    <span v-if="currentRows[record.key]">
+                        <a-typography-link
+                                @click="save(record.key)">Save</a-typography-link>
+                        <a-popconfirm
+                                title="Sure to cancel?"
+                                @confirm="cancel(record.key)">
+                            <a>Cancel</a>
+                        </a-popconfirm>
+                    </span>
                     <span v-else>
-            <a @click="edit(record.key)">Edit</a>
-          </span>
+                        <a @click="edit(record.key)">Edit</a>
+                    </span>
                 </div>
             </template>
+
+
         </template>
     </a-table>
 </template>
 <script lang="ts" setup>
-import { cloneDeep } from 'lodash-es';
-import { reactive, ref } from 'vue';
-import type { UnwrapRef } from 'vue';
+import {cloneDeep} from 'lodash-es';
+import type {UnwrapRef} from 'vue';
+import {reactive, ref} from 'vue';
 
 const columns = [
     {
@@ -60,12 +56,15 @@ const columns = [
         dataIndex: 'operation',
     },
 ];
+
 interface DataItem {
     key: string;
     name: string;
     age: number;
     address: string;
 }
+
+
 const data: DataItem[] = [];
 for (let i = 0; i < 100; i++) {
     data.push({
@@ -77,18 +76,21 @@ for (let i = 0; i < 100; i++) {
 }
 
 const dataSource = ref(data);
-const editableData: UnwrapRef<Record<string, DataItem>> = reactive({});
 
+
+const currentRows: UnwrapRef<Record<string, DataItem>> = reactive({});
 const edit = (key: string) => {
-    editableData[key] = cloneDeep(dataSource.value.filter(item => key === item.key)[0]);
+    currentRows[key] = cloneDeep(dataSource.value.filter(item => key === item.key)[0]);
 };
 const save = (key: string) => {
-    Object.assign(dataSource.value.filter(item => key === item.key)[0], editableData[key]);
-    delete editableData[key];
+    Object.assign(dataSource.value.filter(item => key === item.key)[0], currentRows[key]);
+    delete currentRows[key];
 };
 const cancel = (key: string) => {
-    delete editableData[key];
+    delete currentRows[key];
 };
+
+
 </script>
 <style scoped>
 .editable-row-operations a {

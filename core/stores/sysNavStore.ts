@@ -1,0 +1,43 @@
+import {defineStore} from "pinia";
+import {ref} from "vue";
+import {SysNavTreeType, SysTabType} from "../type/sys";
+
+export const useSysNavStore =
+    defineStore('sys_nav', () => {
+        const navTree = ref<SysNavTreeType[]>([])
+        const navTabs = ref<SysTabType[]>([])
+        const navTabPath = ref<string[]>(['设置', '用户中心', '手机号'])
+        const currentTabKey = ref<string>()
+
+
+        function initTabs(panes: SysTabType[]) {
+            navTabs.value = panes
+        }
+
+
+        function closeTab(targetKey: string) {
+            //上一个的tab的index
+            let lastIndex = 0;
+
+            navTabs.value.forEach((pane, i) => {
+                if (pane.key === targetKey) {
+                    lastIndex = i - 1;
+                }
+            });
+
+            //删除目标tab
+            navTabs.value = navTabs.value.filter(pane => pane.key !== targetKey);
+
+            if (navTabs.value.length && currentTabKey.value === targetKey) {
+                if (lastIndex >= 0) {
+                    currentTabKey.value = navTabs.value[lastIndex].key;
+                } else {
+                    currentTabKey.value = navTabs.value[0].key;
+                }
+            }
+
+            console.log('tabs：', navTabs)
+        }
+
+        return {navTree, navTabs, navTabPath, currentTabKey, closeTab, initTabs}
+    })

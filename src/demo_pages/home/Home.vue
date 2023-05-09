@@ -2,7 +2,7 @@
     <a-layout style="min-height: 100vh">
         <a-layout-sider v-model:collapsed="collapsed" collapsible>
             <HomeLogo></HomeLogo>
-            <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
+            <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="dark">
                 <a-menu-item key="1">
                     <pie-chart-outlined/>
                     <span @click="click">Option 1</span>
@@ -43,18 +43,23 @@
 
             <a-layout-content style="margin: 0 16px">
                 <a-breadcrumb style="margin: 16px 0">
-                    <a-breadcrumb-item>User</a-breadcrumb-item>
-                    <a-breadcrumb-item>Bill</a-breadcrumb-item>
+                    <a-breadcrumb-item v-for="v in paths">
+                        {{ v }}
+                    </a-breadcrumb-item>
                 </a-breadcrumb>
 
-                <a-tabs v-model:activeKey="activeKey" hide-add type="editable-card" @edit="onEdit">
-                    <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
-
+                <a-tabs v-model:activeKey="navStore.currentTabKey"
+                        hide-add type="editable-card"
+                        @edit="navStore.closeTab">
+                    <a-tab-pane v-for="pane in panes"
+                                :key="pane.key"
+                                :closable="pane.closable"
+                                :tab="pane.title">
 
                         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+                            {{ pane.content }}
                             <Table></Table>
                         </div>
-<!--                        <ProTable></ProTable>-->
 
 
                     </a-tab-pane>
@@ -73,13 +78,12 @@
 </template>
 <script lang="ts" setup>
 import {DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined,} from '@ant-design/icons-vue';
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 import HomeLogo from "../../components/HomeLogo.vue";
-import {useSysInitStore} from "../../../stores/sysInitStore.ts";
-import router from "../../../routes/routes.ts";
 import {useRouter} from "vue-router";
-import ProTable from "../../../core/components/ProTable.vue";
 import Table from "../tables/Table.vue";
+import {useSysInitStore} from "../../../core/stores/sysInitStore.ts";
+import {useSysNavStore} from "../../../core/stores/sysNavStore.ts";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
@@ -90,44 +94,28 @@ const selectedKeys1 = ref()
 let initStore = useSysInitStore();
 console.log(initStore.count)
 
-const r=useRouter()
+const r = useRouter()
 
 const click = () => {
+    navStore.navTabPath.push('jaskfdl')
+    return
     initStore.increment()
     console.log(initStore.count)
     r.push('/login')
 }
 
+const paths = computed(() => navStore.navTabPath)
 
-const panes = ref<{ title: string; content: string; key: string; closable?: boolean }[]>(
-    new Array(2).fill(null).map((_, index) => {
-        const id = String(index + 1);
-        return {title: `Tab ${id}`, content: `Content of Tab Pane ${id}`, key: id};
-    }),
-);
-const activeKey = ref(panes.value[0].key);
+// nav
+const navStore = useSysNavStore();
+const panesData = new Array(8).fill(null).map((_, index) => {
+    const id = String(index + 1);
+    return {title: `Tab ${id}`, content: `Content of Tab Pane ${id}`, key: id};
+})
 
-
-const remove = (targetKey: string) => {
-    let lastIndex = 0;
-    panes.value.forEach((pane, i) => {
-        if (pane.key === targetKey) {
-            lastIndex = i - 1;
-        }
-    });
-    panes.value = panes.value.filter(pane => pane.key !== targetKey);
-    if (panes.value.length && activeKey.value === targetKey) {
-        if (lastIndex >= 0) {
-            activeKey.value = panes.value[lastIndex].key;
-        } else {
-            activeKey.value = panes.value[0].key;
-        }
-    }
-};
-
-const onEdit = (targetKey: string) => {
-    remove(targetKey);
-};
+//初始化tab
+navStore.initTabs(panesData)
+let panes = computed(() => navStore.navTabs)
 
 
 </script>

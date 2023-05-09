@@ -1,32 +1,16 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
     <a-table :columns="columns" :data-source="dataSource" bordered>
-        <template #bodyCell="{ column, text, record }">
-
+        <template #bodyCell="{ column, record }">
 
             <template v-if="column.dataIndex === 'operation'">
-                <div class="editable-row-operations">
-                    <span v-if="currentRows[record.key]">
-                        <a-typography-link
-                                @click="save(record.key)">Save</a-typography-link>
-                        <a-popconfirm
-                                title="Sure to cancel?"
-                                @confirm="cancel(record.key)">
-                            <a>Cancel</a>
-                        </a-popconfirm>
-                    </span>
-                    <span v-else>
-                        <a @click="edit(record.key)">Edit</a>
-                    </span>
-                </div>
+                <a @click="edit(column,record)">Edit</a>
             </template>
-
 
         </template>
     </a-table>
 </template>
 <script lang="ts" setup>
-import {cloneDeep} from 'lodash-es';
 import type {UnwrapRef} from 'vue';
 import {reactive, ref} from 'vue';
 
@@ -79,15 +63,10 @@ const dataSource = ref(data);
 
 
 const currentRows: UnwrapRef<Record<string, DataItem>> = reactive({});
-const edit = (key: string) => {
-    currentRows[key] = cloneDeep(dataSource.value.filter(item => key === item.key)[0]);
-};
-const save = (key: string) => {
-    Object.assign(dataSource.value.filter(item => key === item.key)[0], currentRows[key]);
-    delete currentRows[key];
-};
-const cancel = (key: string) => {
-    delete currentRows[key];
+
+const edit = (column: any, row: DataItem) => {
+    console.log('row:', row.name)
+    console.log('column:', column)
 };
 
 

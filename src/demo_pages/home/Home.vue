@@ -58,6 +58,7 @@
 
                         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
                             {{ pane.content }}
+                            <PrivaSearchHeader></PrivaSearchHeader>
                             <Table></Table>
                         </div>
 
@@ -84,6 +85,7 @@ import {useRouter} from "vue-router";
 import Table from "../tables/Table.vue";
 import {useSysInitStore} from "../../../core/stores/sysInitStore.ts";
 import {useSysNavStore} from "../../../core/stores/sysNavStore.ts";
+import PrivaSearchHeader from "../../../core/components/PrivaSearchHeader.vue";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);

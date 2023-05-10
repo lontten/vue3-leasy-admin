@@ -1,8 +1,7 @@
 import {createApp} from 'vue';
 import './style.css';
 import 'normalize.css/normalize.css';
-
-import 'ant-design-vue/dist/reset.css';
+import 'ant-design-vue/dist/reset.css'
 import Antd from 'ant-design-vue';
 
 import App from './App.vue';
@@ -22,13 +21,6 @@ setGlobalOptions({
     manual: true,
     // ...
 });
-
-/**
- * 测试环境下 引入自定义的mockRequest
- */
-if (process.env.NODE_ENV === 'development' || true) {
-    // mockRequest()
-}
 
 
 app.mount('#app');

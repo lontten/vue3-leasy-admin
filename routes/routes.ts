@@ -10,12 +10,14 @@ import HelloWorld from "../src/components/HelloWorld.vue";
 import Home from "../src/demo_pages/home/Home.vue";
 import {isAuthenticated} from "../core/utils/login.ts";
 import {baseConfig} from "../config/config.ts";
+import TestPage from "../src/demo_pages/test/TestPage.vue";
 
 const routes = [
     {path: '/', component: Home},
     {path: '/home', component: Home},
     {path: '/login', component: Login},
     {path: '/hello', component: HelloWorld},
+    {path: '/test', component: TestPage},
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置
@@ -23,7 +25,7 @@ const routes = [
 // 暂时保持简单
 const router = createRouter({
     // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 history 模式。
-    history: createWebHistory(baseConfig.baseUrl ),
+    history: createWebHistory(baseConfig.baseUrl),
     routes, // `routes: routes` 的缩写
 })
 

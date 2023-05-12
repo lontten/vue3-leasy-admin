@@ -2,7 +2,7 @@
     <component :is="$antIcons[iconName]"/>
 </template>
 <script lang="ts" setup>
-import {computed, toRefs, watch} from "vue";
+import {computed, toRefs, watchEffect} from "vue";
 
 interface Props {
     name: string
@@ -17,11 +17,8 @@ const toH = (text: any) => {
 
 let {name} = toRefs(props)
 const iconName = computed(() => toH(name.value))
-watch(
-    () => props.name,
-    (value) => {
-        name.value = value
-    }
-);
+
+watchEffect(() => {
+})
 </script>
 

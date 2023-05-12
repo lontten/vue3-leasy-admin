@@ -4,46 +4,7 @@
             <HomeLogo></HomeLogo>
             <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="dark">
 
-
-                <a-menu-item key="1">
-                    <pie-chart-outlined/>
-                    <span @click="click">Option 1</span>
-                </a-menu-item>
-
-
-                <a-menu-item key="2">
-                    <desktop-outlined/>
-                    <span>Option 2</span>
-                </a-menu-item>
-
-
-                <a-sub-menu key="sub1">
-                    <template #title>
-                        <span>
-                            <user-outlined/>
-                            <span>User</span>
-                        </span>
-                    </template>
-                    <a-menu-item key="3">Tom</a-menu-item>
-                    <a-menu-item key="4">Bill</a-menu-item>
-                    <a-menu-item key="5">Alex</a-menu-item>
-                </a-sub-menu>
-
-                <a-sub-menu key="sub2">
-                    <template #title>
-                        <span>
-                            <team-outlined/>
-                            <span>Team</span>
-                        </span>
-                    </template>
-                    <a-menu-item key="6">Team 1</a-menu-item>
-                    <a-menu-item key="8">Team 2</a-menu-item>
-                </a-sub-menu>
-
-                <a-menu-item key="9">
-                    <file-outlined/>
-                    <span>File</span>
-                </a-menu-item>
+                <ProNavTreeOption :list="navTree"></ProNavTreeOption>
 
             </a-menu>
         </a-layout-sider>
@@ -88,7 +49,6 @@
     </a-layout>
 </template>
 <script lang="ts" setup>
-import {DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined,} from '@ant-design/icons-vue';
 import {computed, ref} from 'vue';
 import HomeLogo from "../../components/HomeLogo.vue";
 import {useRouter} from "vue-router";
@@ -97,6 +57,7 @@ import {useSysInitStore} from "../../../core/stores/sysInitStore.ts";
 import {useSysNavStore} from "../../../core/stores/sysNavStore.ts";
 import PrivaSearchHeader from "../../../core/components/PrivaSearchHeader.vue";
 import ProIcon from "../../../core/components/ProIcon.vue";
+import ProNavTreeOption from "../../../core/components/ProNavTreeOption.vue";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
@@ -134,7 +95,7 @@ const paths = computed(() => navStore.navTabPath)
 // nav
 const navStore = useSysNavStore();
 let navTree = ref(navStore.navTree)
-navTree.value = [
+const navData = [
     {
         name: '1',
         path: '1',
@@ -197,6 +158,7 @@ navTree.value = [
 
 
 ]
+navStore.initNavTree(navData)
 console.log(navTree.value)
 
 const panesData = new Array(8).fill(null).map((_, index) => {

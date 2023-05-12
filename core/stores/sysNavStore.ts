@@ -10,8 +10,26 @@ export const useSysNavStore =
         const currentTabKey = ref<string>()
 
 
-        function initTabs(panes: SysTabType[]) {
-            navTabs.value = panes
+        function initTabs(list: SysTabType[]) {
+            navTabs.value = list
+        }
+
+        function initNavTree(list: SysNavTreeType[]) {
+            walkNavTree(list)
+            navTree.value = list
+        }
+
+        const walkNavTree = (list: SysNavTreeType[]): SysNavTreeType[] => {
+            return list.map(value => {
+                if (!value.namePaths) {
+                    value.namePaths = []
+                }
+                value.namePaths.push(value.name)
+                if (value.children && value.children.length > 0) {
+                    value.children = walkNavTree(value.children)
+                }
+                return value
+            })
         }
 
 
@@ -39,5 +57,5 @@ export const useSysNavStore =
             console.log('tabs：', navTabs)
         }
 
-        return {navTree, navTabs, navTabPath, currentTabKey, closeTab, initTabs}
+        return {navTree, navTabs, initNavTree, navTabPath, currentTabKey, closeTab, initTabs}
     })

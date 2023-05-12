@@ -9,6 +9,7 @@ export interface SysTabType {
 
 export interface SysNavTreeType {
     name: string
+    namePaths?: string[]
     path: string
     key: string
     icon: string

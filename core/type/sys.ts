@@ -1,5 +1,4 @@
 //页面tab
-import {Component, DefineComponent} from "vue";
 
 export interface SysTabType {
     title: string
@@ -12,7 +11,6 @@ export interface SysNavTreeType {
     name: string
     path: string
     key: string
-    icon: LComponent
+    icon: string
+    children?: SysNavTreeType[]
 }
-
-export type LComponent = Component | DefineComponent;

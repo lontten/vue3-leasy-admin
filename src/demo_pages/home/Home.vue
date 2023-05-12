@@ -3,39 +3,48 @@
         <a-layout-sider v-model:collapsed="collapsed" collapsible>
             <HomeLogo></HomeLogo>
             <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="dark">
+
+
                 <a-menu-item key="1">
                     <pie-chart-outlined/>
                     <span @click="click">Option 1</span>
                 </a-menu-item>
+
+
                 <a-menu-item key="2">
                     <desktop-outlined/>
                     <span>Option 2</span>
                 </a-menu-item>
+
+
                 <a-sub-menu key="sub1">
                     <template #title>
-            <span>
-              <user-outlined/>
-              <span>User</span>
-            </span>
+                        <span>
+                            <user-outlined/>
+                            <span>User</span>
+                        </span>
                     </template>
                     <a-menu-item key="3">Tom</a-menu-item>
                     <a-menu-item key="4">Bill</a-menu-item>
                     <a-menu-item key="5">Alex</a-menu-item>
                 </a-sub-menu>
+
                 <a-sub-menu key="sub2">
                     <template #title>
-            <span>
-              <team-outlined/>
-              <span>Team</span>
-            </span>
+                        <span>
+                            <team-outlined/>
+                            <span>Team</span>
+                        </span>
                     </template>
                     <a-menu-item key="6">Team 1</a-menu-item>
                     <a-menu-item key="8">Team 2</a-menu-item>
                 </a-sub-menu>
+
                 <a-menu-item key="9">
                     <file-outlined/>
                     <span>File</span>
                 </a-menu-item>
+
             </a-menu>
         </a-layout-sider>
         <a-layout>
@@ -124,6 +133,72 @@ const paths = computed(() => navStore.navTabPath)
 
 // nav
 const navStore = useSysNavStore();
+let navTree = ref(navStore.navTree)
+navTree.value = [
+    {
+        name: '1',
+        path: '1',
+        key: '1',
+        icon: 'StepBackwardOutlined',
+        children: [
+            {
+                name: '1-1',
+                path: '1-1',
+                key: '1-1',
+                icon: 'StepBackwardOutlined',
+                children: [
+                    {
+                        name: '1-1-1',
+                        path: '1-1-1',
+                        key: '1-1-1',
+                        icon: 'StepBackwardOutlined'
+                    },
+                    {
+                        name: '1-1-2',
+                        path: '1-1-2',
+                        key: '1-1-2',
+                        icon: 'StepBackwardOutlined'
+                    },
+                    {
+                        name: '1-1-3',
+                        path: '1-1-3',
+                        key: '1-1-3',
+                        icon: 'StepBackwardOutlined'
+                    },
+                ]
+            },
+            {
+                name: '1-2',
+                path: '1-2',
+                key: '1-2',
+                icon: 'StepBackwardOutlined'
+            },
+            {
+                name: '1-3',
+                path: '1-3',
+                key: '1-3',
+                icon: 'StepBackwardOutlined'
+            },
+
+        ]
+    },
+    {
+        name: '2',
+        path: '2',
+        key: '2',
+        icon: 'StepBackwardOutlined'
+    },
+    {
+        name: '3',
+        path: '3',
+        key: '3',
+        icon: 'StepBackwardOutlined'
+    },
+
+
+]
+console.log(navTree.value)
+
 const panesData = new Array(8).fill(null).map((_, index) => {
     const id = String(index + 1);
     return {title: `Tab ${id}`, content: `Content of Tab Pane ${id}`, key: id};

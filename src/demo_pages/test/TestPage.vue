@@ -11,10 +11,10 @@ let iconName = ref<string>('wifi-outlined');
 const click = () => {
     console.log('iconName', iconName.value)
 
-    if (iconName.value == 'StepBackwardOutlined') {
+    if (iconName.value == 'plus-circle-two-tone') {
         iconName.value = 'wifi-outlined'
     } else {
-        iconName.value = 'StepBackwardOutlined'
+        iconName.value = 'plus-circle-two-tone'
     }
 
     console.log('iconName2', iconName.value)

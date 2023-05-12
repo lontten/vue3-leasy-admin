@@ -57,7 +57,13 @@
                                 :tab="pane.title">
 
                         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-                            {{ pane.content }}
+                            2
+                            <ProIcon name="step-backward-outlined"></ProIcon>
+                            3
+                            <ProIcon name="StepBackwardOutlined"></ProIcon>
+                            4
+                            <ProIcon name="wifi-outlined"></ProIcon>
+
                             <PrivaSearchHeader></PrivaSearchHeader>
                             <Table></Table>
                         </div>
@@ -86,6 +92,7 @@ import Table from "../tables/Table.vue";
 import {useSysInitStore} from "../../../core/stores/sysInitStore.ts";
 import {useSysNavStore} from "../../../core/stores/sysNavStore.ts";
 import PrivaSearchHeader from "../../../core/components/PrivaSearchHeader.vue";
+import ProIcon from "../../../core/components/ProIcon.vue";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);

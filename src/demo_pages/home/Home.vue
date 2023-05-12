@@ -57,12 +57,7 @@
                                 :tab="pane.title">
 
                         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-                            2
-                            <ProIcon name="step-backward-outlined"></ProIcon>
-                            3
-                            <ProIcon name="StepBackwardOutlined"></ProIcon>
-                            4
-                            <ProIcon name="wifi-outlined"></ProIcon>
+                            <ProIcon :name="iconName"></ProIcon>
 
                             <PrivaSearchHeader></PrivaSearchHeader>
                             <Table></Table>
@@ -96,6 +91,7 @@ import ProIcon from "../../../core/components/ProIcon.vue";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
+let iconName = ref<string>('wifi-outlined');
 
 
 const selectedKeys1 = ref()
@@ -106,6 +102,17 @@ console.log(initStore.count)
 const r = useRouter()
 
 const click = () => {
+    console.log('iconName', iconName.value)
+
+    if (iconName.value == 'StepBackwardOutlined') {
+        iconName.value = 'wifi-outlined'
+    } else {
+        iconName.value = 'StepBackwardOutlined'
+    }
+
+    console.log('iconName2', iconName.value)
+    return;
+
     navStore.navTabPath.push('jaskfdl')
     return
     initStore.increment()

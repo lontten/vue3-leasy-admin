@@ -1,8 +1,8 @@
 <template>
-    <component :is="$antIcons[name]"/>
+    <component :is="$antIcons[iconName]"/>
 </template>
 <script lang="ts" setup>
-import {toRefs} from "vue";
+import {computed, toRefs, watch} from "vue";
 
 interface Props {
     name: string
@@ -16,7 +16,12 @@ const toH = (text: any) => {
 }
 
 let {name} = toRefs(props)
-name = toH(name.value)
-
+const iconName = computed(() => toH(name.value))
+watch(
+    () => props.name,
+    (value) => {
+        name.value = value
+    }
+);
 </script>
 

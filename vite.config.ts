@@ -9,10 +9,15 @@ import Components from 'unplugin-vue-components/vite';
 export default defineConfig({
     base: baseConfig.baseUrl,
     plugins: [
-        vue(),
+        vue({
+            script: {
+                // @ts-ignore
+                defineModel: true
+            }
+        }),
         viteMockServe({
-            // default
             mockPath: 'core/mock',
+            // @ts-ignore
             enable: true,
             watchFiles: true,
         }),

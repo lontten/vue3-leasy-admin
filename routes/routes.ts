@@ -5,12 +5,12 @@
 // 每个路由都需要映射到一个组件。
 // 我们后面再讨论嵌套路由。
 import {createRouter, createWebHistory} from "vue-router";
-import Login from "../src/demo_pages/login/Login.vue";
+import Login from "../src/pages_demo/login/Login.vue";
 import HelloWorld from "../src/components/HelloWorld.vue";
-import Home from "../src/demo_pages/home/Home.vue";
+import Home from "../src/pages_demo/home/Home.vue";
 import {isAuthenticated} from "../core/utils/login.ts";
 import {baseConfig} from "../config/config.ts";
-import TestPage from "../src/demo_pages/test/TestPage.vue";
+import TestPage from "../src/pages_test/TestPage.vue";
 
 const routes = [
     {path: '/', component: Home},

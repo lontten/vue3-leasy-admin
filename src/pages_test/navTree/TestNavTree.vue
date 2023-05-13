@@ -50,14 +50,9 @@
 </template>
 <script lang="ts" setup>
 import {computed, ref} from 'vue';
-import HomeLogo from "../../components/HomeLogo.vue";
-import {useRouter} from "vue-router";
-import Table from "../tables/Table.vue";
 import {useSysInitStore} from "../../../core/stores/sysInitStore.ts";
+import {useRouter} from "vue-router";
 import {useSysNavStore} from "../../../core/stores/sysNavStore.ts";
-import PrivaSearchHeader from "../../../core/components/PrivaSearchHeader.vue";
-import ProIcon from "../../../core/components/ProIcon.vue";
-import ProNavTreeOption from "../../../core/components/ProNavTreeOption.vue";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
@@ -73,6 +68,7 @@ const r = useRouter()
 
 const click = () => {
     console.log('iconName', iconName.value)
+
     if (iconName.value == 'StepBackwardOutlined') {
         iconName.value = 'wifi-outlined'
     } else {
@@ -93,7 +89,7 @@ const paths = computed(() => navStore.navTabPath)
 
 // nav
 const navStore = useSysNavStore();
-let navTree = computed(()=>navStore.navTree)
+let navTree = ref(navStore.navTree)
 const navData = [
     {
         name: '1',

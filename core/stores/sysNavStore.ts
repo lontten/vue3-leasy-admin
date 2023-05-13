@@ -15,18 +15,19 @@ export const useSysNavStore =
         }
 
         function initNavTree(list: SysNavTreeType[]) {
-            walkNavTree(list)
+            walkNavTree(list, [])
             navTree.value = list
         }
 
-        const walkNavTree = (list: SysNavTreeType[]): SysNavTreeType[] => {
+        const walkNavTree = (list: SysNavTreeType[], parentNamePaths: string[]): SysNavTreeType[] => {
             return list.map(value => {
                 if (!value.namePaths) {
                     value.namePaths = []
                 }
+                value.namePaths.push(...parentNamePaths)
                 value.namePaths.push(value.name)
                 if (value.children && value.children.length > 0) {
-                    value.children = walkNavTree(value.children)
+                    value.children = walkNavTree(value.children, value.namePaths)
                 }
                 return value
             })

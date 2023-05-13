@@ -20,6 +20,7 @@
 import {toRefs, watchEffect} from "vue";
 import {SysNavTreeType} from "../type/sys";
 import ProIcon from "./ProIcon.vue";
+import {useSysNavStore} from "../stores/sysNavStore.ts";
 
 interface Props {
     list: SysNavTreeType[]
@@ -29,10 +30,11 @@ const props = defineProps<Props>()
 let {list} = toRefs(props)
 watchEffect(() => {
 })
-
+const navStore = useSysNavStore()
 
 const click = (e: SysNavTreeType) => {
     console.log('click', e)
+    navStore.navTabPath = e.namePaths || []
 }
 
 const openEvent = (e: any) => {

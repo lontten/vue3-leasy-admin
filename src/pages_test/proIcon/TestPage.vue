@@ -4,7 +4,7 @@
 </template>
 <script lang="ts" setup>
 import {ref} from "vue";
-import ProIcon from "../../core/components/ProIcon.vue";
+import ProIcon from "../../../core/components/ProIcon.vue";
 
 let iconName = ref<string>('wifi-outlined');
 

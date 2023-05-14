@@ -12,6 +12,7 @@ import {isAuthenticated} from "../core/utils/login.ts";
 import {baseConfig} from "../config/config.ts";
 import TestPage from "../src/pages_test/proIcon/TestPage.vue";
 import TestNavTree from "../src/pages_test/navTree/TestNavTree.vue";
+import TestProForm from "../src/pages_test/proForm/TestProForm.vue";
 
 const routes = [
     {path: '/', component: Home},
@@ -20,6 +21,7 @@ const routes = [
     {path: '/hello', component: HelloWorld},
     {path: '/testProIcon', component: TestPage},
     {path: '/testNavTree', component: TestNavTree},
+    {path: '/testProForm', component: TestProForm},
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置

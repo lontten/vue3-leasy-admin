@@ -12,7 +12,8 @@ export default defineConfig({
         vue({
             script: {
                 // @ts-ignore
-                defineModel: true
+                defineModel: true,
+                propsDestructure:true
             }
         }),
         viteMockServe({

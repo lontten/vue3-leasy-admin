@@ -15,3 +15,8 @@ export interface SysNavTreeType {
     icon: string
     children?: SysNavTreeType[]
 }
+
+// 项目基础配置
+export interface BaseConfigType {
+    baseUrl?:string
+}

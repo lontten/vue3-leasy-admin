@@ -1,9 +1,9 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
-import {baseConfig} from "./config/config";
 import {viteMockServe} from "vite-plugin-mock";
 import {AntDesignVueResolver} from "unplugin-vue-components/resolvers";
 import Components from 'unplugin-vue-components/vite';
+import {baseConfig} from "./config/config";
 
 // https://vitejs.dev/config/
 export default defineConfig({

@@ -1,14 +1,11 @@
-import {createRouter, createWebHistory} from "vue-router";
 import Login from "../src/pages_demo/login/Login.vue";
 import HelloWorld from "../src/components/HelloWorld.vue";
 import Home from "../src/pages_demo/home/Home.vue";
-import {isAuthenticated} from "../core/utils/login.ts";
-import {baseConfig} from "./config.ts";
 import TestPage from "../src/pages_test/proIcon/TestPage.vue";
 import TestNavTree from "../src/pages_test/navTree/TestNavTree.vue";
 import TestProForm from "../src/pages_test/proForm/TestProForm.vue";
 
-const routes = [
+export const routes = [
     {path: '/', component: Home},
     {path: '/home', component: Home},
     {path: '/login', component: Login},
@@ -17,24 +14,3 @@ const routes = [
     {path: '/testNavTree', component: TestNavTree},
     {path: '/testProForm', component: TestProForm},
 ]
-
-const router = createRouter({
-    // 我们在这里使用 history 模式。
-    history: createWebHistory(baseConfig.baseUrl),
-    routes, // `routes: routes` 的缩写
-})
-
-router.beforeEach(async (to, _from) => {
-    if (
-        // 检查用户是否已登录
-        !isAuthenticated &&
-        // ❗️ 避免无限重定向
-        to.name !== 'Login'
-    ) {
-        // 将用户重定向到登录页面
-        return {name: '/login'}
-    }
-})
-
-
-export default router;

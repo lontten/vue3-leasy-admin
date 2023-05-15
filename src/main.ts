@@ -4,10 +4,10 @@ import 'normalize.css/normalize.css';
 import Antd from 'ant-design-vue';
 
 import App from './App.vue';
-import router from '../config/routes.ts';
 import {createPinia} from 'pinia';
 import {setGlobalOptions} from "vue-request";
 import * as antIcons from '@ant-design/icons-vue'
+import router from "../core/config/routes.ts";
 
 const app = createApp(App);
 const pinia = createPinia();

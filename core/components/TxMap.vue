@@ -2,23 +2,50 @@
   <div id="container"></div>
 
 
+  <div id="panel2">
+    <a-select
+        ref="select"
+        v-model:value="ssx1"
+        style="width: 240px"
+        @focus="focus"
+        @change="handleChange"
+    >
+      <a-select-option v-for="item in ssx1List" :key="item.label" v-model:value="item.value">{{
+          item.label
+        }}
+      </a-select-option>
+    </a-select>
+
+    <h4>下属行政区查询</h4>
+    <div class="input-item">
+      <div class="title">省市区</div>
+      <select id='province' style="width:200px" @change='search2'></select>
+
+
+    </div>
+    <div class="input-item">
+      <div class="title">地级市</div>
+      <select id='city' style="width:200px" @change='search2'></select>
+    </div>
+    <div class="input-item">
+      <div class="title">区县</div>
+      <select id='district' style="width:200px" @change='search2'></select>
+    </div>
+    <div class="input-item">
+      <div class="title">街道</div>
+      <select id='street' style="width:200px" @change='search2'></select>
+    </div>
+  </div>
+
   <div id="panel">
     <p>输入关键字，将展示相关地点提示，点击提示可定位到该处。</p>
     <input id='keyword' type="text" v-model="keyword">
     <input id="search" type="button" class="btn" value="搜索" @click="searchByKeyword"/>
-    <ul id="suggestionList">
-      <li v-for="(item,index) in suggestionList">
-        <a href="#" @click="setSuggestion(index)">
-          {{ item.title }}
-          <span class="item_info">{{ item.address }}</span>
-        </a>
-      </li>
-    </ul>
   </div>
 
 </template>
 <script lang="ts" setup>
-import {onMounted, ref, toValue, watch} from "vue";
+import {onMounted, ref, toValue} from "vue";
 
 const TMap: any = (window as any).TMap;
 
@@ -37,17 +64,37 @@ let map;
 // 创建信息窗
 let info //POI信息窗
 
-const suggestionList = ref([])
-// let suggestionList = []; //搜索建议列表
+//搜索提示
 let search;  // 新建一个地点搜索类
 let suggest; // 新建一个关键字输入提示类
 let markers;
 let infoWindowList
 
+//省市县
+let provinceSelect;
+let citySelect;
+let districtSelect;
+let areaSelect;
+let provinceList = [];
+let cityList = [];
+let districtList = [];
+let areaList = [];
+let district;
+let polygons;
+
+let ssx1List = ref([])
+let ssx1 = ref()
+
+const focus = () => {
+  console.log('focus');
+};
+
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
+};
+
 
 const initMap = () => {
-
-
   //定义地图中心点坐标
   const center = new TMap.LatLng(39.984120, 116.307484);
   //定义map变量，调用 TMap.Map() 构造函数创建地图
@@ -80,6 +127,37 @@ const initMap = () => {
   });
   infoWindowList = Array(10);
 
+
+  //------------------省市县
+  provinceSelect = document.getElementById('province');
+  citySelect = document.getElementById('city');
+  districtSelect = document.getElementById('district');
+  areaSelect = document.getElementById('street');
+  district = new TMap.service.District({
+    // 新建一个行政区划类
+    polygon: 2, // 返回行政区划边界的类型
+  });
+  polygons = new TMap.MultiPolygon({
+    map: map,
+    geometries: [],
+  });
+  district.getChildren().then((result) => {
+    // 获取省市区列表及其边界信息
+    provinceList = result.result[0];
+    provinceSelect.add(new Option('---请选择---', null));
+    provinceList.forEach((province, index) => {
+      provinceSelect.add(new Option(province.fullname, index));
+    });
+    ssx1List.value = provinceList.map(value => {
+      return {
+        label: value.fullname,
+        value: value.fullname,
+      }
+    })
+    citySelect.innerHTML = '';
+    districtSelect.innerHTML = '';
+    areaSelect.innerHTML = '';
+  });
 
 };
 
@@ -118,47 +196,6 @@ const clickHandler = (e: any) => {
 const keyword = ref('')
 
 
-watch(keyword, (value) => {
-  // 使用者在搜索框中输入文字时触发
-  suggest
-      .getSuggestions({keyword: keyword.value, location: map.getCenter()})
-      .then((result) => {
-        suggestionList.value = result.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-})
-
-function setSuggestion(index) {
-  // 点击输入提示后，于地图中用点标记绘制该地点，并显示信息窗体，包含其名称、地址等信息
-  infoWindowList.forEach((infoWindow) => {
-    infoWindow.close();
-  });
-  infoWindowList.length = 0;
-  keyword.value = suggestionList.value[index].title;
-
-  markers.setGeometries([]);
-  markers.updateGeometries([
-    {
-      id: '0', // 点标注数据数组
-      position: suggestionList.value[index].location,
-    },
-  ]);
-  var infoWindow = new TMap.InfoWindow({
-    map: map,
-    position: suggestionList.value[index].location,
-    content: `<h3>${suggestionList.value[index].title}</h3><p>地址：${suggestionList.value[index].address}</p>`,
-    offset: {x: 0, y: -50},
-  });
-  infoWindowList.push(infoWindow);
-  map.setCenter(suggestionList.value[index].location);
-  markers.on('click', (e) => {
-    infoWindowList[Number(e.geometry.id)].open();
-  });
-
-}
-
 function searchByKeyword() {
   // 关键字搜索功能
   infoWindowList.forEach((infoWindow) => {
@@ -168,7 +205,7 @@ function searchByKeyword() {
   markers.setGeometries([]);
   search
       .searchRectangle({
-        keyword: keyword.value,
+        keyword: toValue(keyword),
         bounds: map.getBounds(),
       })
       .then((result) => {
@@ -192,6 +229,123 @@ function searchByKeyword() {
           });
         });
       });
+}
+
+
+// -------------------------------------------------------------
+
+
+function search2(selector) {
+  selector = selector.target
+  console.log(selector.value)
+  if (selector.id === 'province' && selector.value) {
+    citySelect.innerHTML = '';
+    districtSelect.innerHTML = '';
+    areaSelect.innerHTML = '';
+    citySelect.add(new Option('---请选择---', null));
+    district
+        .getChildren({id: provinceList[selector.value].id})
+        .then((result) => {
+          // 根据选择的省市区获取其下级行政区划及其边界
+          cityList = result.result[0];
+          cityList.forEach((city, index) => {
+            citySelect.add(new Option(city.fullname, index));
+          });
+        });
+    drawPolygon(
+        provinceList[selector.value].id,
+        provinceList[selector.value].polygon
+    ); // 根据所选区域绘制边界
+  } else if (selector.id === 'city' && selector.value) {
+    districtSelect.innerHTML = '';
+    areaSelect.innerHTML = '';
+    districtSelect.add(new Option('---请选择---', null));
+    district.getChildren({id: cityList[selector.value].id}).then((result) => {
+      // 根据选择的地级市或直辖市区获取其下级行政区划及其边界
+      if (result.result[0].length > 0 && result.result[0][0].id.length > 6) {
+        // 直辖市的区的下级即为街道级，故略过一级
+        districtList = [];
+        districtSelect.innerHTML = '';
+        districtSelect.add(new Option('---------', null));
+        areaList = result.result[0];
+        areaSelect.add(new Option('---请选择---', null));
+        areaList.forEach((district, index) => {
+          areaSelect.add(new Option(district.fullname, index));
+        }); // 根据所选区域绘制边界
+      } else {
+        // 非直辖市的地级市之下有区县级
+        districtList = result.result[0];
+        districtList.forEach((district, index) => {
+          districtSelect.add(new Option(district.fullname, index));
+        });
+      }
+    });
+    drawPolygon(cityList[selector.value].id, cityList[selector.value].polygon);
+    // 根据所选区域绘制边界
+  } else if (selector.id === 'district' && selector.value) {
+    areaSelect.innerHTML = '';
+    district
+        .getChildren({id: districtList[selector.value].id})
+        .then((result) => {
+          // 根据选择的区县获取其下级行政区划及位置
+          areaList = result.result[0];
+          areaList.forEach((area, index) => {
+            areaSelect.add(new Option(area.fullname, index));
+          });
+        });
+    areaSelect.add(new Option('---请选择---', null));
+    drawPolygon(
+        districtList[selector.value].id,
+        districtList[selector.value].polygon
+    );
+  } else if (selector.id === 'street' && selector.value) {
+    map.setCenter(areaList[selector.value].location);
+    // 街道级仅提供位置信息不提供边界信息，故以设置地图中心代替边界绘制
+  }
+}
+
+function drawPolygon(placeId, polygonArray) {
+  // 根据多边形顶点坐标数组绘制多边形
+  polygons.remove(polygons.getGeometries().map((item) => item.id));
+  var bounds = [];
+  var newGeometries = polygonArray.map((polygon, index) => {
+    bounds.push(fitBounds(polygon));
+    return {
+      id: `${placeId}_${index}`,
+      paths: polygon,
+    };
+  });
+  bounds = bounds.reduce((a, b) => {
+    return fitBounds([
+      a.getNorthEast(),
+      a.getSouthWest(),
+      b.getNorthEast(),
+      b.getSouthWest(),
+    ]);
+  });
+  polygons.updateGeometries(newGeometries);
+  map.fitBounds(bounds);
+}
+
+function fitBounds(latLngList) {
+  // 由多边形顶点坐标数组计算能完整呈现该多边形的最小矩形范围
+  if (latLngList.length === 0) {
+    return null;
+  }
+  var boundsN = latLngList[0].getLat();
+  var boundsS = boundsN;
+  var boundsW = latLngList[0].getLng();
+  var boundsE = boundsW;
+  latLngList.forEach((point) => {
+    point.getLat() > boundsN && (boundsN = point.getLat());
+    point.getLat() < boundsS && (boundsS = point.getLat());
+    point.getLng() > boundsE && (boundsE = point.getLng());
+    point.getLng() < boundsW && (boundsW = point.getLng());
+  });
+  return new TMap.LatLngBounds(
+      new TMap.LatLng(boundsS, boundsW),
+      new TMap.LatLng(boundsN, boundsE)
+  );
 }
 
 onMounted(() => {

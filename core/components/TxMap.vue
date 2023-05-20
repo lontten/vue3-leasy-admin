@@ -2,9 +2,23 @@
   <div id="container"></div>
 
 
+  <div id="panel">
+    <p>输入关键字，将展示相关地点提示，点击提示可定位到该处。</p>
+    <input id='keyword' type="text" v-model="keyword">
+    <input id="search" type="button" class="btn" value="搜索" @click="searchByKeyword"/>
+    <ul id="suggestionList">
+      <li v-for="(item,index) in suggestionList">
+        <a href="#" @click="setSuggestion(index)">
+          {{ item.title }}
+          <span class="item_info">{{ item.address }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
 </template>
 <script lang="ts" setup>
-import {onMounted} from "vue";
+import {onMounted, ref, toValue, watch} from "vue";
 
 const TMap: any = (window as any).TMap;
 
@@ -18,12 +32,17 @@ interface Props {
 }
 
 const {type = 'lng_lat'} = defineProps<Props>()
+let map;
 
 // 创建信息窗
 let info //POI信息窗
 
-
-let map;
+const suggestionList = ref([])
+// let suggestionList = []; //搜索建议列表
+let search;  // 新建一个地点搜索类
+let suggest; // 新建一个关键字输入提示类
+let markers;
+let infoWindowList
 
 
 const initMap = () => {
@@ -47,7 +66,19 @@ const initMap = () => {
   //Map实例创建后，通过on方法绑定点击事件
   map.on("click", clickHandler)
 
-  //-------------------
+  //-------------------搜索建议初始化
+  search = new TMap.service.Search({pageSize: 10}); // 新建一个地点搜索类
+  suggest = new TMap.service.Suggestion({
+    // 新建一个关键字输入提示类
+    pageSize: 10, // 返回结果每页条目数
+    region: '北京', // 限制城市范围
+    regionFix: true, // 搜索无结果时是否固定在当前城市
+  });
+  markers = new TMap.MultiMarker({
+    map: map,
+    geometries: [],
+  });
+  infoWindowList = Array(10);
 
 
 };
@@ -83,6 +114,85 @@ const clickHandler = (e: any) => {
 
 }
 
+
+const keyword = ref('')
+
+
+watch(keyword, (value) => {
+  // 使用者在搜索框中输入文字时触发
+  suggest
+      .getSuggestions({keyword: keyword.value, location: map.getCenter()})
+      .then((result) => {
+        suggestionList.value = result.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+})
+
+function setSuggestion(index) {
+  // 点击输入提示后，于地图中用点标记绘制该地点，并显示信息窗体，包含其名称、地址等信息
+  infoWindowList.forEach((infoWindow) => {
+    infoWindow.close();
+  });
+  infoWindowList.length = 0;
+  keyword.value = suggestionList.value[index].title;
+
+  markers.setGeometries([]);
+  markers.updateGeometries([
+    {
+      id: '0', // 点标注数据数组
+      position: suggestionList.value[index].location,
+    },
+  ]);
+  var infoWindow = new TMap.InfoWindow({
+    map: map,
+    position: suggestionList.value[index].location,
+    content: `<h3>${suggestionList.value[index].title}</h3><p>地址：${suggestionList.value[index].address}</p>`,
+    offset: {x: 0, y: -50},
+  });
+  infoWindowList.push(infoWindow);
+  map.setCenter(suggestionList.value[index].location);
+  markers.on('click', (e) => {
+    infoWindowList[Number(e.geometry.id)].open();
+  });
+
+}
+
+function searchByKeyword() {
+  // 关键字搜索功能
+  infoWindowList.forEach((infoWindow) => {
+    infoWindow.close();
+  });
+  infoWindowList.length = 0;
+  markers.setGeometries([]);
+  search
+      .searchRectangle({
+        keyword: keyword.value,
+        bounds: map.getBounds(),
+      })
+      .then((result) => {
+        result.data.forEach((item, index) => {
+          var geometries = markers.getGeometries();
+          var infoWindow = new TMap.InfoWindow({
+            map: map,
+            position: item.location,
+            content: `<h3>${item.title}</h3><p>地址：${item.address}</p><p>电话：${item.tel}</p>`,
+            offset: {x: 0, y: -50},
+          });
+          infoWindow.close();
+          infoWindowList[index] = infoWindow;
+          geometries.push({
+            id: String(index),
+            position: item.location,
+          });
+          markers.updateGeometries(geometries);
+          markers.on('click', (e) => {
+            infoWindowList[Number(e.geometry.id)].open();
+          });
+        });
+      });
+}
 
 onMounted(() => {
   initMap()

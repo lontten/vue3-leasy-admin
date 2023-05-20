@@ -150,7 +150,7 @@ const navData = [
     },
     {
         name: '3',
-        path: '3',
+        path: 'testProTables',
         key: '3',
         icon: 'StepBackwardOutlined'
     },

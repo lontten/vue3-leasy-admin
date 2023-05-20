@@ -1,7 +1,6 @@
 import {createApp, nextTick} from 'vue';
 import './style.css';
 import 'normalize.css/normalize.css';
-import Antd from 'ant-design-vue';
 
 import App from './App.vue';
 import {createPinia} from 'pinia';
@@ -14,7 +13,6 @@ const pinia = createPinia();
 
 app.use(pinia);
 app.use(router);
-app.use(Antd);
 
 //全局配置vue-request
 setGlobalOptions({

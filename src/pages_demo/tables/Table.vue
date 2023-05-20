@@ -1,4 +1,3 @@
-<!-- eslint-disable prettier/prettier -->
 <template>
     <a-table :columns="columns" :data-source="dataSource" bordered>
         <template #bodyCell="{ column, record }">

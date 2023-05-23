@@ -360,4 +360,32 @@ onMounted(() => {
   width: 100%;
   height: 100%;
 }
+
+
+#panel {
+  position: absolute;
+  background: #FFF;
+  width: 350px;
+  padding: 20px;
+  z-index: 9999;
+  top: 30px;
+  left: 30px;
+}
+
+
+.options {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 2rem;
+}
+
+.title {
+  width: 3rem;
+  text-align: justify;
+  display: inline-block;
+  text-align-last: justify;
+}
+
 </style>

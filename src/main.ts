@@ -1,4 +1,4 @@
-import {createApp, nextTick} from 'vue';
+import {createApp} from 'vue';
 import './style.css';
 import 'normalize.css/normalize.css';
 

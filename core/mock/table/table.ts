@@ -5,7 +5,7 @@ import {PageType} from "../../type/page";
 export default [
     {
         url: '/api/table/list/page',
-        method: 'get',
+        method: 'post',
         response: ({query, body}): ResponseType<PageType<any>> => {
             const {pageIndex, pageSize, key1, key2} = body
             console.log('body:', body)
@@ -14,46 +14,68 @@ export default [
                 "data": {
                     "records": [
                         {
-                            "id": "string",
-                            "createTime": "string",
-                            "updateTime": "string",
-                            "payTime": "string",
-                            "loApplyStatus": 0,
-                            "loPaymentStatus": 0,
-                            "loRefundStatus": 0,
-                            "loAbolishStatus": 0,
-                            "loHandleStatus": 0,
-                            "uid": "string",
-                            "goodsId": "string",
-                            "loAddressId": "string",
-                            "loShowTradeNo": "string",
-                            "loTitle": "string",
-                            "loTargetType": 0,
-                            "loPayMoney": 0,
-                            "loDscountMoney": 0,
-                            "loTotalMoney": 0,
-                            "loNum": 0,
-                            "ugrId": "string",
-                            "loFreightMoney": 0,
-                            "goodsTitle": "string",
-                            "goodsCoverImg": "string",
-                            "loEvaluation": true,
-                            "loRemarks": "string",
-                            "nickname": "string",
-                            "avatar": "string",
-                            "loAddressPhone": "string",
-                            "loAddressName": "string",
-                            "loAddressAddress": "string",
-                            "goodsCityDeliveryType": "string",
-                            "goodsShowStatusName": "string",
-                            "goodsShowStatus": 0
+                            "id": "1",
+                            "createTime": "string1",
+                            "updateTime": "string1",
+                            "dictInfo": "string",
+                            "dictSort": 1,
+                            "uid": "string1",
+                            "dictName": "string1",
+                            "dictImg": "string1",
+                        },
+                        {
+                            "id": "2",
+                            "createTime": "string2",
+                            "updateTime": "string2",
+                            "dictInfo": "string",
+                            "dictSort": 2,
+                            "uid": "string2",
+                            "dictName": "string2",
+                            "dictImg": "string2",
                         }
                     ],
-                    "total": 0,
-                    "pages": 0,
-                    "current": 0,
-                    "size": 0
+                    "total": 2,
+                    "pages": 1,
+                    "current": 1,
+                    "size": 10
                 },
+                "msg": {}
+            }
+        },
+    },
+    {
+        url: '/api/table',
+        method: 'post',
+        response: ({body}): ResponseType<any> => {
+            console.log('body:', body)
+            return {
+                "code": "A000",
+                "data": {},
+                "msg": {}
+            }
+        },
+    },
+    {
+        url: '/api/table/{id}',
+        method: 'put',
+        response: ({query, body}): ResponseType<any> => {
+            console.log('id:', query.id)
+            console.log('body:', body)
+            return {
+                "code": "A000",
+                "data": {},
+                "msg": {}
+            }
+        },
+    },
+    {
+        url: '/api/table/{id}',
+        method: 'delete',
+        response: ({query}): ResponseType<any> => {
+            console.log('id:', query.id)
+            return {
+                "code": "A000",
+                "data": {},
                 "msg": {}
             }
         },

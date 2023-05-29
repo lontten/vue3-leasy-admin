@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
+    "@amap/amap-jsapi-types": "^0.0.13",
     "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^4.0.0-rc.4",
     "axios": "^1.4.0",

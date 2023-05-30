@@ -2,6 +2,29 @@
   <a-table :columns="columns" :data-source="dataSource" bordered>
     <template #bodyCell="{ column, record }">
 
+
+      <!--      渲染 valueType: tags 类型 -->
+      <template v-if="column.valueType === 'tags'  ">
+        <span>
+          <a-tag
+              v-for="tag in record[column.dataIndex]"
+              :key="tag"
+              :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+          >
+            {{ tag }}
+          </a-tag>
+        </span>
+      </template>
+
+
+      <template v-if="column.key === 'state'">
+            <span>
+              <a-badge status="success"/>
+              Finished
+            </span>
+      </template>
+
+
       <template v-if="column.dataIndex === 'operation'">
         <a @click="edit(column,record)">Edit</a>
         <a @click="edit(column,record)">Edit</a>
@@ -12,11 +35,12 @@
 </template>
 <script lang="ts" setup>
 import type {UnwrapRef} from 'vue';
-import {computed, reactive, ref} from 'vue';
+import {computed, reactive} from 'vue';
 import {useRequest} from "vue-request";
 import axios from "axios";
+import {TableColumnType} from "../../../core/type/table.ts";
 
-const columns = [
+const columns: TableColumnType[] = [
   {
     title: '名字',
     dataIndex: 'dictName',
@@ -43,6 +67,12 @@ const columns = [
     width: '10%',
   },
   {
+    title: 'tags',
+    dataIndex: 'dictTagList',
+    width: '10%',
+    valueType: 'tags'
+  },
+  {
     title: '操作',
     dataIndex: 'operation',
   },
@@ -66,9 +96,9 @@ const getDictListPage = async () => {
 
 const {data, run, loading} = useRequest(getDictListPage);
 run()
-console.log('page data:: ',data)
-const dataSource=computed(()=>data.value?.data.data.records)
-console.log('s',dataSource)
+console.log('page data:: ', data)
+const dataSource = computed(() => data.value?.data.data.records)
+console.log('s', dataSource)
 
 const currentRows: UnwrapRef<Record<string, DataItem>> = reactive({});
 

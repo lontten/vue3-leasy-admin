@@ -22,6 +22,7 @@ export default [
                             "uid": "string1",
                             "dictName": "string1",
                             "dictImg": "string1",
+                            dictTagList: ['121', 'jsdafk'],
                         },
                         {
                             "id": "2",
@@ -32,6 +33,7 @@ export default [
                             "uid": "string2",
                             "dictName": "string2",
                             "dictImg": "string2",
+                            dictTagList: ['121', 'jsdafk'],
                         }
                     ],
                     "total": 2,

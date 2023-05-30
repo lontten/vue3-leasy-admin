@@ -1,23 +1,49 @@
 <template>
-    <div>
-        <a-pagination v-model:current="current1" show-quick-jumper :total="500" @change="onChange" />
-        <br />
-        <a-pagination
-            v-model:current="current2"
-            show-quick-jumper
-            :total="500"
-            disabled
-            show-less-items
-            @change="onChange"
-        />
-    </div>
+  <div>
+    <PrivaSearchHeader v-model="columns" :onSearchEvent="searchFun"></PrivaSearchHeader>
+    <Table></Table>
+  </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
-const current1 = ref<number>(1);
-const current2 = ref<number>(2);
-const onChange = (pageNumber: number) => {
-    console.log('Page: ', pageNumber);
-};
+import Table from "../../src/pages_demo/tables/Table.vue";
+import PrivaSearchHeader from "./PrivaSearchHeader.vue";
+
+const searchFun = (e: any) => {
+  console.log('pro table:search param:', e)
+}
+
+const columns = [
+  {
+    title: '名字',
+    dataIndex: 'dictName',
+    width: 500,
+  },
+  {
+    title: '详情',
+    dataIndex: 'dictInfo',
+    width: 250,
+  },
+  {
+    title: '排序',
+    dataIndex: 'dictSort',
+    width: '20%',
+  },
+  {
+    title: 'uid',
+    dataIndex: 'uid',
+    width: '10%',
+    hideInSearch: true,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    width: '10%',
+  },
+  {
+    title: '操作',
+    dataIndex: 'operation',
+  },
+];
+
 </script>
 

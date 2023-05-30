@@ -27,10 +27,8 @@
                                 :tab="pane.title">
 
                         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-                            <ProIcon :name="iconName"></ProIcon>
-
-                            <PrivaSearchHeader></PrivaSearchHeader>
-                            <Table></Table>
+afjs
+                          <ProTable></ProTable>
                         </div>
 
 
@@ -58,6 +56,7 @@ import {useSysNavStore} from "../../../core/stores/sysNavStore.ts";
 import PrivaSearchHeader from "../../../core/components/PrivaSearchHeader.vue";
 import ProIcon from "../../../core/components/ProIcon.vue";
 import ProNavTreeOption from "../../../core/components/ProNavTreeOption.vue";
+import ProTable from "../../../core/components/ProTable.vue";
 
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);

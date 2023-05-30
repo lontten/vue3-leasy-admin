@@ -4,7 +4,7 @@ import {PageType} from "../../type/page";
 
 export default [
     {
-        url: '/api/table/list/page',
+        url: '/api/dict/list/page',
         method: 'post',
         response: ({query, body}): ResponseType<PageType<any>> => {
             const {pageIndex, pageSize, key1, key2} = body
@@ -44,7 +44,7 @@ export default [
         },
     },
     {
-        url: '/api/table',
+        url: '/api/dict',
         method: 'post',
         response: ({body}): ResponseType<any> => {
             console.log('body:', body)
@@ -56,7 +56,7 @@ export default [
         },
     },
     {
-        url: '/api/table/{id}',
+        url: '/api/dict/{id}',
         method: 'put',
         response: ({query, body}): ResponseType<any> => {
             console.log('id:', query.id)
@@ -69,7 +69,7 @@ export default [
         },
     },
     {
-        url: '/api/table/{id}',
+        url: '/api/dict/{id}',
         method: 'delete',
         response: ({query}): ResponseType<any> => {
             console.log('id:', query.id)

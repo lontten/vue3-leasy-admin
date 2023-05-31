@@ -1,7 +1,7 @@
 <template>
 
-<!--  <TxMap v-model="address"></TxMap>-->
-  <GdMap></GdMap>
+  <TxMap v-model="address"></TxMap>
+<!--  <GdMap></GdMap>-->
 </template>
 <script lang="ts" setup>
 import TxMap from "../../../core/components/TxMap.vue";

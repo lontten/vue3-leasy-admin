@@ -7,6 +7,7 @@
 import AMapLoader from "@amap/amap-jsapi-loader";
 import {onMounted, reactive} from "vue";
 
+
 const state = reactive({
   path: [],
   current_position: [],
@@ -19,10 +20,11 @@ let geolocation; //ip定位
 
 //进行地图初始化
 const initMap = async () => {
+  let marker;
   const AMap = await AMapLoader.load({
     key: "5297e3a63a0d02c70822e57f95edc42d",             // 申请好的Web端开发者Key，首次调用 load 时必填
     version: "2.0",      // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-    plugins: [''],       // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+    plugins: ['AMap.Geocoder', 'AMap.PlaceSearch'],       // 需要使用的的插件列表，如比例尺'AMap.Scale'等
   })
 
   const lnglat = new AMap.LngLat(116.397, 39.918); //默认位置
@@ -30,18 +32,63 @@ const initMap = async () => {
 
   // 初始化
   marker, map = new AMap.Map("container", {  //设置地图容器id
-    viewMode: "2D",    //是否为3D地图模式
+    viewMode: "3D",    //是否为3D地图模式
     zoom: 11,           //初始化地图级别
     center: lnglat, //初始化地图中心点位置
     // mapStyle: 'amap://styles/whitesmoke', //设置地图的显示样式
   });
 
+  const geocoder = new AMap.Geocoder({
+    city: "010", //城市设为北京，默认：“全国”
+  });
+
+  const placeSearch = new AMap.PlaceSearch({
+    city: 'beijing', // 兴趣点城市
+    citylimit: false,  //是否强制限制在设置的城市内搜索
+    pageSize: 10, // 单页显示结果条数
+    children: 0, //不展示子节点数据
+    pageIndex: 1, //页码
+    extensions: 'base' //返回基本地址信息
+  });
+
+  const infoWindow = new AMap.InfoWindow({
+    autoMove: true,
+    offset: {x: 0, y: -30}
+  });
+
+
   //为地图注册click事件获取鼠标点击出的经纬度坐标
   map.on('click', function (e) {
-    console.log(e)
-    console.log('lng,lat::' + e.lnglat.getLng() + ',' + e.lnglat.getLat())
+    console.log('click::', e)
+    const lnglatArr = [e.lnglat.getLng(), e.lnglat.getLat()]
+    addMarker(lnglatArr)
 
-    addMarker([e.lnglat.getLng(), e.lnglat.getLat()])
+    geocoder.getAddress(lnglatArr, function (status, result) {
+      if (status === 'complete' && result.regeocode) {
+        let towncode = result.regeocode.addressComponent.towncode
+        let adcode = result.regeocode.addressComponent.adcode
+        console.log('res:', result.regeocode.addressComponent)
+        console.log('res:', result.regeocode.addressComponent.province)
+        console.log('res:', result.regeocode.addressComponent.city)
+        console.log('res:', result.regeocode.addressComponent.district)
+        console.log('res:', result.regeocode.formattedAddress)
+
+
+
+
+        //详情查询
+        placeSearch.getDetails(towncode, function (status, result) {
+          console.log(status, result)
+          if (status === 'complete' && result.info === 'OK') {
+            placeSearch_CallBack(result);
+          }
+        });
+
+      } else {
+        console.log('根据经纬度查询地址失败')
+      }
+    });
+
 
   });
 
@@ -71,6 +118,30 @@ const initMap = async () => {
       marker.setMap(null);
       marker = null;
     }
+  }
+
+
+  //回调函数
+  function placeSearch_CallBack(data) {
+    const poiArr = data.poiList.pois;
+    //添加marker
+    const marker = new AMap.Marker({
+      map: map,
+      position: poiArr[0].location
+    });
+    map.setCenter(marker.getPosition());
+    infoWindow.setContent(createContent(poiArr[0]));
+    infoWindow.open(map, marker.getPosition());
+  }
+
+  function createContent(poi) {  //信息窗体内容
+    console.log('poi', poi)
+    const s = [];
+    s.push("<b>名称：" + poi.name + "</b>");
+    s.push("地址：" + poi.address);
+    s.push("电话：" + poi.tel);
+    s.push("类型：" + poi.type);
+    return s.join("<br>");
   }
 
 
@@ -110,6 +181,9 @@ const initMap = async () => {
 
 
 onMounted(() => {
+  window._AMapSecurityConfig = {
+    securityJsCode: '0dbf508f53f76ad1b50725fa6d1e8335',
+  }
   initMap();
 })
 </script>

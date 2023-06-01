@@ -67,6 +67,7 @@ let info //POI信息窗
 //搜索提示
 let search;  // 新建一个地点搜索类
 let suggest; // 新建一个关键字输入提示类
+let geocoder; //ip转化地址类
 let markers;
 let infoWindowList
 
@@ -112,6 +113,9 @@ const initMap = () => {
   }).close();
   //Map实例创建后，通过on方法绑定点击事件
   map.on("click", clickHandler)
+
+  geocoder = new TMap.service.Geocoder(); // 新建一个正逆地址解析类
+
 
   //-------------------搜索建议初始化
   search = new TMap.service.Search({pageSize: 10}); // 新建一个地点搜索类
@@ -161,10 +165,27 @@ const initMap = () => {
 
 };
 
+// ip转化地址
+const ipConvertAddress = async (location: any) => {
+  map.setCenter(location);
+  const {status, result} = await geocoder.getAddress({location: location}) // 将给定的坐标位置转换为地址
+  if (status != 0) {
+    return null
+  }
+  const {address_component, formatted_addresses} = result
+  // 显示搜索到的地址
+  const addressStr = formatted_addresses.recommend
+  const {province, city, district} = address_component
+  return {
+    province, city, district, addressStr
+  }
+}
+
 //定义事件处理方法
-const clickHandler = (e: any) => {
+const clickHandler = async (e: any) => {
   const lat = e.latLng.getLat().toFixed(6);
   const lng = e.latLng.getLng().toFixed(6);
+  console.log("您点击的坐标经纬度是：", e);
   console.log("您点击的坐标经纬度是：" + lng + "," + lat);
   switch (type) {
     case 'obj':
@@ -178,6 +199,14 @@ const clickHandler = (e: any) => {
       break
   }
 
+  let {
+    province, city, district, addressStr
+  } = await ipConvertAddress(e.latLng)
+
+  console.log('ip2address:', {
+    province, city, district, addressStr
+  })
+
 
   // 获取click事件返回的poi信息
   let poi = e.poi;
@@ -185,11 +214,13 @@ const clickHandler = (e: any) => {
     // 拾取到POI
     console.log('poi', poi)
     info.setContent(poi.name).setPosition(poi.latLng).open();
+    addressStr = addressStr + '-' + poi.name
   } else {
     // 没有拾取到POI
     info.close();
   }
 
+  console.log('addressStr::', addressStr)
 }
 
 

@@ -1,0 +1,16 @@
+image: docker:stable
+stages:
+  - build
+
+build:
+  stage: build
+  only:
+    - develop2
+  tags:
+    - public
+    - docker
+  image: node:16.16.0
+  cache:
+    paths:
+  script:
+    - ls

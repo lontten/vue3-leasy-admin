@@ -20,3 +20,9 @@ export interface SysNavTreeType {
 export interface BaseConfigType {
     baseUrl?:string
 }
+
+// 项目基础配置
+export interface FileZipConfig {
+    zipNum?:number
+    sizeMax?:number
+}

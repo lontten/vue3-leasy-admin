@@ -8,11 +8,13 @@
 
     <div class="clearfix">
       <a-upload
+          v-model:value="formData[name]"
           :file-list="fileList"
           list-type="picture-card"
           @preview="handlePreview"
           :before-upload="beforeUpload"
           @change="handleChange"
+          @remove="handleRemove"
       >
         <div v-if="fileList.length < 8">
           <plus-outlined/>
@@ -33,23 +35,43 @@ import {onMounted, ref} from 'vue';
 import {PlusOutlined} from '@ant-design/icons-vue';
 import type {UploadChangeParam, UploadProps} from 'ant-design-vue';
 import {message} from 'ant-design-vue';
-import axios from "axios";
 import {v4} from "uuid";
-import {fileUploadOssPolicy} from "@/services/file/upload.ts";
+import {imgZip} from "../../utils/file/img.ts";
 
 
 const formData = defineModel<T>()
-const {label, name, rule} = defineProps<LnFormPropsType>()
+const {label, name, rule, useJson = false, uploadType, fileTypeList = []} = defineProps<LnFormPropsType>()
 
 
-const fileList = ref([]);
+const fileList = ref<UploadProps['fileList']>([]);
 const loading = ref<boolean>(false);
-const imageUrl = ref<string>('');
 
+
+// -------------------------------图片移除-----------------------------------
+const handleRemove: UploadProps['onRemove'] = file => {
+  const index = fileList.value.indexOf(file);
+  const newFileList = fileList.value.slice();
+  newFileList.splice(index, 1);
+  fileList.value = newFileList;
+};
+// -------------------------------图片更新-----------------------------------
 const handleChange = async (info: UploadChangeParam) => {
+  const list = fileList.value.filter(value => value.status == 'done')
+      .map(value => value.url)
+  // @ts-ignore
+  formData.value[name] = useJson ? list : JSON.stringify(list)
+  console.log('list', JSON.stringify(formData.value[name]))
+
+
   console.log('change:', info)
   console.log('change:', fileList.value)
-  await handleUpload()
+
+  if (!info.file.status) {
+    // const url = await ossFileUpload(info.file)
+    // console.log('url', url)
+    info.file.status = 'oss'
+    return;
+  }
   if (info.file.status === 'uploading') {
     loading.value = true;
     return;
@@ -63,13 +85,16 @@ const handleChange = async (info: UploadChangeParam) => {
   }
 };
 
-const beforeUpload = (file: UploadProps['fileList'][number]) => {
-  // //图片格式限制
-  // const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-  // if (!isJpgOrPng) {
-  //   message.error('You can only upload JPG file!');
-  //   return false
-  // }
+const beforeUpload = async (file: UploadProps['fileList'][number]) => {
+  // //图片格式限制 image/jpeg   image/png
+  if (fileTypeList.length > 0) {
+    if (!fileTypeList.includes(file.type)) {
+      message.error('You can only upload JPG file!');
+      return false
+    }
+  }
+
+
   //
   // //图片大小限制
   // const isLt2M = file.size / 1024 / 1024 < 2;
@@ -78,42 +103,19 @@ const beforeUpload = (file: UploadProps['fileList'][number]) => {
   //   return false
   // }
 
+  file.status = 'done'
+  file.url = 'https://project-temp-file.oss-cn-hangzhou.aliyuncs.com/006-dir/1685760327975.svg'
+
+  console.log('file', file.size / 1024)
+  const newFile = await imgZip(file, 0.5)
+  console.log('file2', newFile.size / 1024)
 
   //手动上传
   fileList.value = [...fileList.value, file];
+  console.log('befor upad')
   return false;
 };
 
-const ossFileUpload = async (file:any) => {
-  const {code, data} = await fileUploadOssPolicy();
-  if (code != 'A000') {
-    message.error('文件上传失败!');
-    return
-  }
-  const ossData = data
-
-  const n = 1
-  const fileName = file.name
-  let str = fileName[n].substring(fileName[n].lastIndexOf('.'));
-  let nameStr = ossData.dir + v4() + str;
-
-  const formData = {
-    name: nameStr,
-    key: nameStr,
-    policy: ossData.policy, // 输入你获取的的policy
-    OSSAccessKeyId: ossData.accessId, // 输入你的AccessKeyId
-    success_action_status: '200', // 让服务端返回200,不然，默认会返回204
-    signature: ossData.signature // 输入你获取的的signature
-  }
-  file.status='uploading'
-  const resp = await axios.put(ossData.host, formData, {headers: {"Content-Type": 'multipart/form-data'}})
-  if (1==1){
-    file.status='error'
-  }else {
-    file.status='done'
-  }
-
-}
 
 const handleUpload = async () => {
   const formData2 = new FormData();
@@ -123,10 +125,10 @@ const handleUpload = async () => {
   });
   loading.value = true;
   console.log(formData2)
-
 };
 
 
+// -------------------------------图片预览-----------------------------------
 const handleCancel = () => {
   previewVisible.value = false;
   previewTitle.value = '';
@@ -152,10 +154,25 @@ const handlePreview = async (file: UploadProps['fileList'][number]) => {
   previewVisible.value = true;
   previewTitle.value = file.name || file.url.substring(file.url.lastIndexOf('/') + 1);
 };
-
+// -------------------------------图片预览-----------------------------------end
 
 onMounted(() => {
-  imageUrl.value = formData.value[name]
+  let list = []
+  // @ts-ignore
+  let data = formData.value[name]
+  if (useJson) {
+    list = JSON.parse(data || "[]")
+  } else if (data) {
+    list = data
+  }
+  console.log('kk', list, data)
+  fileList.value = list.map(value => {
+    return {
+      uid: v4(),
+      status: 'done',
+      url: value,
+    }
+  })
 })
 </script>
 <style scoped>

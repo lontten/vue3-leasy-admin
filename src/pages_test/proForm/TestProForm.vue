@@ -13,7 +13,7 @@ data.value = {
   ka: 'ka',
   ka1: 6,
   info: 'info',
-  avatar:'https://project-temp-file.oss-cn-hangzhou.aliyuncs.com/006-dir/1685760327975.svg'
+  avatar: ['https://project-temp-file.oss-cn-hangzhou.aliyuncs.com/006-dir/1685760327975.svg']
 }
 const formColumnsData = [
   {

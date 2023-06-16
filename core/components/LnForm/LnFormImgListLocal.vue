@@ -25,6 +25,7 @@
         <img alt="example" style="width: 100%" :src="previewImage"/>
       </a-modal>
     </div>
+    <img alt="example" style="width: 100%" :src="previewImage2"/>
 
 
   </a-form-item>
@@ -36,7 +37,7 @@ import {PlusOutlined} from '@ant-design/icons-vue';
 import type {UploadChangeParam, UploadProps} from 'ant-design-vue';
 import {message} from 'ant-design-vue';
 import {v4} from "uuid";
-import {imgZip} from "../../utils/file/img.ts";
+import {fileToDataURL, imgZip} from "../../utils/file/img.ts";
 
 
 const formData = defineModel<T>()
@@ -45,6 +46,7 @@ const {label, name, rule, useJson = false, uploadType, fileTypeList = []} = defi
 
 const fileList = ref<UploadProps['fileList']>([]);
 const loading = ref<boolean>(false);
+const previewImage2 = ref<string>();
 
 
 // -------------------------------图片移除-----------------------------------
@@ -107,8 +109,15 @@ const beforeUpload = async (file: UploadProps['fileList'][number]) => {
   file.url = 'https://project-temp-file.oss-cn-hangzhou.aliyuncs.com/006-dir/1685760327975.svg'
 
   console.log('file', file.size / 1024)
-  const newFile = await imgZip(file, 0.5)
+  const newFile = await imgZip(file, {zipNum: 0.5})
+  if (!newFile) {
+    message.error("压缩失败")
+    return false
+  }
   console.log('file2', newFile.size / 1024)
+  console.log('file2', newFile)
+  previewImage2.value=await fileToDataURL(newFile)
+
 
   //手动上传
   fileList.value = [...fileList.value, file];

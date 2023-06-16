@@ -4,6 +4,7 @@ import {v4} from "uuid";
 import axios from "axios";
 import {imgZip} from "./img.ts";
 import {FileZipConfig} from "../../type/sys.ts";
+import {getFileNameSuffix, getFileNameSuffixDot} from "./file.ts";
 
 // @ts-ignore
 export const ossFileUpload = async (file: any, config?: FileZipConfig) => {
@@ -21,8 +22,7 @@ export const ossFileUpload = async (file: any, config?: FileZipConfig) => {
     const ossData = data
 
     const fileName = file.name
-    let str = fileName.substring(fileName.lastIndexOf('.'));
-    let nameStr = ossData.dir + v4() + str;
+    let nameStr = ossData.dir + v4() + getFileNameSuffixDot(fileName);
 
     const formData = {
         key: nameStr,

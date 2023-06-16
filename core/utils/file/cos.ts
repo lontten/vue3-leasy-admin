@@ -2,6 +2,7 @@ import {fileUploadCosPolicy} from "@/services/file/upload.ts";
 import {message} from "ant-design-vue";
 import * as COS from "cos-nodejs-sdk-v5";
 import {v4} from "uuid";
+import {getFileNameSuffix, getFileNameSuffixDot} from "./file.ts";
 
 const getTxCosConfig = async () => {
     const v = await fileUploadCosPolicy()
@@ -32,8 +33,7 @@ const cosFileUpload = async (file: any, onProgress?: (e: any) => {}) => {
     });
 
     const fileName = file.name
-    let str = fileName.substring(fileName.lastIndexOf('.'));
-    let nameStr = data.dir + v4() + str;
+    let nameStr = data.dir + v4() + getFileNameSuffixDot(fileName);
 
     const resp = await cos.uploadFile({
         FilePath: "",

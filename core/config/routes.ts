@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {baseConfig} from "../../config/config.ts";
-import {isAuthenticated} from "../utils/login.ts";
 import {routes} from "../../config/routes.ts";
+import {useSysInitStore} from "../stores/sysInitStore.ts";
 
 const router = createRouter({
     // 我们在这里使用 history 模式。
@@ -10,14 +10,23 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, _from) => {
+    let initStore = useSysInitStore();
     if (
         // 检查用户是否已登录
-        !isAuthenticated &&
+        initStore.isLogin() &&
         // ❗️ 避免无限重定向
-        to.name !== 'Login'
+        (to.path !== '/login')
     ) {
+        const {roles, routers} = initStore.getUserInfo()
+        if (routers) {
+            return routers.includes(to.path)
+        }
+        if (roles) {
+
+        }
+
         // 将用户重定向到登录页面
-        return {name: '/login'}
+        return {path: '/login'}
     }
 })
 

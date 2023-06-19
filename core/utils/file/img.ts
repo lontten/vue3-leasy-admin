@@ -1,6 +1,6 @@
 //图片添加水印
-import {FileZipConfig} from "../../type/sys.ts";
 import {changeFileNameSuffix} from "./file.ts";
+import {FileZipConfig} from "../../type/sys/file.ts";
 
 export const imgZip = async (file: File, config: FileZipConfig) => {
     const newFile = await imgZipCore(file, config)

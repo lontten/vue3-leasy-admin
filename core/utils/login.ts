@@ -1,4 +1,7 @@
+import {useSysInitStore} from "../stores/sysInitStore.ts";
+
 export const isAuthenticated = () => {
-  return false
+    let initStore = useSysInitStore();
+    return !initStore.isLogin()
 }
 

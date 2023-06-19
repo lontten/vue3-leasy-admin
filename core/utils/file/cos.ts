@@ -2,7 +2,7 @@ import {fileUploadCosPolicy} from "@/services/file/upload.ts";
 import {message} from "ant-design-vue";
 import * as COS from "cos-nodejs-sdk-v5";
 import {v4} from "uuid";
-import {getFileNameSuffix, getFileNameSuffixDot} from "./file.ts";
+import {getFileNameSuffixDot} from "./file.ts";
 
 const getTxCosConfig = async () => {
     const v = await fileUploadCosPolicy()
@@ -23,6 +23,7 @@ const cosFileUpload = async (file: any, onProgress?: (e: any) => {}) => {
     }
 
     // 这里省略初始化过程和上传参数
+    // @ts-ignore
     const cos = new COS({
         TmpSecretId: data.tmpSecretId,        // 临时密钥的 tmpSecretId
         TmpSecretKey: data.tmpSecretKey,      // 临时密钥的 tmpSecretKey

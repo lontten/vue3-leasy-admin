@@ -1,3 +1,3 @@
-import {SysNavTreeType} from "../type/sys";
+import {SysNavTreeType} from "../type/sys/nav.ts";
 
 export const Nav: SysNavTreeType[] = []

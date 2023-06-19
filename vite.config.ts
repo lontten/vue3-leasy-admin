@@ -11,13 +11,12 @@ export default defineConfig({
     base: baseConfig.baseUrl,
 
 
-
     plugins: [
         vue({
             script: {
                 // @ts-ignore
                 defineModel: true,
-                propsDestructure:true
+                propsDestructure: true
             }
         }),
         viteMockServe({
@@ -41,8 +40,20 @@ export default defineConfig({
             '@': path.resolve(__dirname, 'src')
         }
     },
-    build:{
-        cssMinify:true,
+
+
+    css: {
+        /* CSS 预处理器 */
+        preprocessorOptions: {
+            scss: {
+                additionalData: '@import "src/assets/style/mixin.scss";'
+            }
+        }
+    },
+
+
+    build: {
+        cssMinify: true,
 
     }
 })

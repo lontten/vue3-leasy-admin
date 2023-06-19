@@ -3,8 +3,7 @@ import {message} from "ant-design-vue";
 import {v4} from "uuid";
 import axios from "axios";
 import {imgZip} from "./img.ts";
-import {FileZipConfig} from "../../type/sys.ts";
-import {getFileNameSuffix, getFileNameSuffixDot} from "./file.ts";
+import {getFileNameSuffixDot} from "./file.ts";
 
 // @ts-ignore
 export const ossFileUpload = async (file: any, config?: FileZipConfig) => {

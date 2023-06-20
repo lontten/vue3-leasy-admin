@@ -24,10 +24,10 @@
         <div class="title">区县</div>
         <select id='district' style="width:200px" @change='search2'></select>
       </div>
-      <div class="input-item">
-        <div class="title">街道</div>
-        <select id='street' style="width:200px" @change='search2'></select>
-      </div>
+<!--      <div class="input-item">-->
+<!--        <div class="title">街道</div>-->
+<!--        <select id='street' style="width:200px" @change='search2'></select>-->
+<!--      </div>-->
     </div>
 
   </div>
@@ -394,8 +394,8 @@ onMounted(() => {
 #panel {
   position: absolute;
   background: #FFF;
-  width: 350px;
-  padding: 20px;
+  width: 250px;
+  padding: 10px;
   z-index: 9999;
   top: 30px;
   left: 30px;

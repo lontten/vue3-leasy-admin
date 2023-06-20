@@ -25,9 +25,6 @@
         <img alt="example" style="width: 100%" :src="previewImage"/>
       </a-modal>
     </div>
-    <img alt="example" style="width: 100%" :src="previewImage2"/>
-
-
   </a-form-item>
 </template>
 <script lang="ts" setup generic="T">

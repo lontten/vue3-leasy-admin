@@ -45,12 +45,6 @@ import LnFormImgListLocal from "./LnForm/LnFormImgListLocal.vue";
 
 const formData = defineModel<T>()
 
-interface Props {
-  formColumns: any[]
-}
-
-const {formColumns = []} = defineProps<Props>()
-
 
 const onFinish = (values: any) => {
   console.log('Success:', values);

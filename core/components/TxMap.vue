@@ -1,58 +1,47 @@
 <template>
-  <div id="container"></div>
+  <div class="map">
+    <div class="map-base">
 
-
-  <div id="panel2">
-    <a-select
-        ref="select"
-        v-model:value="ssx1"
-        style="width: 240px"
-        @focus="focus"
-        @change="handleChange"
-    >
-      <a-select-option v-for="item in ssx1List" :key="item.label" v-model:value="item.value">{{
-          item.label
-        }}
-      </a-select-option>
-    </a-select>
-
-    <h4>下属行政区查询</h4>
-    <div class="input-item">
-      <div class="title">省市区</div>
-      <select id='province' style="width:200px" @change='search2'></select>
-
+      <div id="container"></div>
+      <div id="panel">
+        <p>搜索</p>
+        <input id='keyword' type="text" v-model="keyword">
+        <input id="search" type="button" class="btn" value="搜索" @click="searchByKeyword"/>
+      </div>
 
     </div>
-    <div class="input-item">
-      <div class="title">地级市</div>
-      <select id='city' style="width:200px" @change='search2'></select>
+    <div class="ssx-search">
+      <h4>下属行政区查询</h4>
+      <div class="input-item">
+        <div class="title">省市区</div>
+        <select id='province' style="width:200px" @change='search2'></select>
+      </div>
+      <div class="input-item">
+        <div class="title">地级市</div>
+        <select id='city' style="width:200px" @change='search2'></select>
+      </div>
+      <div class="input-item">
+        <div class="title">区县</div>
+        <select id='district' style="width:200px" @change='search2'></select>
+      </div>
+      <div class="input-item">
+        <div class="title">街道</div>
+        <select id='street' style="width:200px" @change='search2'></select>
+      </div>
     </div>
-    <div class="input-item">
-      <div class="title">区县</div>
-      <select id='district' style="width:200px" @change='search2'></select>
-    </div>
-    <div class="input-item">
-      <div class="title">街道</div>
-      <select id='street' style="width:200px" @change='search2'></select>
-    </div>
+
   </div>
 
-  <div id="panel">
-    <p>输入关键字，将展示相关地点提示，点击提示可定位到该处。</p>
-    <input id='keyword' type="text" v-model="keyword">
-    <input id="search" type="button" class="btn" value="搜索" @click="searchByKeyword"/>
-  </div>
 
 </template>
 <script lang="ts" setup>
 import {onMounted, ref, toValue} from "vue";
+import {AddressType} from "../type/sys/address.ts";
+import {addressPosForm, addressPosTo} from "../utils/address.ts";
 
 const TMap: any = (window as any).TMap;
 
-let address = defineModel<{
-  lat: string,
-  lng: string
-} | string>()
+let address = defineModel<AddressType>({})
 
 interface Props {
   type?: 'obj' | 'lat_lng' | 'lng_lat'
@@ -84,20 +73,24 @@ let district;
 let polygons;
 
 let ssx1List = ref([])
-let ssx1 = ref()
 
 const focus = () => {
   console.log('focus');
 };
 
-const handleChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
-
 
 const initMap = () => {
+  let pos
   //定义地图中心点坐标
-  const center = new TMap.LatLng(39.984120, 116.307484);
+  let center = new TMap.LatLng(39.984120, 116.307484);
+  if (address.value) {
+    if (address.value?.pos) {
+      const {lat, lng} = addressPosForm(address.value?.pos, type)
+      center = new TMap.LatLng(lat, lng);
+    }
+  }
+
+
   //定义map变量，调用 TMap.Map() 构造函数创建地图
   map = new TMap.Map(document.getElementById('container'), {
     center: center,//设置地图中心点坐标
@@ -183,36 +176,29 @@ const ipConvertAddress = async (location: any) => {
 
 //定义事件处理方法
 const clickHandler = async (e: any) => {
+  let pos
   const lat = e.latLng.getLat().toFixed(6);
   const lng = e.latLng.getLng().toFixed(6);
-  console.log("您点击的坐标经纬度是：", e);
-  console.log("您点击的坐标经纬度是：" + lng + "," + lat);
-  switch (type) {
-    case 'obj':
-      address.value = {lng: lng, lat: lat};
-      break
-    case 'lat_lng':
-      address.value = `${lat},${lng}`;
-      break
-    case 'lng_lat':
-      address.value = `${lng},${lat}`;
-      break
-  }
+  // console.log("您点击的坐标经纬度是：", e);
+  // console.log("您点击的坐标经纬度是：" + lng + "," + lat);
+
+  pos = addressPosTo({lng: lng, lat: lat}, type)
+
 
   let {
     province, city, district, addressStr
   } = await ipConvertAddress(e.latLng)
 
-  console.log('ip2address:', {
-    province, city, district, addressStr
-  })
+  // console.log('ip2address:', {
+  //   province, city, district, addressStr
+  // })
 
 
   // 获取click事件返回的poi信息
   let poi = e.poi;
   if (poi) {
     // 拾取到POI
-    console.log('poi', poi)
+    // console.log('poi', poi)
     info.setContent(poi.name).setPosition(poi.latLng).open();
     addressStr = addressStr + '-' + poi.name
   } else {
@@ -220,7 +206,19 @@ const clickHandler = async (e: any) => {
     info.close();
   }
 
-  console.log('addressStr::', addressStr)
+  // console.log('addressStr::', addressStr)
+  // console.log('最终的结果：:', {
+  //   province, city, district, addressStr
+  // })
+
+  address.value = {
+    pos: pos,
+    province: province,
+    city: city,
+    district: district,
+    address: addressStr,
+  }
+
 }
 
 
@@ -417,6 +415,16 @@ onMounted(() => {
   text-align: justify;
   display: inline-block;
   text-align-last: justify;
+}
+
+
+.map {
+  display: flex;
+}
+
+.ssx-search {
+  flex: 1;
+
 }
 
 </style>

@@ -23,8 +23,8 @@ watch(address, () => {
 </script>
 <style lang="scss" scoped>
 .map {
-  width: 1000px;
-  height: 600px;
+  width: 1300px;
+  height: 800px;
   border: green solid 1px;
 }
 </style>

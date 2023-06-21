@@ -10,7 +10,8 @@
       </div>
 
     </div>
-    <div class="ssx-search">
+
+    <div class="ssx-search" v-show="false">
       <h4>下属行政区查询</h4>
       <div class="input-item">
         <div class="title">省市区</div>
@@ -24,10 +25,16 @@
         <div class="title">区县</div>
         <select id='district' style="width:200px" @change='search2'></select>
       </div>
-<!--      <div class="input-item">-->
-<!--        <div class="title">街道</div>-->
-<!--        <select id='street' style="width:200px" @change='search2'></select>-->
-<!--      </div>-->
+      <div class="input-item" v-show="false">
+        <div class="title">街道</div>
+        <select id='street' style="width:200px" @change='search2'></select>
+      </div>
+    </div>
+
+
+    <div class="ssx-search2">
+      <h4>下属行政区查询2</h4>
+      <LnSsx :getSsxList="getSsxList"></LnSsx>
     </div>
 
   </div>
@@ -38,6 +45,7 @@
 import {onMounted, ref, toValue} from "vue";
 import {AddressType} from "../type/sys/address.ts";
 import {addressPosForm, addressPosTo} from "../utils/address.ts";
+import LnSsx from "./LnSsx.vue";
 
 const TMap: any = (window as any).TMap;
 
@@ -158,108 +166,109 @@ const initMap = () => {
 
 };
 
+
 // ip转化地址
-const ipConvertAddress = async (location: any) => {
-  map.setCenter(location);
-  const {status, result} = await geocoder.getAddress({location: location}) // 将给定的坐标位置转换为地址
+const pos2Address = async (pos: any) => {
+  map.setCenter(pos);
+  const {status, result} = await geocoder.getAddress({location: pos}) // 将给定的坐标位置转换为地址
   if (status != 0) {
     return null
   }
   const {address_component, formatted_addresses} = result
   // 显示搜索到的地址
-  const addressStr = formatted_addresses.recommend
+  const address = formatted_addresses.recommend
   const {province, city, district} = address_component
   return {
-    province, city, district, addressStr
+    province, city, district, address, pos: {
+      lat: pos.lat,
+      lng: pos.lng
+    }
   }
 }
+
 
 //定义事件处理方法
 const clickHandler = async (e: any) => {
   let pos
-  const lat = e.latLng.getLat().toFixed(6);
-  const lng = e.latLng.getLng().toFixed(6);
-  // console.log("您点击的坐标经纬度是：", e);
-  // console.log("您点击的坐标经纬度是：" + lng + "," + lat);
 
-  pos = addressPosTo({lng: lng, lat: lat}, type)
-
-
-  let {
-    province, city, district, addressStr
-  } = await ipConvertAddress(e.latLng)
-
-  // console.log('ip2address:', {
-  //   province, city, district, addressStr
-  // })
-
+  let addressInfo: any = await pos2Address(e.latLng)
+  pos = addressPosTo(e.latLng, type)
+  addressInfo.pos = pos
 
   // 获取click事件返回的poi信息
   let poi = e.poi;
   if (poi) {
     // 拾取到POI
-    // console.log('poi', poi)
     info.setContent(poi.name).setPosition(poi.latLng).open();
-    addressStr = addressStr + '-' + poi.name
+    addressInfo.address = addressInfo.address + '-' + poi.name
   } else {
     // 没有拾取到POI
     info.close();
   }
 
-  // console.log('addressStr::', addressStr)
-  // console.log('最终的结果：:', {
-  //   province, city, district, addressStr
-  // })
-
-  address.value = {
-    pos: pos,
-    province: province,
-    city: city,
-    district: district,
-    address: addressStr,
-  }
-
+  address.value = addressInfo
 }
 
+
+const getSsxList = () => {
+  return []
+}
 
 const keyword = ref('')
 
 
-function searchByKeyword() {
+const searchByKeyword = async () => {
   // 关键字搜索功能
   infoWindowList.forEach((infoWindow) => {
     infoWindow.close();
   });
+
   infoWindowList.length = 0;
   markers.setGeometries([]);
-  search
-      .searchRectangle({
-        keyword: toValue(keyword),
-        bounds: map.getBounds(),
-      })
-      .then((result) => {
-        result.data.forEach((item, index) => {
-          var geometries = markers.getGeometries();
-          var infoWindow = new TMap.InfoWindow({
-            map: map,
-            position: item.location,
-            content: `<h3>${item.title}</h3><p>地址：${item.address}</p><p>电话：${item.tel}</p>`,
-            offset: {x: 0, y: -50},
-          });
-          infoWindow.close();
-          infoWindowList[index] = infoWindow;
-          geometries.push({
-            id: String(index),
-            position: item.location,
-          });
-          markers.updateGeometries(geometries);
-          markers.on('click', (e) => {
-            infoWindowList[Number(e.geometry.id)].open();
-          });
-        });
-      });
-}
 
+  const result = await search.searchRectangle({
+    keyword: toValue(keyword),
+    bounds: map.getBounds(),
+  })
+  console.log('res2:', result)
+
+
+  result.data.forEach((item, index) => {
+
+    console.log(index, item.address)
+    const geometries = markers.getGeometries();
+    const infoWindow = new TMap.InfoWindow({
+      map: map,
+      position: item.location,
+      content: `<h3>${item.title}</h3><p>地址：${item.address}</p><p>电话：${item.tel}</p>`,
+      offset: {x: 0, y: -50},
+    });
+    infoWindow.close();
+    infoWindowList[index] = infoWindow;
+    geometries.push({
+      id: String(index),
+      position: item.location,
+    });
+    markers.updateGeometries(geometries);
+    markers.on('click', async (e) => {
+      if (flagCanOne) {
+        await searchClick(e, result.data)
+      }
+    });
+  });
+
+}
+//用户防止searchClick多次重复调用
+let flagCanOne = true
+const searchClick = async (e: any, list: any[]) => {
+  flagCanOne = false
+  const info = list[e.geometry.id]
+  let addressInfo: any = await pos2Address(e.latLng)
+  addressInfo.address = info.address + '-' + info.title
+  address.value = addressInfo
+  infoWindowList[Number(e.geometry.id)].open();
+  flagCanOne = true
+}
 
 // -------------------------------------------------------------
 
@@ -333,6 +342,87 @@ function search2(selector) {
   }
 }
 
+
+interface SsxSelectorType {
+  id: 'province' | 'city' | 'district',
+  value: number
+}
+
+function search3(selector: SsxSelectorType) {
+
+
+  if (selector.id === 'province' && selector.value) {
+    citySelect.innerHTML = '';
+    districtSelect.innerHTML = '';
+    areaSelect.innerHTML = '';
+    citySelect.add(new Option('---请选择---', null));
+    district
+        .getChildren({id: provinceList[selector.value].id})
+        .then((result) => {
+          // 根据选择的省市区获取其下级行政区划及其边界
+          cityList = result.result[0];
+          cityList.forEach((city, index) => {
+            citySelect.add(new Option(city.fullname, index));
+          });
+        });
+    drawPolygon(
+        provinceList[selector.value].id,
+        provinceList[selector.value].polygon
+    ); // 根据所选区域绘制边界
+  } else if (selector.id === 'city' && selector.value) {
+    districtSelect.innerHTML = '';
+    areaSelect.innerHTML = '';
+    districtSelect.add(new Option('---请选择---', null));
+    district.getChildren({id: cityList[selector.value].id}).then((result) => {
+      // 根据选择的地级市或直辖市区获取其下级行政区划及其边界
+      if (result.result[0].length > 0 && result.result[0][0].id.length > 6) {
+        // 直辖市的区的下级即为街道级，故略过一级
+        districtList = [];
+        districtSelect.innerHTML = '';
+        districtSelect.add(new Option('---------', null));
+        areaList = result.result[0];
+        areaSelect.add(new Option('---请选择---', null));
+        areaList.forEach((district, index) => {
+          areaSelect.add(new Option(district.fullname, index));
+        }); // 根据所选区域绘制边界
+      } else {
+        // 非直辖市的地级市之下有区县级
+        districtList = result.result[0];
+        districtList.forEach((district, index) => {
+          districtSelect.add(new Option(district.fullname, index));
+        });
+      }
+    });
+    drawPolygon(cityList[selector.value].id, cityList[selector.value].polygon);
+    // 根据所选区域绘制边界
+  } else if (selector.id === 'district' && selector.value) {
+    areaSelect.innerHTML = '';
+    district
+        .getChildren({id: districtList[selector.value].id})
+        .then((result) => {
+          // 根据选择的区县获取其下级行政区划及位置
+          areaList = result.result[0];
+          areaList.forEach((area, index) => {
+            areaSelect.add(new Option(area.fullname, index));
+          });
+        });
+    areaSelect.add(new Option('---请选择---', null));
+    drawPolygon(
+        districtList[selector.value].id,
+        districtList[selector.value].polygon
+    );
+  } else if (selector.id === 'street' && selector.value) {
+    map.setCenter(areaList[selector.value].location);
+    // 街道级仅提供位置信息不提供边界信息，故以设置地图中心代替边界绘制
+  }
+}
+
+
+/**
+ * 边界绘制
+ * @param placeId
+ * @param polygonArray
+ */
 function drawPolygon(placeId, polygonArray) {
   // 根据多边形顶点坐标数组绘制多边形
   polygons.remove(polygons.getGeometries().map((item) => item.id));
@@ -424,7 +514,6 @@ onMounted(() => {
 
 .ssx-search {
   flex: 1;
-
 }
 
 </style>

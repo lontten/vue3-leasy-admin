@@ -3,7 +3,7 @@
   <div class="map">
     <TxMap v-model="address" type="obj"></TxMap>
   </div>
-  <!--  <GdMap></GdMap>-->
+<!--    <GdMap></GdMap>-->
 </template>
 <script lang="ts" setup>
 import TxMap from "../../../core/components/TxMap.vue";

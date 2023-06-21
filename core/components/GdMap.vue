@@ -5,17 +5,10 @@
 
 <script setup>
 import AMapLoader from "@amap/amap-jsapi-loader";
-import {onMounted, reactive} from "vue";
+import {onMounted} from "vue";
 
-
-const state = reactive({
-  path: [],
-  current_position: [],
-});
 
 let map;
-let marker;
-let infoWindow;
 let geolocation; //ip定位
 
 //进行地图初始化
@@ -72,8 +65,6 @@ const initMap = async () => {
         console.log('res:', result.regeocode.addressComponent.city)
         console.log('res:', result.regeocode.addressComponent.district)
         console.log('res:', result.regeocode.formattedAddress)
-
-
 
 
         //详情查询
@@ -181,9 +172,7 @@ const initMap = async () => {
 
 
 onMounted(() => {
-  window._AMapSecurityConfig = {
-    securityJsCode: '0dbf508f53f76ad1b50725fa6d1e8335',
-  }
+
   initMap();
 })
 </script>

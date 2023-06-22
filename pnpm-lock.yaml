@@ -14,8 +14,8 @@ dependencies:
     specifier: ^6.17.1
     version: registry.npmmirror.com/ali-oss@6.17.1
   ant-design-vue:
-    specifier: ^4.0.0-rc.4
-    version: registry.npmmirror.com/ant-design-vue@4.0.0-rc.4(vue@3.3.4)
+    specifier: ^4.0.0-rc.5
+    version: registry.npmmirror.com/ant-design-vue@4.0.0-rc.5(vue@3.3.4)
   axios:
     specifier: ^1.4.0
     version: registry.npmmirror.com/axios@1.4.0
@@ -844,11 +844,11 @@ packages:
       color-convert: registry.npmmirror.com/color-convert@2.0.1
     dev: true
 
-  registry.npmmirror.com/ant-design-vue@4.0.0-rc.4(vue@3.3.4):
-    resolution: {integrity: sha512-WvdGVHa6TdQ8mtt+/ePs/5Yu5/Lmjj1EwcRC7ZqMNtDVSz/odNokW7EkIZo7gJ0O/BPd2dIw49m0bzAj1RUixg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ant-design-vue/-/ant-design-vue-4.0.0-rc.4.tgz}
-    id: registry.npmmirror.com/ant-design-vue/4.0.0-rc.4
+  registry.npmmirror.com/ant-design-vue@4.0.0-rc.5(vue@3.3.4):
+    resolution: {integrity: sha512-r1n64cXwQqpd9maxGvT1Oz5tWNeBArVvIvskl/f+7B39urM5l8C2IjmuvZuIDbKYwnUmOEtYlDxEzAws3956kA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ant-design-vue/-/ant-design-vue-4.0.0-rc.5.tgz}
+    id: registry.npmmirror.com/ant-design-vue/4.0.0-rc.5
     name: ant-design-vue
-    version: 4.0.0-rc.4
+    version: 4.0.0-rc.5
     engines: {node: '>=12.22.0'}
     peerDependencies:
       vue: '>=3.2.0'

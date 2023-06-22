@@ -13,7 +13,7 @@
     "@amap/amap-jsapi-types": "^0.0.13",
     "@ant-design/icons-vue": "^6.1.0",
     "ali-oss": "^6.17.1",
-    "ant-design-vue": "^4.0.0-rc.4",
+    "ant-design-vue": "^4.0.0-rc.5",
     "axios": "^1.4.0",
     "cos-nodejs-sdk-v5": "^2.12.1",
     "lodash-es": "^4.17.21",

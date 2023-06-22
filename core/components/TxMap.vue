@@ -49,7 +49,7 @@ import LnSsx from "./LnSsx.vue";
 
 const TMap: any = (window as any).TMap;
 
-let address = defineModel<AddressType>({})
+let address = defineModel<AddressType>()
 
 interface Props {
   type?: AddressPosType

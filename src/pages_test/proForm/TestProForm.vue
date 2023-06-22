@@ -19,10 +19,11 @@
                         v-model="data"
                         :uploadType="'oss'"
     ></LnFormImgListLocal>
-    <LnFormMap label="address" name="address"
+    <LnFormMap
                v-model="data"
-               addressPosType="obj" addressMapType="tx">
-    </LnFormMap>
+               :addressPosType="AddressPosTypeEnum.LNG_LAT"
+               :addressMapType="AddressMapTypeEnum.TX"
+    ></LnFormMap>
 
   </ProForm>
 </template>
@@ -34,6 +35,7 @@ import LnFormText from "../../../core/components/LnForm/LnFormText.vue";
 import LnFormImgListLocal from "../../../core/components/LnForm/LnFormImgListLocal.vue";
 import LnFormNumber from "../../../core/components/LnForm/LnFormNumber.vue";
 import LnFormMap from "../../../core/components/LnForm/LnFormMap.vue";
+import {AddressMapTypeEnum, AddressPosTypeEnum} from "../../../core/type/sys/address.ts";
 
 let data = ref<any>();
 

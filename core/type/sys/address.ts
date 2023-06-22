@@ -16,3 +16,8 @@ export const AddressPosTypeEnum = {
     LNG_LAT: 'lng_lat' as AddressPosType,
 }
 export type AddressMapType = 'tx' | 'gd' | 'baidu'
+export const AddressMapTypeEnum = {
+    TX: 'tx' as AddressMapType,
+    GD: 'gd' as AddressMapType,
+    BAIDU: 'baidu' as AddressMapType,
+}

@@ -478,6 +478,7 @@ onMounted(() => {
   /*地图(容器)显示大小*/
   width: 100%;
   height: 100%;
+  max-height: 800px;
 }
 
 
@@ -515,5 +516,7 @@ onMounted(() => {
 .ssx-search {
   flex: 1;
 }
-
+.map-base{
+  width: 100%;
+}
 </style>

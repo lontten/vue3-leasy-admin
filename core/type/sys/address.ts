@@ -8,3 +8,6 @@ export interface AddressType {
     district?: string
     address?: string
 }
+
+export type AddressPosType = 'obj' | 'lat_lng' | 'lng_lat'
+export type AddressMapType = 'tx' | 'gd' | 'baidu'

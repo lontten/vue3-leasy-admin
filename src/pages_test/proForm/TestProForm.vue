@@ -19,11 +19,11 @@
                         v-model="data"
                         :uploadType="'oss'"
     ></LnFormImgListLocal>
+    <LnFormMap label="address" name="address"
+               v-model="data"
+               addressPosType="obj" addressMapType="tx">
+    </LnFormMap>
 
-
-    <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-      <a-button type="primary" html-type="submit">Submit</a-button>
-    </a-form-item>
   </ProForm>
 </template>
 <script lang="ts" setup>
@@ -33,6 +33,7 @@ import LnFormTextArea from "../../../core/components/LnForm/LnFormTextArea.vue";
 import LnFormText from "../../../core/components/LnForm/LnFormText.vue";
 import LnFormImgListLocal from "../../../core/components/LnForm/LnFormImgListLocal.vue";
 import LnFormNumber from "../../../core/components/LnForm/LnFormNumber.vue";
+import LnFormMap from "../../../core/components/LnForm/LnFormMap.vue";
 
 let data = ref<any>();
 
@@ -40,7 +41,12 @@ data.value = {
   ka: 'ka',
   ka1: 6,
   info: 'info',
-  avatar: ['https://project-temp-file.oss-cn-hangzhou.aliyuncs.com/006-dir/1685760327975.svg']
+  avatar: ['https://project-temp-file.oss-cn-hangzhou.aliyuncs.com/006-dir/1685760327975.svg'],
+  addressSsx1: '',
+  addressSsx2: '',
+  addressSsx3: '',
+  addressInfo: '',
+  addressPos: '',
 }
 
 

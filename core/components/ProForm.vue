@@ -9,25 +9,7 @@
       @finishFailed="onFinishFailed"
   >
 
-    <LnFormText label="ka" name="ka"
-                v-model="formData"
-                :rule="[{ required: true, message: 'Please input your username!' }]"
-    ></LnFormText>
-
-    <LnFormTextArea label="info" name="info"
-                    v-model="formData"
-                    :rule="[{ required: true, message: 'Please input your username!' }]"
-    ></LnFormTextArea>
-
-    <LnFormNumber label="ka1" name="ka1"
-                  v-model="formData"
-                  min="3"
-                  max="8"
-    ></LnFormNumber>
-    <LnFormImgListLocal label="avatar" name="avatar"
-                          v-model="formData"
-    ></LnFormImgListLocal>
-
+    <slot></slot>
 
     <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
       <a-button type="primary" html-type="submit">Submit</a-button>
@@ -37,11 +19,6 @@
 
 
 <script lang="ts" setup generic="T">
-import LnFormNumber from "./LnForm/LnFormNumber.vue";
-import LnFormText from "./LnForm/LnFormText.vue";
-import LnFormTextArea from "./LnForm/LnFormTextArea.vue";
-import LnFormImgLocalUpload from "./LnForm/LnFormImgLocalUpload.vue";
-import LnFormImgListLocal from "./LnForm/LnFormImgListLocal.vue";
 
 const formData = defineModel<T>()
 

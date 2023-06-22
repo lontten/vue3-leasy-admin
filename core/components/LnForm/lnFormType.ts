@@ -9,9 +9,11 @@ export interface LnFormPropsType {
     uploadType?: 'oss' | 'cos' | 'http',  //文件上传的方式
     useJson?: boolean, //数组结构的数据是否使用json格式
     fileTypeList?: string[], //可上传的文件类型列表
-    fileSizeMax?:number, //可上传的最大文件格式大小
+    fileSizeMax?: number, //可上传的最大文件格式大小
 
 
-    addressMapType?:AddressMapType //地图类型
-    addressPosType?:AddressPosType //地址经纬读类型
+    addressMapType?: AddressMapType //地图类型
+    addressPosType?: AddressPosType //地址经纬读类型
+
+    addressPrefix?: string //地图字段前缀
 }

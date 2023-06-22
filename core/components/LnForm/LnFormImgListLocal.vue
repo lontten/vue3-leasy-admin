@@ -171,7 +171,6 @@ onMounted(() => {
   } else if (data) {
     list = data
   }
-  console.log('kk', list, data)
   fileList.value = list.map(value => {
     return {
       uid: v4(),

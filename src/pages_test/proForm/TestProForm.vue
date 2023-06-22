@@ -19,7 +19,7 @@
                         v-model="data"
                         :uploadType="'oss'"
     ></LnFormImgListLocal>
-    <LnFormMap
+    <LnFormMap addressPrefix="shop"
                v-model="data"
                :addressPosType="AddressPosTypeEnum.LNG_LAT"
                :addressMapType="AddressMapTypeEnum.TX"
@@ -48,7 +48,7 @@ data.value = {
   addressSsx2: '',
   addressSsx3: '',
   addressInfo: '',
-  addressPos: '113.80724398972029,34.79212175582764',
+  shopAddressPos: '113.80724398972029,34.79212175582764',
 }
 
 

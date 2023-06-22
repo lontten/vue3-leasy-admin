@@ -10,6 +10,12 @@
                     :rule="[{ required: true, message: 'Please input your username!' }]"
     ></LnFormTextArea>
 
+
+    <LnFormDateTime label="datetime" name="datetime"
+                    v-model="data"
+    ></LnFormDateTime>
+
+
     <LnFormNumber label="ka1" name="ka1"
                   v-model="data"
                   min="3"
@@ -36,6 +42,7 @@ import LnFormImgListLocal from "../../../core/components/LnForm/LnFormImgListLoc
 import LnFormNumber from "../../../core/components/LnForm/LnFormNumber.vue";
 import LnFormMap from "../../../core/components/LnForm/LnFormMap.vue";
 import {AddressMapTypeEnum, AddressPosTypeEnum} from "../../../core/type/sys/address.ts";
+import LnFormDateTime from "../../../core/components/LnForm/LnFormDateTime.vue";
 
 let data = ref<any>();
 
@@ -49,6 +56,7 @@ data.value = {
   addressSsx3: '',
   addressInfo: '',
   shopAddressPos: '113.80724398972029,34.79212175582764',
+  datetime:null
 }
 
 

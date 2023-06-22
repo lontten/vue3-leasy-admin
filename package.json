@@ -16,6 +16,7 @@
     "ant-design-vue": "^4.0.0-rc.5",
     "axios": "^1.4.0",
     "cos-nodejs-sdk-v5": "^2.12.1",
+    "dayjs": "^1.11.8",
     "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.3",

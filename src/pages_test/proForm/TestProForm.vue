@@ -16,6 +16,13 @@
     ></LnFormDateTime>
 
 
+    <LnFormSelect label="ss" name="ss"
+                  v-model="data"
+                  :selectOptionList="optionList"
+    ></LnFormSelect>
+    <button @click="addOption">add</button>
+
+
     <LnFormNumber label="ka1" name="ka1"
                   v-model="data"
                   min="3"
@@ -43,6 +50,7 @@ import LnFormNumber from "../../../core/components/LnForm/LnFormNumber.vue";
 import LnFormMap from "../../../core/components/LnForm/LnFormMap.vue";
 import {AddressMapTypeEnum, AddressPosTypeEnum} from "../../../core/type/sys/address.ts";
 import LnFormDateTime from "../../../core/components/LnForm/LnFormDateTime.vue";
+import LnFormSelect from "../../../core/components/LnForm/LnFormSelect.vue";
 
 let data = ref<any>();
 
@@ -56,9 +64,34 @@ data.value = {
   addressSsx3: '',
   addressInfo: '',
   shopAddressPos: '113.80724398972029,34.79212175582764',
-  datetime:null
+  datetime: null
 }
 
+
+const optionList = ref([
+  {
+    value: '1',
+    label: 'a',
+  },
+  {
+    value: '2',
+    label: 'b',
+  },
+  {
+    value: '3',
+    label: 'c',
+    disabled: true,
+  },
+  {
+    value: '4',
+    label: 'd',
+  },
+])
+
+
+const addOption = () => {
+  optionList.value = []
+}
 
 </script>
 <style scoped>

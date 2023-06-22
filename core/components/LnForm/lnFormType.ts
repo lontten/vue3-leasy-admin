@@ -1,4 +1,5 @@
 import {AddressMapType, AddressPosType} from "../../type/sys/address.ts";
+import {SelectOptionType} from "../../type/form.ts";
 
 export interface LnFormPropsType {
     label?: string
@@ -16,4 +17,6 @@ export interface LnFormPropsType {
     addressPosType?: AddressPosType //地址经纬读类型
 
     addressPrefix?: string //地图字段前缀
+
+    selectOptionList?:SelectOptionType[] //选项列表
 }

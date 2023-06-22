@@ -52,7 +52,7 @@
 
 import {LnFormPropsType} from "./lnFormType.ts";
 import TxMap from "../TxMap.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import GdMap from "../GdMap.vue";
 import {AddressMapTypeEnum, AddressPosTypeEnum, AddressType} from "../../type/sys/address.ts";
 
@@ -65,7 +65,7 @@ const {
   addressMapType = AddressMapTypeEnum.TX
 } = defineProps<LnFormPropsType>()
 
-const address = ref<AddressType>()
+const address = ref<AddressType>({})
 
 const open = ref<boolean>(false);
 
@@ -81,7 +81,13 @@ const handleOk = (e: MouseEvent) => {
   formData.value.addressPos = address.value?.pos
   formData.value.addressInfo = address.value?.address
 };
-
+onMounted(() => {
+  if (formData.value) {
+    if (formData.value.addressPos) {
+      address.value.pos = formData.value.addressPos
+    }
+  }
+})
 </script>
 <style lang="scss" scoped>
 .map-modal {

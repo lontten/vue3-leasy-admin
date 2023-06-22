@@ -1,6 +1,7 @@
 # Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+经过过度封装的后台模版，适合那些前端技术不好的后端开发人员，
+可以让他们快速开发出一个完整的后台管理系统，同时页面也不太难看。
 
 ## todo
 - [ ] 整体布局
@@ -11,6 +12,9 @@ This template should help get you started developing with Vue 3 and TypeScript i
 - [ ] ProTable
 - [ ] ProForm
 - [ ] 根据json，生成页面
+- [ ] 腾讯地图
+- [ ] 高德地图
+- [ ] 百度地图
 
 
 ## 部署
@@ -21,9 +25,9 @@ location / {
   try_files $uri $uri/ /index.html;
 }
 
-# 非根目录 例如放在 html下面的 p099-admin 目录下面
-location /p099-admin {
-  try_files $uri $uri/ /p099-admin/index.html;
+# 非根目录 例如放在 html下面的 easy-admin 目录下面
+location /easy-admin {
+  try_files $uri $uri/ /easy-admin/index.html;
 }
 
 ```

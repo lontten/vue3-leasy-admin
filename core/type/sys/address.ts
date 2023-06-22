@@ -10,4 +10,9 @@ export interface AddressType {
 }
 
 export type AddressPosType = 'obj' | 'lat_lng' | 'lng_lat'
+export const AddressPosTypeEnum = {
+    OBJ: 'obj' as AddressPosType,
+    LAT_LNG: 'lat_lng' as AddressPosType,
+    LNG_LAT: 'lng_lat' as AddressPosType,
+}
 export type AddressMapType = 'tx' | 'gd' | 'baidu'

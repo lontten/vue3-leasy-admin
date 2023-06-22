@@ -11,7 +11,7 @@
 
     </div>
 
-    <div class="ssx-search" v-show="false">
+    <div class="ssx-search" v-show="true">
       <h4>下属行政区查询</h4>
       <div class="input-item">
         <div class="title">省市区</div>
@@ -43,7 +43,7 @@
 </template>
 <script lang="ts" setup>
 import {onMounted, ref, toValue} from "vue";
-import {AddressType} from "../type/sys/address.ts";
+import {AddressPosType, AddressPosTypeEnum, AddressType} from "../type/sys/address.ts";
 import {addressPosForm, addressPosTo} from "../utils/address.ts";
 import LnSsx from "./LnSsx.vue";
 
@@ -52,10 +52,10 @@ const TMap: any = (window as any).TMap;
 let address = defineModel<AddressType>({})
 
 interface Props {
-  type?: 'obj' | 'lat_lng' | 'lng_lat'
+  type?: AddressPosType
 }
 
-const {type = 'lng_lat'} = defineProps<Props>()
+const {type = AddressPosTypeEnum.LNG_LAT} = defineProps<Props>()
 let map;
 
 // 创建信息窗
@@ -149,9 +149,9 @@ const initMap = () => {
   district.getChildren().then((result) => {
     // 获取省市区列表及其边界信息
     provinceList = result.result[0];
-    provinceSelect.add(new Option('---请选择---', null));
+    provinceSelect.add(new Option('---请选择---'));
     provinceList.forEach((province, index) => {
-      provinceSelect.add(new Option(province.fullname, index));
+      provinceSelect.add(new Option(province.fullname, index.toString()));
     });
     ssx1List.value = provinceList.map(value => {
       return {
@@ -167,7 +167,7 @@ const initMap = () => {
 };
 
 
-// ip转化地址
+// 经纬度转化地址
 const pos2Address = async (pos: any) => {
   map.setCenter(pos);
   const {status, result} = await geocoder.getAddress({location: pos}) // 将给定的坐标位置转换为地址
@@ -280,14 +280,14 @@ function search2(selector) {
     citySelect.innerHTML = '';
     districtSelect.innerHTML = '';
     areaSelect.innerHTML = '';
-    citySelect.add(new Option('---请选择---', null));
+    citySelect.add(new Option('---请选择---'));
     district
         .getChildren({id: provinceList[selector.value].id})
         .then((result) => {
           // 根据选择的省市区获取其下级行政区划及其边界
           cityList = result.result[0];
           cityList.forEach((city, index) => {
-            citySelect.add(new Option(city.fullname, index));
+            citySelect.add(new Option(city.fullname, index.toString()));
           });
         });
     drawPolygon(
@@ -297,24 +297,24 @@ function search2(selector) {
   } else if (selector.id === 'city' && selector.value) {
     districtSelect.innerHTML = '';
     areaSelect.innerHTML = '';
-    districtSelect.add(new Option('---请选择---', null));
+    districtSelect.add(new Option('---请选择---'));
     district.getChildren({id: cityList[selector.value].id}).then((result) => {
       // 根据选择的地级市或直辖市区获取其下级行政区划及其边界
       if (result.result[0].length > 0 && result.result[0][0].id.length > 6) {
         // 直辖市的区的下级即为街道级，故略过一级
         districtList = [];
         districtSelect.innerHTML = '';
-        districtSelect.add(new Option('---------', null));
+        districtSelect.add(new Option('---------'));
         areaList = result.result[0];
-        areaSelect.add(new Option('---请选择---', null));
+        areaSelect.add(new Option('---请选择---'));
         areaList.forEach((district, index) => {
-          areaSelect.add(new Option(district.fullname, index));
+          areaSelect.add(new Option(district.fullname, index.toString()));
         }); // 根据所选区域绘制边界
       } else {
         // 非直辖市的地级市之下有区县级
         districtList = result.result[0];
         districtList.forEach((district, index) => {
-          districtSelect.add(new Option(district.fullname, index));
+          districtSelect.add(new Option(district.fullname, index.toString()));
         });
       }
     });
@@ -328,10 +328,10 @@ function search2(selector) {
           // 根据选择的区县获取其下级行政区划及位置
           areaList = result.result[0];
           areaList.forEach((area, index) => {
-            areaSelect.add(new Option(area.fullname, index));
+            areaSelect.add(new Option(area.fullname, index.toString()));
           });
         });
-    areaSelect.add(new Option('---请选择---', null));
+    areaSelect.add(new Option('---请选择---'));
     drawPolygon(
         districtList[selector.value].id,
         districtList[selector.value].polygon
@@ -355,14 +355,14 @@ function search3(selector: SsxSelectorType) {
     citySelect.innerHTML = '';
     districtSelect.innerHTML = '';
     areaSelect.innerHTML = '';
-    citySelect.add(new Option('---请选择---', null));
+    citySelect.add(new Option('---请选择---'));
     district
         .getChildren({id: provinceList[selector.value].id})
         .then((result) => {
           // 根据选择的省市区获取其下级行政区划及其边界
           cityList = result.result[0];
           cityList.forEach((city, index) => {
-            citySelect.add(new Option(city.fullname, index));
+            citySelect.add(new Option(city.fullname, index.toString()));
           });
         });
     drawPolygon(
@@ -372,24 +372,24 @@ function search3(selector: SsxSelectorType) {
   } else if (selector.id === 'city' && selector.value) {
     districtSelect.innerHTML = '';
     areaSelect.innerHTML = '';
-    districtSelect.add(new Option('---请选择---', null));
+    districtSelect.add(new Option('---请选择---'));
     district.getChildren({id: cityList[selector.value].id}).then((result) => {
       // 根据选择的地级市或直辖市区获取其下级行政区划及其边界
       if (result.result[0].length > 0 && result.result[0][0].id.length > 6) {
         // 直辖市的区的下级即为街道级，故略过一级
         districtList = [];
         districtSelect.innerHTML = '';
-        districtSelect.add(new Option('---------', null));
+        districtSelect.add(new Option('---------'));
         areaList = result.result[0];
-        areaSelect.add(new Option('---请选择---', null));
+        areaSelect.add(new Option('---请选择---'));
         areaList.forEach((district, index) => {
-          areaSelect.add(new Option(district.fullname, index));
+          areaSelect.add(new Option(district.fullname, index.toString()));
         }); // 根据所选区域绘制边界
       } else {
         // 非直辖市的地级市之下有区县级
         districtList = result.result[0];
         districtList.forEach((district, index) => {
-          districtSelect.add(new Option(district.fullname, index));
+          districtSelect.add(new Option(district.fullname, index.toString()));
         });
       }
     });
@@ -403,10 +403,10 @@ function search3(selector: SsxSelectorType) {
           // 根据选择的区县获取其下级行政区划及位置
           areaList = result.result[0];
           areaList.forEach((area, index) => {
-            areaSelect.add(new Option(area.fullname, index));
+            areaSelect.add(new Option(area.fullname, index.toString()));
           });
         });
-    areaSelect.add(new Option('---请选择---', null));
+    areaSelect.add(new Option('---请选择---'));
     drawPolygon(
         districtList[selector.value].id,
         districtList[selector.value].polygon
@@ -426,8 +426,8 @@ function search3(selector: SsxSelectorType) {
 function drawPolygon(placeId, polygonArray) {
   // 根据多边形顶点坐标数组绘制多边形
   polygons.remove(polygons.getGeometries().map((item) => item.id));
-  var bounds = [];
-  var newGeometries = polygonArray.map((polygon, index) => {
+  let bounds = [];
+  const newGeometries = polygonArray.map((polygon, index) => {
     bounds.push(fitBounds(polygon));
     return {
       id: `${placeId}_${index}`,
@@ -451,10 +451,10 @@ function fitBounds(latLngList) {
   if (latLngList.length === 0) {
     return null;
   }
-  var boundsN = latLngList[0].getLat();
-  var boundsS = boundsN;
-  var boundsW = latLngList[0].getLng();
-  var boundsE = boundsW;
+  let boundsN = latLngList[0].getLat();
+  let boundsS = boundsN;
+  let boundsW = latLngList[0].getLng();
+  let boundsE = boundsW;
   latLngList.forEach((point) => {
     point.getLat() > boundsN && (boundsN = point.getLat());
     point.getLat() < boundsS && (boundsS = point.getLat());
@@ -516,7 +516,8 @@ onMounted(() => {
 .ssx-search {
   flex: 1;
 }
-.map-base{
+
+.map-base {
   width: 100%;
 }
 </style>

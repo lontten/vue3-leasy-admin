@@ -30,7 +30,7 @@
   </a-form-item>
 
   <a-form-item
-      label="地址"
+      label="具体地址"
       name="addressInfo"
       :rules="rule"
   >

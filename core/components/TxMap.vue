@@ -32,7 +32,7 @@
     </div>
 
 
-    <div class="ssx-search2">
+    <div class="ssx-search2" v-if="false">
       <h4>下属行政区查询2</h4>
       <LnSsx :getSsxList="getSsxList"></LnSsx>
     </div>
@@ -176,13 +176,18 @@ const pos2Address = async (pos: any) => {
   }
   const {address_component, formatted_addresses} = result
   // 显示搜索到的地址
-  const address = formatted_addresses.recommend
+  let address = ''
+  if (formatted_addresses) {
+    if (formatted_addresses.recommend) {
+      address = formatted_addresses.recommend
+    }
+  }
   const {province, city, district} = address_component
   return {
-    province, city, district, address, pos: {
+    province, city, district, address, pos: addressPosTo({
       lat: pos.lat,
       lng: pos.lng
-    }
+    }, type)
   }
 }
 
@@ -258,6 +263,7 @@ const searchClick = async (e: any, list: any[]) => {
   flagCanOne = false
   const info = list[e.geometry.id]
   let addressInfo: any = await pos2Address(e.latLng)
+  console.log(addressInfo)  //这个log不能删除，不然会有bug
   addressInfo.address = info.address + '-' + info.title
   address.value = addressInfo
   infoWindowList[Number(e.geometry.id)].open();

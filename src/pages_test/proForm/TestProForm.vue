@@ -48,7 +48,7 @@ data.value = {
   addressSsx2: '',
   addressSsx3: '',
   addressInfo: '',
-  addressPos: '',
+  addressPos: '116.300573,39.962979',
 }
 
 

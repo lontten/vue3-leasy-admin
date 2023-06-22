@@ -189,11 +189,8 @@ const pos2Address = async (pos: any) => {
 
 //定义事件处理方法
 const clickHandler = async (e: any) => {
-  let pos
-
   let addressInfo: any = await pos2Address(e.latLng)
-  pos = addressPosTo(e.latLng, type)
-  addressInfo.pos = pos
+  addressInfo.pos = addressPosTo(e.latLng, type)
 
   // 获取click事件返回的poi信息
   let poi = e.poi;
@@ -230,12 +227,8 @@ const searchByKeyword = async () => {
     keyword: toValue(keyword),
     bounds: map.getBounds(),
   })
-  console.log('res2:', result)
-
 
   result.data.forEach((item, index) => {
-
-    console.log(index, item.address)
     const geometries = markers.getGeometries();
     const infoWindow = new TMap.InfoWindow({
       map: map,
@@ -258,7 +251,8 @@ const searchByKeyword = async () => {
   });
 
 }
-//用户防止searchClick多次重复调用
+
+//防止searchClick多次重复调用
 let flagCanOne = true
 const searchClick = async (e: any, list: any[]) => {
   flagCanOne = false
@@ -327,7 +321,7 @@ function search2(selector) {
         .then((result) => {
           // 根据选择的区县获取其下级行政区划及位置
           areaList = result.result[0];
-          areaList.forEach((area, index) => {
+          areaList.forEach((area: any, index) => {
             areaSelect.add(new Option(area.fullname, index.toString()));
           });
         });
@@ -455,7 +449,7 @@ function fitBounds(latLngList) {
   let boundsS = boundsN;
   let boundsW = latLngList[0].getLng();
   let boundsE = boundsW;
-  latLngList.forEach((point) => {
+  latLngList.forEach((point: any) => {
     point.getLat() > boundsN && (boundsN = point.getLat());
     point.getLat() < boundsS && (boundsS = point.getLat());
     point.getLng() > boundsE && (boundsE = point.getLng());

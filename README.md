@@ -5,14 +5,14 @@
 
 ## todo
 - [ ] 整体布局
-- [ ] request封装
+- [x] request封装
 - [ ] 登陆页
 - [ ] 我的
 - [ ] 我的详情
-- [ ] ProTable
-- [ ] ProForm
+- [x] ProTable
+- [x] ProForm
 - [ ] 根据json，生成页面
-- [ ] 腾讯地图
+- [x] 腾讯地图
 - [ ] 高德地图
 - [ ] 百度地图
 

@@ -19,5 +19,18 @@ export default [
         },
     },
 
+    {
+        url: '/admin-leasy/api/login/current-user',
+        method: 'get',
+        response: ({query, body}) => {
+            return {
+                code: 'A000',
+                data: {
+
+                }
+            }
+        },
+    },
+
 
 ] as MockMethod[]

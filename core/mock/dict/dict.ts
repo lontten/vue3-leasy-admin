@@ -8,7 +8,7 @@ export default [
         method: 'post',
         response: ({query, body}): ResponseType<PageType<any>> => {
             const {pageIndex, pageSize, key1, key2} = body
-            console.log('body:', body)
+            console.log('body:query', query, body)
             return {
                 "code": "A000",
                 "data": {

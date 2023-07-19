@@ -5,7 +5,8 @@ import router from "../../core/config/routes.ts";
 import {useSysInitStore} from "../../core/stores/sysInitStore.ts";
 
 let apis = new Map()
-apis.set("base", 'https://code.xxx.com/api-admin')
+// apis.set("base", 'https://code.xxx.com/api-admin')
+apis.set("base", 'api')
 apis.set("hf", 'import.meta.env.VITE_URL_hf')
 apis.set("org", 'import.meta.env.VITE_URL_org')
 

@@ -1,0 +1,60 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",  // 这里需要配置
+    "paths": {
+      "@/*": ["./src/*"]  // 这里需要配置
+    },
+
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true,
+    /* Bundler mode */
+    "moduleResolution": "Node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    /* Linting */
+    "strict": true,
+    //用于指定是否启动所有类型检查，如果设为true这会同时开启下面这几个严格检查，默认为false
+    "alwaysStrict": true,
+    //指定始终以严格模式检查每个模块，并且在编译之后的JS文件中加入"use strict"字符串，用来告诉浏览器该JS为严格模式
+    "noUnusedLocals": true,
+    //用于检查是否有定义了但是没有使用变量，对于这一点的检测，使用ESLint可以在你书写代码的时候做提示，你可以配合使用，他的默认值为false
+    "noUnusedParameters": true,
+    //用于检测是否在函数中没有使用的参数
+    "noImplicitReturns": false,
+    //用于检查函数是否有返回值，设为true后，如果函数没有返回值则会提示，默认为false
+    "noFallthroughCasesInSwitch": true
+    //用于检查switch中是否有case没有使用break跳出switch,默认为false
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.ts",
+    "config/routes.ts",
+    "core/**/*.ts",
+    "core/**/*.d.ts",
+    "core/**/*.tsx",
+    "core/**/*.vue",
+    "core/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "extends": "./tsconfig.extends.json",
+
+
+
+}

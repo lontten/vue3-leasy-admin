@@ -9,19 +9,19 @@
                     v-model:value="formData[name]"
                     :min="min"
                     :max="max"
-                    :disabled="disabled"
+                    v-bind="config"
                     style="width: 100%"/>
   </a-form-item>
 </template>
 
 
-<script lang="ts" setup generic="T">
+<script lang="ts" setup>
 import {LnFormItemPropsType} from "./lnFormType.ts";
 
-const formData = defineModel<T>()
+const formData = defineModel<any>()
 const {
   label, name, rule, min, max,
-  extra, disabled = false
+  extra, config
 } = defineProps<LnFormItemPropsType>()
 
 </script>

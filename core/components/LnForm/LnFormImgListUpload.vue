@@ -17,7 +17,7 @@
           :before-upload="beforeUpload"
           @change="handleChange"
           @remove="handleRemove"
-          :disabled="disabled"
+          v-bind="config"
       >
         <div v-if="fileList.length < 8">
           <plus-outlined/>
@@ -30,7 +30,7 @@
     </div>
   </a-form-item>
 </template>
-<script lang="ts" setup generic="T">
+<script lang="ts" setup>
 import {onMounted, ref, watch} from 'vue';
 import {PlusOutlined} from '@ant-design/icons-vue';
 import type {UploadChangeParam, UploadProps} from 'ant-design-vue';
@@ -40,12 +40,12 @@ import {LnFormItemPropsType} from "./lnFormType.ts";
 import {ossFileUpload} from "../../utils/file/oss.ts";
 
 
-const formData = defineModel<T>()
+const formData = defineModel<any>()
 // fileTypeList使用,分割 例如： "image/png,image/jpeg"
 const {
   label, name, rule, useJson = false, extra,
   uploadType, fileTypeList = 'image/png,image/jpeg', fileNum = 1,
-  disabled = false
+  config
 } = defineProps<LnFormItemPropsType>()
 
 

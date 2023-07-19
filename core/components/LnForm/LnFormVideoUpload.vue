@@ -13,7 +13,7 @@
         :show-upload-list="false"
         :before-upload="beforeUpload"
         @change="handleChange"
-        :disabled="disabled"
+        v-bind="config"
     >
       <img v-if="imageUrl" :src="imageUrl" :width="100" :height="100" alt=""/>
       <div v-else>
@@ -25,7 +25,7 @@
 
   </a-form-item>
 </template>
-<script lang="ts" setup generic="T">
+<script lang="ts" setup>
 import {onMounted, ref, watch} from 'vue';
 import {LoadingOutlined, PlusOutlined} from '@ant-design/icons-vue';
 import type {UploadChangeParam, UploadProps} from 'ant-design-vue';
@@ -34,12 +34,12 @@ import {LnFormItemPropsType} from "./lnFormType";
 import {ossVideoUpload} from "../../utils/file/oss";
 import {v4} from "uuid";
 
-const formData = defineModel<T>()
+const formData = defineModel<any>()
 // fileTypeList使用,分割 例如： "video/mp4,image/jpeg"
 const {
   label, name, rule, extra,
-  uploadType, fileTypeList = 'video/mp4,', fileNum = 1,
-  disabled = false
+  uploadType, fileTypeList = 'video/mp4,',
+  config,
 } = defineProps<LnFormItemPropsType>()
 
 

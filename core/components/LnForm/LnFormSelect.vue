@@ -10,8 +10,8 @@
         ref="select"
         v-model:value="formData[name]"
         :options="selectOptionList"
+        v-bind="config"
         @change="onChange"
-        :disabled="disabled"
     ></a-select>
 
 
@@ -19,15 +19,15 @@
 </template>
 
 
-<script lang="ts" setup generic="T">
+<script lang="ts" setup>
 
 import {LnFormItemPropsType} from "./lnFormType.ts";
 import {watchEffect} from "vue";
 
-const formData = defineModel<T>()
+const formData = defineModel<any>()
 const {
   label, name, rule, extra, selectOptionList = [],
-  onChange, disabled = false
+  onChange, config,
 } = defineProps<LnFormItemPropsType>()
 const setFormData = (data: any) => {
   let v = formData.value
@@ -37,6 +37,7 @@ const setFormData = (data: any) => {
 }
 
 watchEffect(() => {
+  console.log('config,', config)
   if (selectOptionList.length == 0) {
     setFormData('')
   }

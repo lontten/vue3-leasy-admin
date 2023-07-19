@@ -13,7 +13,7 @@
         :show-upload-list="false"
         :before-upload="beforeUpload"
         @change="handleChange"
-        :disabled="disabled"
+        v-bind="config"
     >
       <img v-if="imageUrl" :src="imageUrl" :width="100" :height="100" alt="avatar"/>
       <div v-else>
@@ -34,12 +34,12 @@ import {LnFormItemPropsType} from "./lnFormType";
 import {ossFileUpload} from "../../utils/file/oss";
 import {v4} from "uuid";
 
-const formData = defineModel<T>()
+const formData = defineModel<any>()
 // fileTypeList使用,分割 例如： "image/png,image/jpeg"
 const {
   label, name, rule, extra,
-  uploadType, fileTypeList = 'image/png,image/jpeg', fileNum = 1,
-  disabled = false
+  uploadType, fileTypeList = 'image/png,image/jpeg',
+  config
 } = defineProps<LnFormItemPropsType>()
 
 

@@ -7,6 +7,7 @@ import p500 from "@/pages_demo/sys/p500.vue";
 import p403 from "@/pages_demo/sys/p403.vue";
 import pSuccess from "@/pages_demo/sys/pSuccess.vue";
 import pError from "@/pages_demo/sys/pError.vue";
+import testForm from "@/pages_test/testForm.vue";
 
 
 export const routes = [
@@ -15,6 +16,7 @@ export const routes = [
         path: '/home', component: Home,
         children: [
             {path: 'overview', component: TestTxMap},
+            {path: 'abc', component: testForm},
 
         ]
     },

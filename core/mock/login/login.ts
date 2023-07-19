@@ -5,6 +5,7 @@ export default [
         url: '/api/user/login',
         method: 'post',
         response: ({query, body}) => {
+            console.log(query)
             if (body.username == 'admin') {
                 return {
                     code: 'A000',
@@ -23,11 +24,10 @@ export default [
         url: '/admin-leasy/api/login/current-user',
         method: 'get',
         response: ({query, body}) => {
+            console.log(query, body)
             return {
                 code: 'A000',
-                data: {
-
-                }
+                data: {}
             }
         },
     },

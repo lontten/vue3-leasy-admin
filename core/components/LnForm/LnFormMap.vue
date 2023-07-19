@@ -39,8 +39,8 @@
       :rules="rule"
   >
     <a-input-group compact>
-      <a-input v-model:value="formData[addressInfo]" style="width: calc(100% - 200px)" :disabled="disabled"/>
-      <a-button type="primary" @click="showModal" :disabled="disabled">地图定位</a-button>
+      <a-input v-model:value="formData[addressInfo]" style="width: calc(100% - 200px)" v-bind="config"/>
+      <a-button type="primary" @click="showModal" v-bind="config">地图定位</a-button>
     </a-input-group>
   </a-form-item>
 
@@ -66,7 +66,7 @@ const {
   rule = [{required: true, message: '请设置地图定位!'}],
   addressPosType = AddressPosTypeEnum.LNG_LAT,
   addressMapType = AddressMapTypeEnum.TX,
-  disabled = false,
+  config,
 } = defineProps<LnFormItemPropsType>()
 
 const addressSsx1 = computed(() => {

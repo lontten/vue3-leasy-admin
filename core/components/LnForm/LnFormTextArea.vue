@@ -5,18 +5,18 @@
       :rules="rule"
       :extra="extra"
   >
-    <a-textarea v-model:value="formData[name]" :autoSize="style" :disabled="disabled"/>
+    <a-textarea v-model:value="formData[name]" :autoSize="style" v-bind="config"/>
   </a-form-item>
 </template>
 
-<script lang="ts" setup generic="T">
+<script lang="ts" setup>
 import {LnFormItemPropsType} from "./lnFormType.ts";
 import {computed} from "vue";
 
-const formData = defineModel<T>()
+const formData = defineModel<any>()
 const {
   label, name, rule, extra, minRows = 6, maxRows = 16,
-  disabled = false
+  config,
 } = defineProps<LnFormItemPropsType>()
 
 

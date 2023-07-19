@@ -11,20 +11,20 @@
                    valueFormat="YYYY-MM-DD HH:mm:ss"
                    :format="datetimeFormat"
                    v-model:value="formData[name]"
-                   :disabled="disabled"
+                   v-bind="config"
     />
   </a-form-item>
 </template>
 
 
-<script lang="ts" setup generic="T">
+<script lang="ts" setup>
 import 'dayjs/locale/zh-cn';
 import {LnFormItemPropsType} from "./lnFormType.ts";
 
-const formData = defineModel<T>()
+const formData = defineModel<any>()
 const {
   label, name, rule,
-  extra, disabled = false
+  extra, config
 } = defineProps<LnFormItemPropsType>()
 
 const datetimeFormat = "YYYY-MM-DD HH:mm:ss"

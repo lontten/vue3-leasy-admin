@@ -23,7 +23,7 @@ export const useSysNavStore =
             list.forEach(nav => {
                 if (nav.roles) {
                     roles.forEach(role => {
-                        if (nav.roles.includes(role)) {
+                        if (nav.roles?.includes(role)) {
                             nav.show = true
                         }
                     })

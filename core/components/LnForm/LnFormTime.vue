@@ -5,17 +5,17 @@
       :rules="rule"
       :extra="extra"
   >
-    <a-time-picker v-model:value="formData[name]" :disabled="disabled"/>
+    <a-time-picker v-model:value="formData[name]" v-bind="config"/>
   </a-form-item>
 </template>
 
 
-<script lang="ts" setup generic="T">
+<script lang="ts" setup>
 
 import {LnFormItemPropsType} from "./lnFormType.ts";
 
-const formData = defineModel<T>()
-const {label, name, rule, extra, disabled = false} = defineProps<LnFormItemPropsType>()
+const formData = defineModel<any>()
+const {label, name, rule, extra, config,} = defineProps<LnFormItemPropsType>()
 
 </script>
 

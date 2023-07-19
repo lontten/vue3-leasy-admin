@@ -5,20 +5,16 @@
       :rules="rule"
       :extra="extra"
   >
-    <a-date-picker v-model:value="formData[name]" :disabled="disabled"/>
+    <a-date-picker v-model:value="formData[name]" v-bind="config"/>
   </a-form-item>
 </template>
 
-
-<script lang="ts" setup generic="T">
-
-
+<script lang="ts" setup>
 import {LnFormItemPropsType} from "./lnFormType";
-
-const formData = defineModel<T>()
+const formData = defineModel<any>()
 const {
   label, name, rule,
-  extra, disabled = false
+  extra, config
 } = defineProps<LnFormItemPropsType>()
 
 </script>

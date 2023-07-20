@@ -7,8 +7,6 @@
   >
     <a-input-number :id="name"
                     v-model:value="formData[name]"
-                    :min="min"
-                    :max="max"
                     v-bind="config"
                     style="width: 100%"/>
   </a-form-item>
@@ -20,7 +18,7 @@ import {LnFormItemPropsType} from "./lnFormType.ts";
 
 const formData = defineModel<any>()
 const {
-  label, name, rule, min, max,
+  label, name, rule,
   extra, config
 } = defineProps<LnFormItemPropsType>()
 

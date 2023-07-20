@@ -9,16 +9,11 @@ export interface LnFormItemPropsType {
     config?: any,
 
 
-    min?: number,
-    max?: number,
-
-    // select
-    mode?: 'multiple' | 'tags' | 'combobox'
 
     uploadType?: 'oss' | 'cos' | 'http',  //文件上传的方式
     useJson?: boolean, //数组结构的数据是否使用json格式
     fileTypeList?: string, //可上传的文件类型列表使用,分割，例如： "image/png, image/jpeg"
-    fileSizeMax?: number, //可上传的最大文件格式大小
+    fileSizeMax?: string, //可上传的最大文件格式大小, kK,mM,gG
     fileNum?: number, //可上传的文件数量
 
 
@@ -28,10 +23,10 @@ export interface LnFormItemPropsType {
     showSsx?: boolean //显示省市县
     ssxName?: string //省市县字段名字
 
-    selectOptionList?: SelectOptionType[] //选项列表
-
     minRows?: number //多行文本高度
     maxRows?: number //多行文本高度
+
+    selectOptionList?:SelectOptionType[] //选项列表
 
     onChange?: any
 

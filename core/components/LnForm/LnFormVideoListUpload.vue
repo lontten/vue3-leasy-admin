@@ -18,7 +18,7 @@
           @remove="handleRemove"
           v-bind="config"
       >
-        <div v-if="fileList.length < 8">
+        <div v-if="fileList.length < fileNum">
           <plus-outlined/>
           <div style="margin-top: 8px">Upload</div>
         </div>
@@ -40,7 +40,7 @@ const formData = defineModel<any>()
 // fileTypeList使用,分割 例如： "image/png,image/jpeg"
 const {
   label, name, rule, useJson = false, extra,
-  uploadType, fileTypeList = 'video/mp4,', fileNum = 1,
+  uploadType, fileTypeList = 'video/mp4,', fileNum = 1, fileSizeMax,
   config,
 } = defineProps<LnFormItemPropsType>()
 
@@ -69,6 +69,11 @@ const handleChange = (_info: UploadChangeParam) => {
 };
 
 const beforeUpload = async (file: UploadProps['fileList'][number]) => {
+  //数量限制
+  if (fileList.value.length >= fileNum) {
+    return false
+  }
+
   // //图片格式限制 image/jpeg   image/png
   let arr = fileTypeList.split(',');
   if (arr.length > 0) {
@@ -79,13 +84,24 @@ const beforeUpload = async (file: UploadProps['fileList'][number]) => {
   }
 
 
-  //
-  // //图片大小限制
-  // const isLt2M = file.size / 1024 / 1024 < 2;
-  // if (!isLt2M) {
-  //   message.error('Image must smaller than 2MB!');
-  //   return false
-  // }
+  //文件大小限制
+  if (fileSizeMax) {
+    let isBig = false
+    if (fileSizeMax.endsWith('k') || fileSizeMax.endsWith('K')) {
+      isBig = file.size / 1024 > Number.parseInt(fileSizeMax);
+    }
+    if (fileSizeMax.endsWith('m') || fileSizeMax.endsWith('M')) {
+      isBig = file.size / 1024 / 1024 > Number.parseInt(fileSizeMax);
+    }
+    if (fileSizeMax.endsWith('g') || fileSizeMax.endsWith('G')) {
+      isBig = file.size / 1024 / 1024 / 1024 > Number.parseInt(fileSizeMax);
+    }
+
+    if (isBig) {
+      message.error('文件必须小于' + fileSizeMax);
+      return false
+    }
+  }
 
   const uid = file.uid
   const setFileStatus = (status: any) => {
@@ -96,6 +112,10 @@ const beforeUpload = async (file: UploadProps['fileList'][number]) => {
     }
   }
 
+  //数量限制
+  if (fileList.value.length >= fileNum) {
+    return false
+  }
   fileList.value = [...fileList.value, file];
 
   //手动上传

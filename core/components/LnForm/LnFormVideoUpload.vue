@@ -38,7 +38,7 @@ const formData = defineModel<any>()
 // fileTypeList使用,分割 例如： "video/mp4,image/jpeg"
 const {
   label, name, rule, extra,
-  uploadType, fileTypeList = 'video/mp4,',
+  uploadType, fileTypeList = 'video/mp4,', fileSizeMax,
   config,
 } = defineProps<LnFormItemPropsType>()
 
@@ -67,13 +67,24 @@ const beforeUpload = async (file: UploadProps['fileList'][number]) => {
     }
   }
 
-  //
-  // //图片大小限制
-  // const isLt2M = file.size / 1024 / 1024 < 2;
-  // if (!isLt2M) {
-  //   message.error('Image must smaller than 2MB!');
-  //   return false
-  // }
+  //文件大小限制
+  if (fileSizeMax) {
+    let isBig = false
+    if (fileSizeMax.endsWith('k') || fileSizeMax.endsWith('K')) {
+      isBig = file.size / 1024 > Number.parseInt(fileSizeMax);
+    }
+    if (fileSizeMax.endsWith('m') || fileSizeMax.endsWith('M')) {
+      isBig = file.size / 1024 / 1024 > Number.parseInt(fileSizeMax);
+    }
+    if (fileSizeMax.endsWith('g') || fileSizeMax.endsWith('G')) {
+      isBig = file.size / 1024 / 1024 / 1024 > Number.parseInt(fileSizeMax);
+    }
+
+    if (isBig) {
+      message.error('图片必须小于' + fileSizeMax);
+      return false
+    }
+  }
 
   //手动上传
   switch (uploadType) {

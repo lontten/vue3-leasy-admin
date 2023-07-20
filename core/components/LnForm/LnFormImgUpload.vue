@@ -38,7 +38,7 @@ const formData = defineModel<any>()
 // fileTypeList使用,分割 例如： "image/png,image/jpeg"
 const {
   label, name, rule, extra,
-  uploadType, fileTypeList = 'image/png,image/jpeg',
+  uploadType, fileTypeList = 'image/png,image/jpeg',fileSizeMax,
   config
 } = defineProps<LnFormItemPropsType>()
 
@@ -64,14 +64,26 @@ const beforeUpload = async (file: UploadProps['fileList'][number]) => {
       return false
     }
   }
+  console.log('k,',fileSizeMax)
+  //文件大小限制
+  if (fileSizeMax) {
+    let isBig = false
+    if (fileSizeMax.endsWith('k') || fileSizeMax.endsWith('K')) {
+      console.log('k,',fileSizeMax)
+      isBig = file.size / 1024 > Number.parseInt(fileSizeMax);
+    }
+    if (fileSizeMax.endsWith('m') || fileSizeMax.endsWith('M')) {
+      isBig = file.size / 1024 / 1024 > Number.parseInt(fileSizeMax);
+    }
+    if (fileSizeMax.endsWith('g') || fileSizeMax.endsWith('G')) {
+      isBig = file.size / 1024 / 1024 / 1024 > Number.parseInt(fileSizeMax);
+    }
 
-  //
-  // //图片大小限制
-  // const isLt2M = file.size / 1024 / 1024 < 2;
-  // if (!isLt2M) {
-  //   message.error('Image must smaller than 2MB!');
-  //   return false
-  // }
+    if (isBig) {
+      message.error('图片必须小于' + fileSizeMax);
+      return false
+    }
+  }
 
   //手动上传
   switch (uploadType) {

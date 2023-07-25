@@ -1,10 +1,17 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",  // 这里需要配置
+    "baseUrl": "./",
+    // 这里需要配置
     "paths": {
-      "@/*": ["./src/*"]  // 这里需要配置
+      "@src/*": [
+        "./src/*"
+      ],
+      // 这里需要配置
+      "@core/*": [
+        "./core/*"
+      ]
+      // 这里需要配置
     },
-
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
@@ -53,8 +60,5 @@
       "path": "./tsconfig.node.json"
     }
   ],
-  "extends": "./tsconfig.extends.json",
-
-
-
+  "extends": "./tsconfig.extends.json"
 }

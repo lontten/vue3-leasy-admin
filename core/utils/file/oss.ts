@@ -1,4 +1,4 @@
-import {fileUploadOssPolicy} from "@/services/file/upload.ts";
+import {fileUploadOssPolicy} from "@src/services/file/upload.ts";
 import {message} from "ant-design-vue";
 import {v4} from "uuid";
 import axios from "axios";

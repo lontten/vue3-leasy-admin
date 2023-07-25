@@ -1,4 +1,4 @@
-import {baseReq} from "@/utils/axios.ts";
+import {baseReq} from "@src/utils/axios.ts";
 
 export const fileUploadOssPolicy = async () => {
     return await baseReq().get("/file/upload/oss/policy")

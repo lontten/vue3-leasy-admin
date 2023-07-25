@@ -5,6 +5,7 @@ import {AntDesignVueResolver} from "unplugin-vue-components/resolvers";
 import Components from 'unplugin-vue-components/vite';
 import {baseConfig} from "./config/config";
 import * as path from "path";
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,10 +34,14 @@ export default defineConfig({
             ],
         }),
 
+        // vue-jsx插件
+        vueJsx({})
+
     ],
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'src')
+            '@src': path.resolve(__dirname, 'src'),
+            '@core': path.resolve(__dirname, 'core'),
         },
         //配置文件扩展名
         extensions: [".ts", ".mjs", ".js", ".jsx", ".tsx", ".json"],

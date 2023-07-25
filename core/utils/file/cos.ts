@@ -1,4 +1,4 @@
-import {fileUploadCosPolicy} from "@/services/file/upload.ts";
+import {fileUploadCosPolicy} from "@src/services/file/upload.ts";
 import {message} from "ant-design-vue";
 import * as COS from "cos-nodejs-sdk-v5";
 import {v4} from "uuid";

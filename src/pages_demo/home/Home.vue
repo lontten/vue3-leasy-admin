@@ -73,7 +73,7 @@ import HomeLogo from "../../components/HomeLogo.vue";
 import {useSysNavStore} from "../../../core/stores/sysNavStore.ts";
 import ProNavTreeOption from "../../../core/components/ProNavTreeOption.vue";
 import {removeToken} from "../../../core/utils/login.ts";
-import {getUserInfo} from "@/pages_demo/home/homeService.ts";
+import {getUserInfo} from "@src/pages_demo/home/homeService.ts";
 import {useSysInitStore} from "../../../core/stores/sysInitStore.ts";
 import {is_uuid_zero} from "../../../core/utils/UUID.ts";
 

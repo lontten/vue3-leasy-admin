@@ -1,4 +1,4 @@
-import {baseReq} from "@/utils/axios.ts";
+import {baseReq} from "@src/utils/axios.ts";
 
 export const getUserInfo = async () => {
     const {code, data} = await baseReq().get('/login/current-user' );

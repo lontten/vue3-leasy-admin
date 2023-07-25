@@ -1,8 +1,8 @@
 import axios, {AxiosInstance} from "axios";
 import {message} from "ant-design-vue";
-import {removeToken} from "../../core/utils/login.ts";
+import {removeToken} from "@core/utils/login.ts";
 import router from "../../core/config/routes.ts";
-import {useSysInitStore} from "../../core/stores/sysInitStore.ts";
+import {useSysInitStore} from "@core/stores/sysInitStore.ts";
 
 let apis = new Map()
 // apis.set("base", 'https://code.xxx.com/api-admin')

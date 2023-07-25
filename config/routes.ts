@@ -1,13 +1,13 @@
-import Home from "@/pages_demo/home/Home.vue";
-import Login from "@/pages_demo/login/Login.vue";
-import HelloWorld from "@/components/HelloWorld.vue";
-import p404 from "@/pages_demo/sys/p404.vue";
-import p500 from "@/pages_demo/sys/p500.vue";
-import p403 from "@/pages_demo/sys/p403.vue";
-import pSuccess from "@/pages_demo/sys/pSuccess.vue";
-import pError from "@/pages_demo/sys/pError.vue";
-import testForm from "@/pages_test/testForm.vue";
-import overview from "@/pages_demo/overview/overview.vue";
+import Home from "@src/pages_demo/home/Home.vue";
+import Login from "@src/pages_demo/login/Login.vue";
+import HelloWorld from "@src/components/HelloWorld.vue";
+import p404 from "@src/pages_demo/sys/p404.vue";
+import p500 from "@src/pages_demo/sys/p500.vue";
+import p403 from "@src/pages_demo/sys/p403.vue";
+import pSuccess from "@src/pages_demo/sys/pSuccess.vue";
+import pError from "@src/pages_demo/sys/pError.vue";
+import testForm from "@src/pages_test/testForm.vue";
+import overview from "@src/pages_demo/overview/overview.vue";
 
 
 export const routes = [

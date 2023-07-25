@@ -6,6 +6,7 @@
       <order-card
           currentTitle="今日订单数量"
           totalTitle="总订单数量"
+          pre-num="232"
           preTitle="昨日订单数量"
           preShortTitle="昨日"
 
@@ -23,6 +24,7 @@
       <order-card
           currentTitle="今日订单数量"
           totalTitle="总订单数量"
+          pre-num="232"
           preTitle="昨日订单数量"
           preShortTitle="昨日"
 
@@ -40,6 +42,7 @@
       <order-card
           currentTitle="今日订单数量"
           totalTitle="总订单数量"
+          pre-num="232"
           preTitle="昨日订单数量"
           preShortTitle="昨日"
 
@@ -57,6 +60,7 @@
       <order-card
           currentTitle="今日订单数量"
           totalTitle="总订单数量"
+          pre-num="232"
           preTitle="昨日订单数量"
           preShortTitle="昨日"
 
@@ -72,6 +76,7 @@
 
     </div>
     <a-typography-title :level="4">其他功能</a-typography-title>
+    <Bar></Bar>
 
   </div>
 
@@ -79,6 +84,7 @@
 </template>
 <script lang="ts" setup>
 import OrderCard from "../../../core/components/overview/orderCard.vue";
+import {Bar} from "@src/components/Ka.tsx";
 
 const width = "386px"
 

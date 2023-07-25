@@ -1,15 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import {ref} from 'vue'
+import LnFormImgUpload from "@core/components/LnForm/LnFormImgUpload.vue";
+import LnFormDateTime from "@core/components/LnForm/LnFormDateTime.vue";
+import HomeLogo from "@src/components/HomeLogo.vue";
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+
+
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
+  <LnFormDateTime label="asaff  " name="asdf"></LnFormDateTime>
 
+  <home-logo></home-logo>
   <div class="card">
+    <LnFormImgUpload label="a " name="a"></LnFormImgUpload>
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>
       Edit
@@ -20,7 +28,7 @@ const count = ref(0)
   <p>
     Check out
     <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
+    >create-vue</a
     >, the official Vue + Vite starter
   </p>
   <p>

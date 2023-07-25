@@ -36,10 +36,10 @@
 </template>
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
-import {apiLogin} from "@/services/access/login.ts";
+import {apiLogin} from "@src/services/access/login.ts";
 import {useSysInitStore} from "../../../core/stores/sysInitStore.ts";
 import router from "../../../core/config/routes.ts";
-import {getUserInfo} from "@/pages_demo/home/homeService.ts";
+import {getUserInfo} from "@src/pages_demo/home/homeService.ts";
 import {removeToken} from "../../../core/utils/login.ts";
 import {is_uuid_zero} from "../../../core/utils/UUID.ts";
 import {useRouter} from "vue-router";

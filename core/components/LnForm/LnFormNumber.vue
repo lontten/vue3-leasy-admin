@@ -19,7 +19,7 @@ import {LnFormItemPropsType} from "./lnFormType.ts";
 const formData = defineModel<any>()
 const {
   label, name, rule,
-  extra, config
+  extra, config,
 } = defineProps<LnFormItemPropsType>()
 
 </script>

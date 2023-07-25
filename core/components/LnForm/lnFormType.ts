@@ -2,8 +2,8 @@ import {AddressMapType, AddressPosType} from "../../type/sys/address.ts";
 import {SelectOptionType} from "../../type/form.ts";
 
 export interface LnFormItemPropsType {
-    label?: string
-    name?: string
+    label: string
+    name: string
     rule?: any[],
     extra?: string, //备注
     config?: any,

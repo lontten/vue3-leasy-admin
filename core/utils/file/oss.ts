@@ -1,3 +1,4 @@
+// @ts-ignore
 import {fileUploadOssPolicy} from "@src/services/file/upload.ts";
 import {message} from "ant-design-vue";
 import {v4} from "uuid";

@@ -103,14 +103,14 @@ const columnList = computed(() => {
 })
 
 interface Props {
-  onSearchEvent: (e: any) => {}
+  onSearchEvent: (e: any) => void
 }
 
 const {onSearchEvent} = defineProps<Props>()
 
 
 const expand = ref(false);
-const formRef = ref<FormInstance>();
+const formRef = ref<FormInstance>({});
 
 const onFinish = (values: any) => {
   onSearchEvent(values)

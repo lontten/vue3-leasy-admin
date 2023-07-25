@@ -1,3 +1,4 @@
+// @ts-ignore
 import {fileUploadCosPolicy} from "@src/services/file/upload.ts";
 import {message} from "ant-design-vue";
 import * as COS from "cos-nodejs-sdk-v5";
@@ -23,15 +24,15 @@ const cosFileUpload = async (file: any, onProgress?: (e: any) => {}) => {
     }
 
     // 这里省略初始化过程和上传参数
-    // @ts-ignore
-    const cos = new COS({
+    const cosConfig = {
         TmpSecretId: data.tmpSecretId,        // 临时密钥的 tmpSecretId
         TmpSecretKey: data.tmpSecretKey,      // 临时密钥的 tmpSecretKey
         SecurityToken: data.sessionToken, // 临时密钥的 sessionToken
         ExpiredTime: data.expiredTime,               // 临时密钥失效时间戳，是申请临时密钥时，时间戳加 durationSeconds
 
         SimpleUploadMethod: 'putObject', // 强烈建议，高级上传、批量上传内部对小文件做简单上传时使用putObject
-    });
+    }
+    const cos = new COS(cosConfig);
 
     const fileName = file.name
     let nameStr = data.dir + v4() + getFileNameSuffixDot(fileName);

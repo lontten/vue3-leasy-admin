@@ -10,6 +10,7 @@
 
            row-key="id"
            :row-selection="selectedRowsConfig"
+           v-bind="config"
 
   >
     <template #bodyCell="{ column, record }">
@@ -72,18 +73,42 @@
       </template>
 
     </template>
+
+
+    <!--    二级表格-->
+    <template #expandedRowRender>
+      <TableCore v-model="queryDataExpanded"
+                 v-model:columns="columnsExpanded"
+                 :config="{
+                   pagination:false
+                 }"
+      >
+
+        <template #lnOperation="{data}">
+          <slot name="lnOperationExpanded" :data="data"></slot>
+        </template>
+
+      </TableCore>
+    </template>
+
+
   </a-table>
 </template>
 <script lang="ts" setup generic="T">
 import {computed, onMounted, ref, watch} from 'vue';
 import {usePagination} from "vue-request";
 import {TableProps} from "ant-design-vue";
+import {LnTablePropsType} from "@core/components/LnForm/lnFormType.ts";
 
 const queryData = defineModel<any>()
+const queryDataExpanded = defineModel<any>('queryDataExpanded')
 const columnsBase = defineModel<any[]>('columns')
+const columnsExpanded = defineModel<any[]>('columnsExpanded')
 const searchKey = defineModel<any>('searchKey')
 const selectedRows = defineModel<any>('selectedRows')
-
+const {
+  config,
+} = defineProps<LnTablePropsType>()
 
 const switchRef = ref<any>({})
 const columns = computed(() => {

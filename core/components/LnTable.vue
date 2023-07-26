@@ -24,7 +24,9 @@
     </div>
 
     <TableCore v-model="queryData"
+               v-model:queryDataExpanded="queryDataExpanded"
                v-model:columns="columns"
+               v-model:columnsExpanded="columnsExpanded"
                v-model:searchKey="searchKey"
                v-model:selectedRows="selectedRows"
                ref="tableRef"
@@ -33,6 +35,12 @@
       <template #lnOperation="{data}">
         <slot name="lnOperation" :data="data"></slot>
       </template>
+
+
+      <template #lnOperationExpanded="{data}">
+        <slot name="lnOperationExpanded" :data="data"></slot>
+      </template>
+
 
     </TableCore>
   </div>
@@ -44,7 +52,9 @@ import {computed, ref} from "vue";
 
 
 const queryData = defineModel<T>()
+const queryDataExpanded = defineModel<any[]>('queryDataExpanded')
 const columns = defineModel<any[]>('columns')
+const columnsExpanded = defineModel<any[]>('columnsExpanded')
 const searchData = defineModel<any>('searchData')
 const selectedRows = defineModel<any>('selectedRows')
 const hasSelected = computed(() => selectedRows.value && selectedRows.value.length > 0);

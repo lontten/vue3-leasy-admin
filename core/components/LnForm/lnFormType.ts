@@ -48,4 +48,5 @@ export interface LnFormPropsType {
 
 export interface LnTablePropsType {
     columns?: any[] //字段
+    config?: any,
 }

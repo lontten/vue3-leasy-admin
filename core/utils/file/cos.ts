@@ -46,7 +46,6 @@ const cosFileUpload = async (file: any, onProgress?: (e: any) => {}) => {
         Body: file,
         onProgress: onProgress
     })
-    console.log('resp:', resp)
     if (resp.statusCode == 200 && resp.Location) {
         return {
             isOk: true,

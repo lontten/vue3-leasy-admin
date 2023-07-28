@@ -83,10 +83,15 @@
 
 </template>
 <script lang="ts" setup>
-import OrderCard from "../../../core/components/overview/orderCard.vue";
+import {greet, to_html} from "lram-wasm";
 import {Bar} from "@src/components/Ka.tsx";
-
+import OrderCard from "@core/components/overview/orderCard.vue";
 const width = "386px"
+
+console.log('wasm')
+greet()
+let s = to_html();
+console.log('to html:,', s);
 
 
 </script>

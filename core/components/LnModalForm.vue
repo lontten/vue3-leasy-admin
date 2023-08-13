@@ -2,6 +2,7 @@
   <a-modal v-model:open="open" :title="title"
            @ok="handleOk"
            :width="modalWith"
+           :destroyOnClose="true"
            ok-text="确认" cancel-text="取消"
   >
     <a-form

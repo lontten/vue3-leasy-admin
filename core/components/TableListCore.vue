@@ -4,12 +4,7 @@
            :data-source="dataSource"
            :scroll="{ x: 1300, y: 1000 }"
 
-           :pagination="pagination"
-           :loading="loading"
-           @change="handleTableChange"
-
-           row-key="id"
-           :row-selection="selectedRowsConfig"
+           pagination:false
            v-bind="config"
 
   >
@@ -74,37 +69,17 @@
     </template>
 
 
-    <!--    二级表格-->
-    <template #expandedRowRender="{ record }">
-      <TableListCore v-model="queryDataExpanded"
-                     v-model:expandedParam="record"
-                     v-model:columns="columnsExpanded"
-      >
-
-        <template #lnOperation="{data}">
-          <slot name="lnOperationExpanded" :data="data"></slot>
-        </template>
-
-      </TableListCore>
-    </template>
-
-
   </a-table>
 </template>
 <script lang="ts" setup generic="T">
-import {computed, onMounted, ref, watch} from 'vue';
-import {usePagination} from "vue-request";
-import {TableProps} from "ant-design-vue";
+import {computed, ref} from 'vue';
 import {LnTablePropsType} from "@core/components/LnForm/lnFormType.ts";
+import {onMounted} from "vue/dist/vue";
 import {list2obj} from "@core/utils/arr.ts";
-import TableListCore from "@core/components/TableListCore.vue";
 
 const queryData = defineModel<any>()
-const queryDataExpanded = defineModel<any>('queryDataExpanded')
+const expandedParam = defineModel<any>('expandedParam')
 const columnsBase = defineModel<any[]>('columns')
-const columnsExpanded = defineModel<any[]>('columnsExpanded')
-const searchKey = defineModel<any>('searchKey')
-const selectedRows = defineModel<any>('selectedRows')
 const {
   config,
 } = defineProps<LnTablePropsType>()
@@ -125,6 +100,7 @@ const columns = computed(() => {
 })
 
 
+
 const switchChange = async (e: any, column: any, record: any) => {
   switchRef.value[column.dataIndexLeasySwitch] = e
   const c: any = !e
@@ -134,32 +110,10 @@ const switchChange = async (e: any, column: any, record: any) => {
   }
 }
 
-// table-------------------------
-const queryDataInt = async (param: any) => {
-  let data = await queryData.value(param)
-  data.total = Number.parseInt(data.total)
-  return data
-}
-const {
-  data,
-  run,
-  loading,
-  current,
-  pageSize,
-  total,
-} = usePagination(queryDataInt, {
-  pagination: {
-    currentKey: 'pageIndex',
-    pageSizeKey: 'pageSize',
-    totalKey: 'total',
-    totalPageKey: 'pages',
-  },
-});
-
 
 // @ts-ignore
 const dataSource = computed(() => {
-  let list: any[] = data.value?.records || []
+  let list: any[] = data.value
   const columnList: any[] = columns.value?.filter(v => v.switchConfig) || []
   list = list.map(value => {
     for (let columnListElement of columnList) {
@@ -171,69 +125,14 @@ const dataSource = computed(() => {
   return list
 });
 
-
-const pagination = computed(() => ({
-  total: total.value,
-  current: current.value,
-  pageSize: pageSize.value,
-}));
-
-const handleTableChange: TableProps['onChange'] | any = (
-    pag: { pageSize: number; current: number },
-    filters: any,
-    sorter: any,
-) => {
-  run({
-    pageSize: pag.pageSize!,
-    pageIndex: pag?.current,
-    sortField: sorter.field,
-    sortOrder: sorter.order,
-    ...filters,
-    ...searchKey.value,
-  });
-};
-
-
-const loadData = () => {
-  run({
-    pageSize: pageSize.value,
-    pageIndex: current.value,
-    ...searchKey.value,
-  })
+const data = ref([])
+const loadData = async () => {
+  data.value = await queryData.value(expandedParam)
 }
-
-
-// 多选----------------
-type Key = string | number;
-const selectedRowKeyList = ref<Key[]>([]);
-const onSelectChange = (selectedRowKeys: Key[]) => {
-  const list = dataSource.value.filter((v: any) => selectedRowKeys.includes(v.id))
-  selectedRows.value = list
-  selectedRowKeyList.value = selectedRowKeys;
-};
-const selectedRowsConfig = computed(() => {
-  if (!selectedRows.value) {
-    return undefined
-  }
-  return {selectedRowKeys: selectedRowKeyList, onChange: onSelectChange}
+onMounted(async () => {
+  await loadData()
 })
 
-
-watch(searchKey, () => {
-  loadData()
-})
-
-onMounted(() => {
-  run({
-    pageSize: 10,
-    pageIndex: 1,
-  });
-})
-// --------------------二级表格-------
-
-
-// 把 方法暴露给父组件
-defineExpose({loadData})
 </script>
 <style scoped>
 .editable-row-operations a {

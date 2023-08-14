@@ -100,7 +100,12 @@ const columns = computed(() => {
 })
 
 
-
+/**
+ * 开关切换时，调用对应的函数，执行成功后，调用loadData重新加载数据
+ * @param e
+ * @param column
+ * @param record
+ */
 const switchChange = async (e: any, column: any, record: any) => {
   switchRef.value[column.dataIndexLeasySwitch] = e
   const c: any = !e

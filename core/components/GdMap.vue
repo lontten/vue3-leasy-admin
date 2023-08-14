@@ -61,7 +61,6 @@ const initMap = async () => {
         let adcode = result.regeocode.addressComponent.adcode
 
 
-
         //详情查询
         placeSearch.getDetails(towncode, function (status, result) {
           console.log(status, result)

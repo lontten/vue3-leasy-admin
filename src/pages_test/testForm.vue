@@ -10,14 +10,14 @@
   </LnForm>
 
   <div>fasdjklfjjjjjja</div>
-  <FtCkeditor v-model:value="formData2"></FtCkeditor>
+  <RichTextCkeditor v-model:value="formData2"></RichTextCkeditor>
   {{ formData2 }}
 </template>
 <script lang="ts" setup>
 import LnForm from "@core/components/LnForm.vue";
 import LnFormRichTextCkeditor5 from "@core/components/LnForm/LnFormRichTextCkeditor5.vue";
 import {ref} from "vue";
-import FtCkeditor from "@core/components/FtCkeditor.vue";
+import RichTextCkeditor from "@core/components/RichTextCkeditor.vue";
 
 const formData = ref({})
 const formData2 = ref({})

@@ -5,7 +5,7 @@
       :rules="rule"
       :extra="extra"
   >
-    <FtCkeditor v-model:value="formData[name]" v-bind="config"/>
+    <RichTextCkeditor v-model:value="formData[name]" v-bind="config"/>
   </a-form-item>
 </template>
 
@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 
 import {LnFormItemPropsType} from "./lnFormType.ts";
-import FtCkeditor from "@core/components/FtCkeditor.vue";
+import RichTextCkeditor from "@core/components/RichTextCkeditor.vue";
 
 const formData = defineModel<any>()
 const {label, name, rule, extra, config,} = defineProps<LnFormItemPropsType>()

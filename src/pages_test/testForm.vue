@@ -7,6 +7,9 @@
         label="a" name="a"
         v-model="formData"
     ></LnFormRichTextCkeditor5>
+    <LnFormFileUpload label="b" name="b"   v-model="formData">
+
+    </LnFormFileUpload>
   </LnForm>
 
   <div>fasdjklfjjjjjja</div>
@@ -18,6 +21,7 @@ import LnForm from "@core/components/LnForm.vue";
 import LnFormRichTextCkeditor5 from "@core/components/LnForm/LnFormRichTextCkeditor5.vue";
 import {ref} from "vue";
 import RichTextCkeditor from "@core/components/RichTextCkeditor.vue";
+import LnFormFileUpload from "@core/components/LnForm/LnFormFileUpload.vue";
 
 const formData = ref({})
 const formData2 = ref({})

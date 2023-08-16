@@ -12,6 +12,8 @@
     "@amap/amap-jsapi-loader": "^1.0.1",
     "@amap/amap-jsapi-types": "^0.0.13",
     "@ant-design/icons-vue": "^6.1.0",
+    "@ckeditor/ckeditor5-build-classic": "^39.0.1",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "ali-oss": "^6.18.0",
     "ant-design-vue": "^4.0.0",

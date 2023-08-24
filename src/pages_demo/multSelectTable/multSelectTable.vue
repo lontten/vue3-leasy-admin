@@ -32,11 +32,10 @@ import {dictListPage} from "@src/services/dict/dict.ts";
 import {dictColumns} from "./data.ts";
 
 const tableRef = ref()
-
-const selectedRows = ref([])
 const searchData = ref({})
 
 
+const selectedRows = ref([])
 watch(selectedRows, () => {
   //当多选发生变化时，这里会执行
   console.log('selectedRows', selectedRows.value)
@@ -48,7 +47,6 @@ const getPage = async (param: any) => {
 }
 
 const del = (data: any) => {
-
 }
 
 </script>

@@ -75,9 +75,9 @@
 
 
     <!--    二级表格-->
-    <template #expandedRowRender="{ record }">
+    <template #expandedRowRender="{ record }" v-if="queryDataExpanded">
       <TableListCore v-model="queryDataExpanded"
-                     v-model:expandedParam="record"
+                     :subParam="record"
                      v-model:columns="columnsExpanded"
       >
 

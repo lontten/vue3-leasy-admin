@@ -49,4 +49,5 @@ export interface LnFormPropsType {
 export interface LnTablePropsType {
     columns?: any[] //字段
     config?: any,
+    subParam?:any, //二级表格的参数
 }

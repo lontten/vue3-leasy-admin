@@ -77,10 +77,10 @@ import {LnTablePropsType} from "@core/components/LnForm/lnFormType.ts";
 import {list2obj} from "@core/utils/arr.ts";
 
 const queryData = defineModel<any>()
-const expandedParam = defineModel<any>('expandedParam')
 const columnsBase = defineModel<any[]>('columns')
 const {
   config,
+  subParam
 } = defineProps<LnTablePropsType>()
 
 const switchRef = ref<any>({})
@@ -131,7 +131,7 @@ const dataSource = computed(() => {
 
 const data = ref([])
 const loadData = async () => {
-  data.value = await queryData.value(expandedParam)
+  data.value = await queryData.value(subParam)
 }
 onMounted(async () => {
   await loadData()

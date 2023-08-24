@@ -62,6 +62,7 @@ export default defineConfig({
 
     build: {
         cssMinify: true,
+        outDir:baseConfig.outDir,
 
     }
 })

@@ -3,6 +3,7 @@
 // 项目基础配置
 export interface BaseConfigType {
     baseUrl?: string
+    outDir?: string
 }
 
 export interface StoreUserInfoType {

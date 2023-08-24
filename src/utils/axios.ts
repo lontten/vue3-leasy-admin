@@ -7,10 +7,8 @@ import {useSysInitStore} from "@core/stores/sysInitStore.ts";
 import {removeToken} from "@core/utils/login.ts";
 
 let apis = new Map()
-// apis.set("base", 'https://code.xxx.com/api-admin')
-apis.set("base", 'api')
-apis.set("hf", 'import.meta.env.VITE_URL_hf')
-apis.set("org", 'import.meta.env.VITE_URL_org')
+apis.set("base", import.meta.env.VITE_URL_BASE)
+// apis.set("hf", import.meta.env.VITE_URL_hf)
 
 
 let map = new Map<string, AjaxFuns>();

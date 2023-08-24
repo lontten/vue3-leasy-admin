@@ -72,9 +72,8 @@
   </a-table>
 </template>
 <script lang="ts" setup generic="T">
-import {computed, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {LnTablePropsType} from "@core/components/LnForm/lnFormType.ts";
-import {onMounted} from "vue/dist/vue";
 import {list2obj} from "@core/utils/arr.ts";
 
 const queryData = defineModel<any>()

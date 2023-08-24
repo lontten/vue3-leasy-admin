@@ -93,13 +93,13 @@ const initStore = useSysInitStore();
 const navStore = useSysNavStore()
 let navTree = computed(() => navStore.navTree)
 const navData = [
-  // {
-  //   name: 'abc',
-  //   path: 'home/abc',
-  //   key: 'abc',
-  //   icon: 'codepen-outlined',
-  //   roles: ['admin']
-  // },
+  {
+    name: 'multSelectTable',
+    path: 'home/multSelectTable',
+    key: 'multSelectTable',
+    icon: 'codepen-outlined',
+    roles: ['admin']
+  },
 
 ]
 navStore.initNavTree(navData)

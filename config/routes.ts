@@ -8,6 +8,7 @@ import pSuccess from "@src/pages_demo/sys/pSuccess.vue";
 import pError from "@src/pages_demo/sys/pError.vue";
 import testForm from "@src/pages_test/testForm.vue";
 import overview from "@src/pages_demo/overview/overview.vue";
+import multSelectTable from "@src/pages_demo/multSelectTable/multSelectTable.vue";
 
 
 export const routes = [
@@ -16,7 +17,7 @@ export const routes = [
         path: '/home', component: Home,
         children: [
             {path: 'overview', component: overview},
-            {path: 'abc', component: testForm},
+            {path: 'multSelectTable', component: multSelectTable},
 
         ]
     },

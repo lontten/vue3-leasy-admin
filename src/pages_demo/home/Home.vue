@@ -100,6 +100,13 @@ const navData = [
     icon: 'codepen-outlined',
     roles: ['admin']
   },
+  {
+    name: 'subTable',
+    path: 'home/subTable',
+    key: 'subTable',
+    icon: 'codepen-outlined',
+    roles: ['admin']
+  },
 
 ]
 navStore.initNavTree(navData)

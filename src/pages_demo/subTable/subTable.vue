@@ -1,8 +1,9 @@
 <template>
   <LnTable v-model:columns="dictColumns"
+           v-model:columnsExpanded="dictColumns"
            v-model="getPage"
            v-model:searchData="searchData"
-           v-model:selectedRows="selectedRows"
+           v-model:queryDataExpanded="queryDataExpanded"
            bordered ref="tableRef">
 
     <template #lnOperation="{data}">
@@ -15,8 +16,13 @@
     </template>
 
 
-    <template #head>
-      <a-button class="editable-add-btn">删除</a-button>
+    <template #lnOperationExpanded="{data}">
+      <a-popconfirm
+          title="确定删除?"
+          @confirm="subDel(data)"
+      >
+        <a-button danger>sub删除</a-button>
+      </a-popconfirm>
     </template>
 
   </LnTable>
@@ -27,28 +33,33 @@
 <script setup lang="ts">
 
 import LnTable from "@core/components/LnTable.vue";
-import {ref, watch} from "vue";
-import {dictListPage} from "@src/services/dict/dict.ts";
+import {ref} from "vue";
+import {dictListAll, dictListPage} from "@src/services/dict/dict.ts";
 import {dictColumns} from "./data.ts";
+import {UUID_ZERO} from "@core/utils/UUID.ts";
 
 const tableRef = ref()
-
-const selectedRows = ref([])
 const searchData = ref({})
 
 
-watch(selectedRows, () => {
-  //当多选发生变化时，这里会执行
-  console.log('selectedRows', selectedRows.value)
-})
-
 const getPage = async (param: any) => {
   param.dictCode = 'tx_address_ssx'
+  param.dictPid = UUID_ZERO
   return await dictListPage(param)
 }
 
-const del = (data: any) => {
+const queryDataExpanded = async (param: any) => {
+  console.log('queryDataExpanded get page', param)
+  return await dictListAll({
+    dictPid: param.id
+  })
+}
 
+const del = (data: any) => {
+  console.log('del,', data)
+}
+const subDel = (data: any) => {
+  console.log('subDel,', data)
 }
 
 </script>

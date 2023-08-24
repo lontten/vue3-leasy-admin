@@ -52,7 +52,7 @@ import {computed, ref} from "vue";
 
 
 const queryData = defineModel<T>()
-const queryDataExpanded = defineModel<any[]>('queryDataExpanded')
+const queryDataExpanded = defineModel<any>('queryDataExpanded')
 const columns = defineModel<any[]>('columns')
 const columnsExpanded = defineModel<any[]>('columnsExpanded')
 const searchData = defineModel<any>('searchData')

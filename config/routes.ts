@@ -9,6 +9,7 @@ import pError from "@src/pages_demo/sys/pError.vue";
 import testForm from "@src/pages_test/testForm.vue";
 import overview from "@src/pages_demo/overview/overview.vue";
 import multSelectTable from "@src/pages_demo/multSelectTable/multSelectTable.vue";
+import subTable from "@src/pages_demo/subTable/subTable.vue";
 
 
 export const routes = [
@@ -18,6 +19,7 @@ export const routes = [
         children: [
             {path: 'overview', component: overview},
             {path: 'multSelectTable', component: multSelectTable},
+            {path: 'subTable', component: subTable},
 
         ]
     },

@@ -80,7 +80,7 @@ const queryData = defineModel<any>()
 const columnsBase = defineModel<any[]>('columns')
 const {
   config,
-  subParam
+  subParam,
 } = defineProps<LnTablePropsType>()
 
 const switchRef = ref<any>({})

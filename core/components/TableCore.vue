@@ -30,12 +30,12 @@
 
       <!--      渲染 valueType: img 类型 -->
       <template v-if="column.valueType === 'img'  ">
-        <img width="50" height="50" :src="record[column.dataIndex]">
-        <!--        <a-image-->
-        <!--            :width="40"-->
-        <!--            :height="40"-->
-        <!--            :src="record[column.dataIndex]"-->
-        <!--        />-->
+<!--        <img width="50" height="50" :src="record[column.dataIndex]">-->
+                <a-image
+                    :width="40"
+                    :height="40"
+                    :src="record[column.dataIndex]"
+                />
       </template>
 
       <!--      渲染 valueType: valueEnum 类型 -->

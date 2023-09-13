@@ -38,6 +38,7 @@ declare module 'vue' {
     ATag: typeof import('ant-design-vue/es')['Tag']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
     AUpload: typeof import('ant-design-vue/es')['Upload']
+    AWatermark: typeof import('ant-design-vue/es')['Watermark']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HomeLogo: typeof import('./src/components/HomeLogo.vue')['default']
     HomeTabs: typeof import('./src/components/HomeTabs.vue')['default']

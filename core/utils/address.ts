@@ -1,4 +1,4 @@
-import {AddressPosType} from "../type/sys/address.ts";
+import {AddressIp, AddressPosType} from "../type/sys/address.ts";
 
 export const addressPosTo = (address: { lat: string, lng: string }, type: AddressPosType) => {
     const {lat, lng} = address
@@ -17,8 +17,15 @@ export const addressPosTo = (address: { lat: string, lng: string }, type: Addres
     return pos
 }
 
+
+export const addressIpToLatLngStr = (address: AddressIp) => {
+    let obj: any = addressPosForm(address.pos, address.type)
+    const {lat, lng} = obj
+    return `${lat},${lng}`;
+}
+
 export const addressPosForm = (pos: any, type: AddressPosType) => {
-    let address
+    let address = {}
     let lat
     let lng
     switch (type) {

@@ -9,6 +9,14 @@ export interface AddressType {
     address?: string
 }
 
+export interface AddressIp {
+    pos: {
+        lat: string,
+        lng: string
+    } | string,
+    type: AddressPosType
+}
+
 export type AddressPosType = 'obj' | 'lat_lng' | 'lng_lat'
 export const AddressPosTypeEnum = {
     OBJ: 'obj' as AddressPosType,

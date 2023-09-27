@@ -15,7 +15,10 @@ export const useSysNavStore =
             navTree.value = list
         }
 
-        function filterRoleNavTree(roles: string[]) {
+        function filterRoleNavTree(roles: string[] | undefined) {
+            if (!roles) {
+                roles = []
+            }
             walkNavTreeFilterRole(navTree.value, roles)
         }
 

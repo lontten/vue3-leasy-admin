@@ -1,86 +1,28 @@
 <template>
 
-  <div class="overview">
-    <div class="card">
-
-      <order-card
-          currentTitle="今日订单数量"
-          totalTitle="总订单数量"
-          preTitle="昨日订单数量"
-          preShortTitle="昨日"
-
-          currentNum="3343"
-          totalNum="3343434"
-          yesterdayNum="22"
-
-          ratioNum="232%"
-          ratioTitle="日同比"
-          :ratioType="true"
-          :width="width"
-      ></order-card>
 
 
-      <order-card
-          currentTitle="今日订单数量"
-          totalTitle="总订单数量"
-          preTitle="昨日订单数量"
-          preShortTitle="昨日"
-
-          currentNum="3343"
-          totalNum="3343434"
-          yesterdayNum="22"
-
-          ratioNum="232%"
-          ratioTitle="日同比"
-          :ratioType="true"
-          :width="width"
-      ></order-card>
-
-
-      <order-card
-          currentTitle="今日订单数量"
-          totalTitle="总订单数量"
-          preTitle="昨日订单数量"
-          preShortTitle="昨日"
-
-          currentNum="3343"
-          totalNum="3343434"
-          yesterdayNum="22"
-
-          ratioNum="232%"
-          ratioTitle="日同比"
-          :ratioType="true"
-          :width="width"
-      ></order-card>
-
-
-      <order-card
-          currentTitle="今日订单数量"
-          totalTitle="总订单数量"
-          preTitle="昨日订单数量"
-          preShortTitle="昨日"
-
-          currentNum="3343"
-          totalNum="3343434"
-          yesterdayNum="22"
-
-          ratioNum="232%"
-          ratioTitle="日同比"
-          :ratioType="true"
-          :width="width"
-      ></order-card>
-
-    </div>
-    <a-typography-title :level="4">其他功能</a-typography-title>
-
-  </div>
+  <TxMapGuide :address="address"></TxMapGuide>
 
 
 </template>
 <script lang="ts" setup>
-import OrderCard from "../../../core/components/overview/orderCard.vue";
 
-const width = "386px"
+import {AddressPosTypeEnum} from "@core/type/sys/address.ts";
+import TxMapGuide from "@core/components/map/TxMapGuide.vue";
+
+let address: any = {
+  pos: "39.977263,116.337063",
+  type: AddressPosTypeEnum.LAT_LNG,
+}
+
+address = {
+  pos: {
+    lat: 39.977263,
+    lng: 116.337063,
+  },
+  type: AddressPosTypeEnum.OBJ,
+}
 
 
 </script>

@@ -42,7 +42,6 @@
     "typescript": "^5.2.2",
     "unplugin-vue-components": "^0.25.2",
     "vite": "^4.4.9",
-    "vite-plugin-html-env": "^1.2.8",
     "vite-plugin-mock": "2.9.8",
     "vite-plugin-wasm": "^3.2.2",
     "vue-tsc": "^1.8.11"

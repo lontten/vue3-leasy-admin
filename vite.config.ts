@@ -7,17 +7,12 @@ import {baseConfig} from "./config/config";
 import * as path from "path";
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import wasm from "vite-plugin-wasm";
-import VitePluginHtmlEnv from 'vite-plugin-html-env'
 
 // https://vitejs.dev/config/
 export default defineConfig({
     base: baseConfig.baseUrl,
 
     plugins: [
-        VitePluginHtmlEnv({
-            compiler: true
-            // compiler: false // old
-        }),
         vue({
             script: {
                 // @ts-ignore
@@ -67,7 +62,7 @@ export default defineConfig({
 
     build: {
         cssMinify: true,
-        outDir:baseConfig.outDir,
+        outDir: baseConfig.outDir,
 
     }
 })

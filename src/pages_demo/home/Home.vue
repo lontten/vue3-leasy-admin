@@ -1,19 +1,28 @@
 <template>
   <a-layout style="min-height: 100vh">
-    <a-layout-sider v-model:collapsed="collapsed" collapsible>
+
+    <a-layout-sider v-model:collapsed="collapsed" collapsible
+                    :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }">
       <HomeLogo></HomeLogo>
+
       <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="dark">
         <ProNavTreeOption :list="navTree"></ProNavTreeOption>
       </a-menu>
+
     </a-layout-sider>
-    <a-layout>
+
+    <a-layout :style="{ marginLeft: '200px' }">
       <a-layout-content class="content">
         <div class="head">
+
+          <!--tab导航 todo -->
           <a-breadcrumb style="margin: 16px 0;">
             <a-breadcrumb-item v-for="v in paths">
               {{ v }}
             </a-breadcrumb-item>
           </a-breadcrumb>
+
+          <!--右上角显示区域-->
           <a-dropdown>
             <div class="user-avatar">
               <img class="user-img" src="../../assets/avatar.png" alt=""/>
@@ -42,6 +51,7 @@
         <!--                      :key="pane.key"-->
         <!--                      :closable="pane.closable"-->
         <!--                      :tab="pane.title">-->
+
 
         <div class="body">
           <router-view></router-view>

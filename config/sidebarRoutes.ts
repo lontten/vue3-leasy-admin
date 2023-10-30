@@ -1,5 +1,11 @@
 export const sidebarRoutes = [
     {
+        name: '首页',
+        path: 'home',
+        key: 'home',
+        icon: 'codepen-outlined',
+    },
+    {
         name: '多选',
         path: 'multSelectTable',
         key: 'multSelectTable',

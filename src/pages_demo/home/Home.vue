@@ -80,7 +80,6 @@ import ProNavTreeOption from "../../../core/components/ProNavTreeOption.vue";
 import {removeToken} from "@core/utils/login.ts";
 import {getUserInfo} from "@src/pages_demo/home/homeService.ts";
 import {useSysInitStore} from "@core/stores/sysInitStore.ts";
-import {is_uuid_zero} from "@core/utils/UUID.ts";
 import {sidebarRoutes} from "../../../config/sidebarRoutes.ts";
 
 const showName = computed(() => {
@@ -127,7 +126,7 @@ onMounted(async () => {
     avatar: '',
     nickname: userInfo.adminName,
     showName: userInfo.showName,
-    roles: [is_uuid_zero(userInfo.businessId) ? 'admin' : 'user']
+    roles: userInfo.roles,
   }
 
 })

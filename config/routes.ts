@@ -15,6 +15,7 @@ export const routes = [
     {
         path: '/', component: overview,
         children: [
+            {path: 'home', component: overview},
             {path: 'login', component: Login},
             {path: '404', component: p404},
             {path: '403', component: p403},

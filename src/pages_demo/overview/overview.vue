@@ -76,6 +76,21 @@
 
     </div>
     <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
+    <a-typography-title :level="4">其他功能</a-typography-title>
     <Bar></Bar>
 
   </div>

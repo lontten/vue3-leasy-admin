@@ -17,6 +17,7 @@ router.beforeEach(async (to, _from) => {
         // ❗️ 避免无限重定向
         (to.path !== '/login')
     ) {
+        console.log("to login")
         // const {roles, routers} = initStore.getUserInfo()
         // if (routers) {
         //     return routers.includes(to.path)

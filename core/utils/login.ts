@@ -5,6 +5,7 @@ export const TOKEN_NAME = "p031-admin-leasy"
 export const isAuthenticated = () => {
     let initStore = useSysInitStore();
     return initStore.isLogin()
+
 }
 
 

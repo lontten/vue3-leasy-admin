@@ -104,7 +104,7 @@ import OrderCard from "@core/components/overview/orderCard.vue";
 const width = "386px"
 
 console.log('wasm')
-greet()
+// greet()
 let s = to_html();
 console.log('to html:,', s);
 

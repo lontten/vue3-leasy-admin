@@ -2,11 +2,11 @@ import {MockMethod} from 'vite-plugin-mock'
 
 export default [
     {
-        url: '/api/user/login',
+        url: '/api/login/account',
         method: 'post',
         response: ({query, body}) => {
             console.log(query)
-            if (body.username == 'admin') {
+            if (body.adminName == 'admin') {
                 return {
                     code: 'A000',
                     data: 'p099-admin-token',
@@ -14,20 +14,24 @@ export default [
                 }
             }
             return {
-                code: 'A001',
+                code: 'M001',
                 msg: '账号或密码错误'
             }
         },
     },
 
     {
-        url: '/admin-leasy/api/login/current-user',
+        url: '/api/login/current-user',
         method: 'get',
         response: ({query, body}) => {
             console.log(query, body)
             return {
                 code: 'A000',
-                data: {}
+                data: {
+                    nickname: 'admin',
+                    avatar: '',
+                    roles: ['admin'],
+                }
             }
         },
     },

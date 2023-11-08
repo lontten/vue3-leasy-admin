@@ -25,8 +25,8 @@
           <!--右上角显示区域-->
           <a-dropdown>
             <div class="user-avatar">
-              <img class="user-img" src="../../assets/avatar.png" alt=""/>
-              <span class="user-admin">{{ showName }}</span>
+              <img class="user-img" :src="avatar" alt=""/>
+              <span class="user-admin">{{ nickname }}</span>
             </div>
 
             <template #overlay>
@@ -82,8 +82,12 @@ import {useSysInitStore} from "@core/stores/sysInitStore.ts";
 import {sidebarRoutes} from "../../../config/sidebarRoutes.ts";
 import {getUserInfo} from "@src/pages_demo/main/mainService.ts";
 
-const showName = computed(() => {
-  return initStore.userInfo.showName
+const nickname = computed(() => {
+  return initStore.userInfo.nickname
+})
+
+const avatar = computed(() => {
+  return initStore.userInfo.avatar
 })
 
 
@@ -123,10 +127,7 @@ onMounted(async () => {
   }
   let initStore = useSysInitStore();
   initStore.userInfo = {
-    avatar: '',
-    nickname: userInfo.adminName,
-    showName: userInfo.showName,
-    roles: userInfo.roles,
+    ...userInfo
   }
 
 })

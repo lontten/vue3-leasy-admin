@@ -69,10 +69,7 @@ const onFinish = async (values: any) => {
     }
 
     initStore.userInfo = {
-      avatar: '',
-      nickname: userInfo.adminName,
-      showName: userInfo.showName,
-      roles: userInfo.roles,
+      ...userInfo,
     }
 
     await r.push('/home')

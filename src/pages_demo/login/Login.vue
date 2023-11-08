@@ -37,12 +37,11 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
 import {apiLogin} from "@src/services/access/login.ts";
-import {useSysInitStore} from "../../../core/stores/sysInitStore.ts";
-import router from "../../../core/config/routes.ts";
-import {getUserInfo} from "@src/pages_demo/home/homeService.ts";
-import {removeToken} from "../../../core/utils/login.ts";
-import {is_uuid_zero} from "../../../core/utils/UUID.ts";
+import {useSysInitStore} from "@core/stores/sysInitStore.ts";
+import {removeToken} from "@core/utils/login.ts";
+import {is_uuid_zero} from "@core/utils/UUID.ts";
 import {useRouter} from "vue-router";
+import {getUserInfo} from "@src/pages_demo/main/mainService.ts";
 
 interface FormState {
   username: string;
@@ -73,7 +72,7 @@ const onFinish = async (values: any) => {
     initStore.userInfo = {
       avatar: '',
       nickname: userInfo.adminName,
-      showName:userInfo.showName,
+      showName: userInfo.showName,
       roles: [is_uuid_zero(userInfo.businessId) ? 'admin' : 'user']
     }
 

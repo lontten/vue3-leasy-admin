@@ -39,7 +39,6 @@ import {onMounted, ref} from 'vue';
 import {apiLogin} from "@src/services/access/login.ts";
 import {useSysInitStore} from "@core/stores/sysInitStore.ts";
 import {removeToken} from "@core/utils/login.ts";
-import {is_uuid_zero} from "@core/utils/UUID.ts";
 import {useRouter} from "vue-router";
 import {getUserInfo} from "@src/pages_demo/main/mainService.ts";
 
@@ -73,7 +72,7 @@ const onFinish = async (values: any) => {
       avatar: '',
       nickname: userInfo.adminName,
       showName: userInfo.showName,
-      roles: [is_uuid_zero(userInfo.businessId) ? 'admin' : 'user']
+      roles: userInfo.roles,
     }
 
     await r.push('/home')

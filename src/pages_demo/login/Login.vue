@@ -1,7 +1,13 @@
 <template>
   <div class="box">
 
+    <img class="bg-img" src="/bg-002.jpg" alt="">
+
     <div class="login">
+
+      <img class="login-logo" src="/vite.svg" alt="">
+      <h1 class="login-title">后台管理系统</h1>
+
       <a-form
           :label-col="{ span: 8 }"
           :model="formState"
@@ -82,19 +88,67 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.login {
-  margin-top: 30vh;
-  width: 30vw;
-  margin-left: -200px;
-  min-width: 300px;
-}
+//.login {
+//  margin-top: 30vh;
+//  width: 30vw;
+//  margin-left: -200px;
+//  min-width: 300px;
+//}
+//
+//.box {
+//  width: 100vw;
+//  height: 100vh;
+//  display: flex;
+//  justify-content: center;
+//
+//}
 
 .box {
   width: 100vw;
   height: 100vh;
   display: flex;
+  align-items: center;
+  flex-direction: column;
   justify-content: center;
+}
 
+.bg-img{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -10;
+}
+.login {
+  width: 20vw;
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0px 0px 0px #000000;
+  border-radius: 20px;
+  padding-top: 20px;
+  margin-bottom: 100px;
+}
+.login-logo{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.login-title{
+  margin-top: 10px;
+  margin-bottom: 5vh;
+}
+
+.logo-type{
+  position: fixed;
+  bottom: 15px;
+  font-size: 13px;
 }
 
 </style>

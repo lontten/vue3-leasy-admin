@@ -16,6 +16,51 @@ export const sidebarRoutes = [
         path: 'subTable',
         key: 'subTable',
         icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
+    },  {
+        name: '子表格',
+        path: 'subTable',
+        key: 'subTable',
+        icon: 'codepen-outlined',
     },
     {
         name: 'hello',
@@ -23,6 +68,13 @@ export const sidebarRoutes = [
         key: 'hello',
         icon: 'codepen-outlined',
         roles: ['admin']
+    },
+   {
+        name: 'hello2',
+        path: 'hello',
+        key: 'hello2',
+        icon: 'codepen-outlined',
+        roles: ['student']
     },
 
 ]

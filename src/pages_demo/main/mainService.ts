@@ -5,5 +5,7 @@ export const getUserInfo = async () => {
     if (code != 'A000') {
         return null
     }
+    data.nickname=data.adminName
+
     return data
 }

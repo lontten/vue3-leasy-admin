@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    home logo
+    p099
   </div>
 </template>
 <script lang="ts" setup>

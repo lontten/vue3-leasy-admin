@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 
 const tsxDiv = () => {
-  let a=[]
+  let a = []
   for (let i = 0; i < 3; i++) {
     a.push(<div>hello tsx</div>)
   }

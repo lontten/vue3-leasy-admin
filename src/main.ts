@@ -1,4 +1,4 @@
-import {createApp} from 'vue';
+import {createApp, watch} from 'vue';
 import './style.css';
 import 'normalize.css/normalize.css';
 
@@ -7,19 +7,24 @@ import {createPinia} from 'pinia';
 import {setGlobalOptions} from "vue-request";
 import * as antIcons from '@ant-design/icons-vue'
 import router from "../core/config/routes.ts";
+import CKEditor from '@ckeditor/ckeditor5-vue'; //此行新增
 
 
 const app = createApp(App);
 
 const pinia = createPinia();
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
+watch(
+    pinia.state,
+    (state) => {
+        // 每当它发生变化时，将整个状态持久化到本地存储
+        localStorage.setItem('piniaState', JSON.stringify(state))
+    },
+    {deep: true}
+)
+pinia.state.value = JSON.parse(localStorage.getItem('piniaState') || '{}')
 
-import CKEditor from '@ckeditor/ckeditor5-vue';  //此行新增
-app.use( CKEditor )
-
-
+app.use(CKEditor)
 app.use(router);
 
 //全局配置vue-request

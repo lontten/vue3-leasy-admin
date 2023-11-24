@@ -44,5 +44,6 @@ declare module 'vue' {
     HomeTabs: typeof import('./src/components/HomeTabs.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Tsx: typeof import('./src/components/Tsx.vue')['default']
   }
 }

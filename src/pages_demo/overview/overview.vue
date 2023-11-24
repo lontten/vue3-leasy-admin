@@ -75,6 +75,7 @@
       ></order-card>
 
     </div>
+    <Tsx></Tsx>
     <a-typography-title :level="4">其他功能</a-typography-title>
     <a-typography-title :level="4">其他功能</a-typography-title>
     <a-typography-title :level="4">其他功能</a-typography-title>
@@ -101,6 +102,7 @@
 import {greet, to_html} from "lram-wasm";
 import {Bar} from "@src/components/Ka.tsx";
 import OrderCard from "@core/components/overview/orderCard.vue";
+import Tsx from "@src/components/Tsx.vue";
 const width = "386px"
 
 console.log('wasm')

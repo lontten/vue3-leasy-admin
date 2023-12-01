@@ -51,7 +51,7 @@ const imageUrl = ref<string>('');
 // -------------------------------图片更新-----------------------------------
 const handleChange = (_info: UploadChangeParam) => {
   if (fileList.value.length > 0) {
-    formData.value[name] = fileList.value[0].url
+    formData.value[name] = fileList.value[0].updateFileUrl
   }
 };
 
@@ -86,6 +86,7 @@ const beforeUpload = async (file: UploadProps['fileList'][number]) => {
     }
   }
 
+  imageUrl.value = null
   //手动上传
   switch (uploadType) {
     case 'cos':
@@ -99,7 +100,6 @@ const beforeUpload = async (file: UploadProps['fileList'][number]) => {
   fileList.value = [file];
   imageUrl.value = file.url
 
-  console.log(file.url)
   loading.value = false
 
   return false;
@@ -117,7 +117,7 @@ const initData = () => {
     url: value + '.cover_img.jpg',
     updateFileUrl: value,
   }]
-  imageUrl.value = value
+  imageUrl.value = value + '.cover_img.jpg'
 }
 onMounted(() => {
   initData()

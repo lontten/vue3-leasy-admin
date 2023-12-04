@@ -8,7 +8,7 @@ export const useSysInitStore =
         const userInfo = ref<StoreUserInfoType>({})
 
         function isLogin() {
-            if (token.value){
+            if (token.value) {
                 return true
             }
             if (token.value && userInfo.value) {
@@ -20,6 +20,4 @@ export const useSysInitStore =
         }
 
         return {userInfo, token, isLogin}
-    }, {
-        persist: true,
     })

@@ -72,7 +72,7 @@
       <a-row>
         <a-col :span="24" style="text-align: right">
           <a-button html-type="submit" type="primary">搜索</a-button>
-          <a-button style="margin: 0 8px" @click="() => formRef.resetFields()">重置</a-button>
+          <a-button style="margin: 0 8px" @click="resetSearch">重置</a-button>
           <a style="font-size: 12px" @click="expand = !expand">
             <template v-if="expand">
               <UpOutlined/>
@@ -110,12 +110,16 @@ const {onSearchEvent} = defineProps<Props>()
 
 
 const expand = ref(false);
-const formRef = ref<FormInstance>({});
+const formRef = ref<FormInstance>();
 
 const onFinish = (values: any) => {
   onSearchEvent(values)
 };
-
+const resetSearch = () => {
+  formRef?.value?.resetFields()
+  searchData.value = {}
+  onFinish({})
+}
 
 const toList = () => {
   const v = columns.value

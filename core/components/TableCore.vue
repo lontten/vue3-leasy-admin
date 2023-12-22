@@ -202,6 +202,14 @@ const loadData = () => {
   })
 }
 
+const loadDataInit = () => {
+  run({
+    pageSize: pageSize.value,
+    pageIndex: 1,
+    ...searchKey.value,
+  })
+}
+
 
 // 多选----------------
 type Key = string | number;
@@ -220,7 +228,7 @@ const selectedRowsConfig = computed(() => {
 
 
 watch(searchKey, () => {
-  loadData()
+  loadDataInit()
 })
 
 onMounted(() => {

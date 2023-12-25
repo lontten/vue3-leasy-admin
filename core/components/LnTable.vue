@@ -70,7 +70,10 @@ const tableRef = ref()
 const loadData = () => {
   tableRef.value.loadData()
 }
+const loadDataExpanded = (id: any) => {
+  tableRef.value.loadDataExpanded(id)
+}
 // 把 方法暴露给父组件
-defineExpose({loadData})
+defineExpose({loadData, loadDataExpanded})
 </script>
 

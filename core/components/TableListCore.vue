@@ -136,7 +136,8 @@ const loadData = async () => {
 onMounted(async () => {
   await loadData()
 })
-
+// 把 方法暴露给父组件
+defineExpose({loadData})
 </script>
 <style scoped>
 .editable-row-operations a {

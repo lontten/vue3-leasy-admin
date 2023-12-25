@@ -30,12 +30,11 @@
 
       <!--      渲染 valueType: img 类型 -->
       <template v-if="column.valueType === 'img'  ">
-<!--        <img width="50" height="50" :src="record[column.dataIndex]">-->
-                <a-image
-                    :width="40"
-                    :height="40"
-                    :src="record[column.dataIndex]"
-                />
+        <a-image
+            :width="40"
+            :height="40"
+            :src="record[column.dataIndex]"
+        />
       </template>
 
       <!--      渲染 valueType: valueEnum 类型 -->
@@ -79,6 +78,7 @@
       <TableListCore v-model="queryDataExpanded"
                      :subParam="record"
                      v-model:columns="columnsExpanded"
+                     :ref="(el) => setSubTableRef(el, record.id)"
       >
 
         <template #lnOperation="{data}">
@@ -238,10 +238,18 @@ onMounted(() => {
   });
 })
 // --------------------二级表格-------
-
+let subTableRefs: { [key: string]: any } = {};
+const setSubTableRef = (el: any, key: any) => {
+  if (el) {
+    subTableRefs[key] = el.loadData;
+  }
+};
+const loadDataExpanded = (id: any) => {
+  subTableRefs[id]()
+}
 
 // 把 方法暴露给父组件
-defineExpose({loadData})
+defineExpose({loadData, loadDataExpanded})
 </script>
 <style scoped>
 .editable-row-operations a {

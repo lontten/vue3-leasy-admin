@@ -1,7 +1,8 @@
+import * as dayjs from "dayjs";
 
 export const FileExcelDownload = (res: any, excelName?: string) => {
     const name = excelName || '导出';
-    const nowTime = moment().format('YYYY-MM-DD');
+    const nowTime = dayjs().format('YYYY-MM-DD');
     const blob = new Blob([res]);
     const objectURL = URL.createObjectURL(blob);
     const btn = document.createElement('a');
@@ -19,7 +20,7 @@ export const FileExcelDownload = (res: any, excelName?: string) => {
 
 export const FileDownload = (res: any, excelName?: string) => {
     const name = excelName || '导出';
-    const nowTime = moment().format('YYYY-MM-DD');
+    const nowTime = dayjs().format('YYYY-MM-DD');
     const blob = new Blob([res]);
     const objectURL = URL.createObjectURL(blob);
     const btn = document.createElement('a');

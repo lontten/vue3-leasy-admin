@@ -37,10 +37,13 @@ import {ref} from "vue";
 import {dictListAll, dictListPage} from "@src/services/dict/dict.ts";
 import {dictColumns} from "./data.ts";
 import {UUID_ZERO} from "@core/utils/UUID.ts";
+import * as dayjs from "dayjs";
 
 const tableRef = ref()
 const searchData = ref({})
 
+var now = dayjs()
+console.log(now.format('YYYY-MM-DD HH:mm:ss'))
 
 const getPage = async (param: any) => {
   param.dictCode = 'tx_address_ssx'

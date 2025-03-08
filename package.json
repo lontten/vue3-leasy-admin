@@ -17,7 +17,7 @@
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "ali-oss": "^6.19.0",
     "ant-design-vue": "^4.0.8",
-    "axios": "^1.6.3",
+    "axios": "^1.8.2",
     "cos-nodejs-sdk-v5": "^2.12.6",
     "dayjs": "^1.11.10",
     "lodash-es": "^4.17.21",
